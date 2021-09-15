@@ -1,35 +1,70 @@
+body{
+    margin:0;
+}
+
 /*Ordering*/
 
+#content {
+    position: relative;
+}
+
 #ordering {
+    position: absolute;
+    top: 20%;
+    left:20%;
+    right:20%;
     width: 60%;
     margin: auto;
     text-align: center;
     border-radius: 10px;
-    background-color: #d3d3d3;
-    opacity: 60%;
+    background-color: rgb(211,211,211, 0.95);
     overflow: auto;
+    opacity: 95%;
+}
+#orderingPicture {
+    width: 100%;
+    height:400px;
+    object-fit: cover;
+    overflow: hidden;
 }
 
     #ordering div {
         width: 60%;
         margin: 20px auto 20px auto;
         text-align: center;
-        background-color: #4682B4;
+        background-color: rgb(70,130,180, 1);
         border-radius: 5px;
         padding: 10px 25px 10px 25px;
+        display:flex;
     }
+   
+        #ordering div label {
+            float:left;
+            width: 20%;
+            padding-right: 20px;
+            max-width: 50px;
+            text-align: right;
+            color: black;
 
-#ordering div label {
-    padding-right: 40px;
-    text-align: right;
-    color: black;
+        }
 
-}
+        #ordering div select {
+            float: right;
+            width: 80%;
+        }
 
-#ordering div select {
-
-
-}
+        #ordering div button {
+            float: left;
+            position: relative;
+            left: 25%;
+            width: 50%;
+            background-color: #007500;
+            color: white;
+            border: 0px;
+        }
+        #ordering div button:hover{
+            cursor:pointer;
+        }
 
 
 
@@ -40,13 +75,14 @@
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     padding-top: 100px; /* Location of the box */
-    left: 0;
+    left: auto;
+    right: auto;
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: rgba(325,325,325,0.6); /* Black w/ opacity */
 }
 
 /* Modal Content */
@@ -54,7 +90,8 @@
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: 1px solid #4682B4;
+    border-radius: 10px;
     width: 80%;
 }
 
