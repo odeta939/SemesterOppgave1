@@ -49,6 +49,7 @@ body{
         #ordering div select {
             float: right;
             width: 80%;
+            max-width: 300px;
         }
 
         #ordering div button {
