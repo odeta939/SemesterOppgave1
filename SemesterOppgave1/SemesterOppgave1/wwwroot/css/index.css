@@ -2,6 +2,26 @@ body{
     margin:0;
 }
 
+
+nav {
+    height: 100px;
+    background-color: #395461;
+    margin: 0px;
+}
+.nav-logo{
+    height: inherit;
+    width: 150px;
+    background-color: white;
+    display: flex;
+
+}
+
+nav p {
+    color: white;
+    margin: 0;
+    display: flex;
+}
+
 /*Ordering*/
 
 #content {
