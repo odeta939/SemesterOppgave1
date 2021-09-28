@@ -26,7 +26,8 @@ namespace SemesterOppgave1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<DbContext>(options => options.UseSqlite("Data source=Order.db"));
+            services.AddDbContext<BoatTripContext>(options => options.UseSqlite("Data source=Customer.db"));
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
