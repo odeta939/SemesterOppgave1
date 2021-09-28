@@ -7,11 +7,18 @@ namespace SemesterOppgave1.Models
 {
     public class Route
     {
-        public int RouteID { get; set; }
-        public virtual Boat Boat { get; set; }
-        public virtual Terminal DeparturePlace { get; set; }
-        public virtual Terminal ArrivalPlace { get; set; }
+        public int Id { get; set; }
         public string DepartureTime { get; set; }
         public string ArrivalTime { get; set; }
+
+        //boat
+        public string BoatName { get; set; }
+        public int Capacity { get; set; }
+        public int TicketPrice { get; set; }
+
+        //terminal
+        public string TerminalName { get; set; }
+
+        public string TerminalAddress { get; set; }
     }
 }

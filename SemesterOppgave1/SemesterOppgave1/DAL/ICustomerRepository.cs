@@ -10,6 +10,7 @@ namespace SemesterOppgave1.DAL
     {
 
         Task<List<Customer>> GetAllCustomers();
+        Task<List<Order>> GetAllOrders();
 
     }
 }

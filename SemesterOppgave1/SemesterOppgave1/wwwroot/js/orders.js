@@ -1,9 +1,13 @@
-$(function(){
+
+/*
+ * DELETE THIS FILE???
+ * 
+ */
+$(function () {
     getOrders();
 })
 
 GET_ORDERS = "";
-
 
 
 function getOrders(){

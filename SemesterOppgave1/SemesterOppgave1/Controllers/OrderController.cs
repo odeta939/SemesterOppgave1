@@ -20,6 +20,10 @@ namespace SemesterOppgave1.Controllers
         {
             return await _db.GetAllCustomers();
         }
+        public async Task<List<Order>> getAllOrders()
+        {
+            return await _db.GetAllOrders();
+        }
 
         public string index()
         {

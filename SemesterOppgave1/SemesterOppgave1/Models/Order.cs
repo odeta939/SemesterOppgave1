@@ -7,10 +7,23 @@ namespace SemesterOppgave1.Models
 {
     public class Order
     {
-        public int OrderID { get; set; }
-        public virtual Route Route { get; set; }
-        public virtual Customer Customer { get; set; }
+        public int Id { get; set; }
         public int TicketAmount { get; set; }
         public int TotalPrice { get; set; }
+        // route
+        public string DepartureTime { get; set; }
+        public string ArrivalTime { get; set; }
+        public string  Boat { get; set; }
+        public string  DeparturePlace { get; set; }
+        public string  ArrivalPlace { get; set; }
+
+        //customer
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public string Street { get; set; }
+        public string Phonenr { get; set; }
+        public string Email { get; set; }
+        public string ZipCode { get; set; }
+        public string City { get; set; }
     }
 }
