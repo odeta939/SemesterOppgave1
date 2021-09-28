@@ -19,10 +19,8 @@ namespace SemesterOppgave1.Controllers
         }
 
         [HttpPost]
-        public void placeOrder(Ticket regTicket)
+        public async Task placeOrder(Ticket regTicket)
         {
-
-           
              //Make Ticket model with these attributes:
              
             var order = new Order()
@@ -54,14 +52,12 @@ namespace SemesterOppgave1.Controllers
             customer.Orders = new List<Order>();
             customer.Orders.Add(order);
             _db.Customers.Add(customer);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
 
             /*
              * Since we don't have login for customer
              * should we still check if customer exists? 
              */
-
-
         }
     } 
 }

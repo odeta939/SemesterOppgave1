@@ -1,23 +1,21 @@
-﻿using System;
+﻿using Mappeeksamen1.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SemesterOppgave1.Models
 {
-    public class Ticket
+    public class Customer
     {
-        public string BoatName { get; set; }
-        public string Route { get; set; }
-        public int Price { get; set; }
-        public string Departure { get; set; }
+        public int CustomerID { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Address { get; set; }
-        //Address normalization
+        public string ZipCode { get; set; }
+        public string PostPlace { get; set; }
         public string Phonenr { get; set; }
         public string Email { get; set; }
-
-
+        public virtual List<Order> Orders { get; set; }
     }
 }
