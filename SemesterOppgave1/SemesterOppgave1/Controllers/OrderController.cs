@@ -19,16 +19,20 @@ namespace SemesterOppgave1.Controllers
         }
 
         [HttpPost]
-        public async Task placeOrder(Order regTicket)
+        public async Task PlaceOrder(Order regTicket)
         {
-             //Make Ticket model with these attributes:
+            var postplace = new PostPlace
+            {
+                ZipCode = regTicket.Customer.PostPlace.ZipCode,
+                PostPlace = regTicket.Customer.PostPlace.PostPlace
+            };
              
             var customer = new Customer
             {
                 Firstname = regTicket.Customer.Firstname,
                 Lastname = regTicket.Customer.Lastname,
                 Address = regTicket.Customer.Address,
-                PostPlace = regTicket.Customer.PostPlace,
+                PostPlace = postplace,
                 Phonenr = regTicket.Customer.Phonenr,
                 Email = regTicket.Customer.Email
             };
@@ -71,14 +75,13 @@ namespace SemesterOppgave1.Controllers
                 TotalPrice = regTicket.TotalPrice
             };
 
-            customer.Orders.Add(order);
             _db.Customers.Add(customer);
+            _db.Boats.Add(boat);
+            _db.Routes.Add(route);
+            _db.Terminals.Add(arrivalTerminal);
+            _db.Terminals.Add(departureTerminal);
+            _db.Orders.Add(order);
             await _db.SaveChangesAsync();
-
-            /*
-             * Since we don't have login for customer
-             * should we still check if customer exists? 
-             */
         }
     } 
 }
