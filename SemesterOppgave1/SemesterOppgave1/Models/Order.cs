@@ -10,10 +10,11 @@ namespace SemesterOppgave1.Models
         public int Id { get; set; }
         public int TicketAmount { get; set; }
         public int TotalPrice { get; set; }
+
         // route
         public string DepartureTime { get; set; }
         public string ArrivalTime { get; set; }
-        public string  Boat { get; set; }
+        public string  BoatName { get; set; }
         public string  DeparturePlace { get; set; }
         public string  ArrivalPlace { get; set; }
 

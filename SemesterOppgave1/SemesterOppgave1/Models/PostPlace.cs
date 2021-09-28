@@ -7,7 +7,6 @@ namespace SemesterOppgave1.Models
 {
     public class PostPlace
     {
-
         public string ZipCode { get; set; }
         public string Place { get; set; }
     }

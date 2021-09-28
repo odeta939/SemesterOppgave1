@@ -15,13 +15,14 @@ namespace SemesterOppgave1.DAL
         public string Phonenr { get; set; }
         public string Email { get; set; }
         virtual public PostPlaces Postplace { get; set; }
-       // virtual public Orders Order { get; set; }
+        //Kan ha denne listen under hvis vi skal liste hver kunde sin ordreliste?
+        //virtual public Orders Order { get; set; }
     }
 
     public class PostPlaces
     {
         [Key]
-        [System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string ZipCode { get; set; }
         public string Street { get; set; }
         public string City { get; set; }
@@ -72,7 +73,6 @@ namespace SemesterOppgave1.DAL
 
         public DbSet<Customers> Customers { get; set; }
         public DbSet<PostPlaces> PostPlaces { get; set; }
-
         public DbSet<Boats> Boats { get; set; }
         public DbSet<Routes> Routes { get; set; }
         public DbSet<Terminals> Terminals { get; set; }
