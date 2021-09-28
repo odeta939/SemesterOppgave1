@@ -74,20 +74,24 @@ namespace SemesterOppgave1.DAL
         {
             try
             {
-                var newCustomer = new Customers();
-                newCustomer.Firstname = customer.Firstname;
-                newCustomer.Lastname = customer.Lastname;
-                newCustomer.Phonenr = customer.Phonenr;
-                newCustomer.Email = customer.Email;
+                var newCustomer = new Customers
+                {
+                    Firstname = customer.Firstname,
+                    Lastname = customer.Lastname,
+                    Phonenr = customer.Phonenr,
+                    Email = customer.Email
+                };
 
                 var checkPostPlace = await _db.PostPlaces.FindAsync(customer.ZipCode);
                 //If the postplace doesnt already exist we create a new PostPlace
                 if (checkPostPlace == null)
                 {
-                    var newPostPlace = new PostPlaces();
-                    newPostPlace.ZipCode = customer.ZipCode;
-                    newPostPlace.City = customer.City;
-                    newPostPlace.Street = customer.Street;
+                    var newPostPlace = new PostPlaces
+                    {
+                        ZipCode = customer.ZipCode,
+                        City = customer.City,
+                        Street = customer.Street
+                    };
                 }
                 else
                 {
@@ -131,10 +135,12 @@ namespace SemesterOppgave1.DAL
                     //If the postplace doesnt already exist we create a new PostPlace
                     if(checkPostPlace == null)
                     {
-                        var newPostPlace = new PostPlaces();
-                        newPostPlace.ZipCode = changedCustomer.ZipCode;
-                        newPostPlace.City = changedCustomer.City;
-                        newPostPlace.Street = changedCustomer.Street;
+                        var newPostPlace = new PostPlaces
+                        {
+                            ZipCode = changedCustomer.ZipCode,
+                            City = changedCustomer.City,
+                            Street = changedCustomer.Street
+                        };
                     }
                     else
                     {
@@ -358,19 +364,23 @@ namespace SemesterOppgave1.DAL
                 var newOrder = new Orders();
 
                 //The customer for the order, gets its info from the order parameter sent from the frontend
-                var customer = new Customers();
-                customer.Firstname = order.Firstname;
-                customer.Lastname = order.Lastname;
-                customer.Phonenr = order.Phonenr;
-                customer.Email = order.Email;
+                var customer = new Customers
+                {
+                    Firstname = order.Firstname,
+                    Lastname = order.Lastname,
+                    Phonenr = order.Phonenr,
+                    Email = order.Email
+                };
                 customer.Postplace.City = order.City;
                 customer.Postplace.ZipCode = order.ZipCode;
                 customer.Postplace.Street = order.Street;
 
                 //The route for the order
-                var route = new Routes();
-                route.DepartureTime = order.DepartureTime;
-                route.ArrivalTime = order.ArrivalTime;
+                var route = new Routes
+                {
+                    DepartureTime = order.DepartureTime,
+                    ArrivalTime = order.ArrivalTime
+                };
                 route.Boat.BoatName = order.BoatName;
                 route.DeparturePlace.TerminalName = order.DeparturePlace;
                 route.ArrivalPlace.TerminalName = order.ArrivalPlace;
