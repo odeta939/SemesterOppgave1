@@ -12,10 +12,9 @@ namespace SemesterOppgave1.Models
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Address { get; set; }
-        public string ZipCode { get; set; }
-        public string PostPlace { get; set; }
         public string Phonenr { get; set; }
         public string Email { get; set; }
         public virtual List<Order> Orders { get; set; }
+        public virtual PostPlace PostPlace { get; set; }
     }
 }

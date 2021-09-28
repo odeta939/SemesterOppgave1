@@ -9,47 +9,68 @@ using System.Threading.Tasks;
 namespace SemesterOppgave1.Controllers
 {
     [Route("[controller]/[action]")]
-    public class TicketController: ControllerBase
+    public class OrderController: ControllerBase
     {
         private readonly BoatTripContext _db;
 
-        public TicketController(BoatTripContext db)
+        public OrderController(BoatTripContext db)
         {
             _db = db;
         }
 
         [HttpPost]
-        public async Task placeOrder(Ticket regTicket)
+        public async Task placeOrder(Order regTicket)
         {
              //Make Ticket model with these attributes:
              
-            var order = new Order()
-            {
-                BoatName = regTicket.BoatName,
-                Route = regTicket.Route,
-                Price = regTicket.Price,
-                Departure = regTicket.Departure
-                
-            };
-
             var customer = new Customer
             {
-                Firstname = regTicket.Firstname,
-                Lastname = regTicket.Lastname,
-                Address = regTicket.Address,
-                /*
-                //--//--//
-                 * probably need to make one more class in 
-                 * DbContext to split out the address properly
-                 * and use attributes like "Street + number", "Postnr", "City"
-                 //--//--//
-                */
-                Phonenr = regTicket.Phonenr,
-                Email = regTicket.Email
-                
+                Firstname = regTicket.Customer.Firstname,
+                Lastname = regTicket.Customer.Lastname,
+                Address = regTicket.Customer.Address,
+                PostPlace = regTicket.Customer.PostPlace,
+                Phonenr = regTicket.Customer.Phonenr,
+                Email = regTicket.Customer.Email
             };
 
-            customer.Orders = new List<Order>();
+            var route = new Route
+            {
+                Boat = regTicket.Route.Boat,
+                DeparturePlace = regTicket.Route.DeparturePlace,
+                ArrivalPlace = regTicket.Route.ArrivalPlace,
+                DepartureTime = regTicket.Route.DepartureTime,
+                ArrivalTime = regTicket.Route.ArrivalTime
+            };
+
+            var boat = new Boat
+            {
+                BoatName = regTicket.Route.Boat.BoatName,
+                Capacity = regTicket.Route.Boat.Capacity,
+                TicketPrice = regTicket.Route.Boat.TicketPrice
+            };
+
+            var departureTerminal = new Terminal
+            {
+                Name = regTicket.Route.DeparturePlace.Name,
+                Address = regTicket.Route.DeparturePlace.Address,
+                ZipCode = regTicket.Route.DeparturePlace.ZipCode
+            };
+
+            var arrivalTerminal = new Terminal
+            {
+                Name = regTicket.Route.ArrivalPlace.Name,
+                Address = regTicket.Route.ArrivalPlace.Address,
+                ZipCode = regTicket.Route.ArrivalPlace.ZipCode
+            };
+
+            var order = new Order
+            {
+                Route = route,
+                Customer = customer,
+                TicketAmount = regTicket.TicketAmount,
+                TotalPrice = regTicket.TotalPrice
+            };
+
             customer.Orders.Add(order);
             _db.Customers.Add(customer);
             await _db.SaveChangesAsync();

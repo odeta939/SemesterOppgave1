@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace SemesterOppgave1.Models
 {
-    public class Terminal
+    public class PostPlace
     {
-        public int TerminalID { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
         public string ZipCode { get; set; }
+        public string PostPlace { get; set; }
     }
 }
