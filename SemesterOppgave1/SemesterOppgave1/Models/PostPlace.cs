@@ -8,7 +8,7 @@ namespace SemesterOppgave1.Models
 {
     public class PostPlace
     {
-        [RegularExpression(@"^[0-9]{4}$")]
+        [RegularExpression(@"^([0-9]{4})|([1-9]{1}[0-9]{4})|([1-9]{3} [1-9]{2})$")]
         public string ZipCode { get; set; }
         [RegularExpression(@"^[0-9a-zA-ZøæåØÆÅ. \-]{2,30}$")]
         public string Place { get; set; }
