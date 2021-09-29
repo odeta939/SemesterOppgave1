@@ -4,11 +4,11 @@
 });
 
 function getCustomers() {
-    $.get("order/getAllRoutes", function ( routes) {
+    $.get("order/GetAllRoutes", function ( routes) {
         //skrivUt();
         console.log(routes)
     });
-    $.get("order/getAllOrders", function (orders) {
+    $.get("order/GetAllOrders", function (orders) {
         //skrivUt();
         console.log(orders)
     });
