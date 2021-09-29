@@ -4,9 +4,12 @@
 });
 
 function getCustomers() {
-    $.get("order/getAllOrders", function ( orders) {
+    $.get("order/getAllRoutes", function ( routes) {
         //skrivUt();
-        
+        console.log(routes)
+    });
+    $.get("order/getAllOrders", function (orders) {
+        //skrivUt();
         console.log(orders)
     });
 }
@@ -18,8 +21,4 @@ function skrivUt(customers) {
     }
 }*/
 
-function getIndex() {
-    $.get("order/index", function (text) {
-        console.log(text);
-    });
-}
+

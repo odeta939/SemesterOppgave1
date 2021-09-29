@@ -37,7 +37,7 @@ namespace SemesterOppgave1
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                loggerFactory.AddFile("Logs/BoatTripLog.txt");
+                //loggerFactory.AddFile("Logs/BoatTripLog.txt");
                 DBInit.Initialize(app);
             }
             else

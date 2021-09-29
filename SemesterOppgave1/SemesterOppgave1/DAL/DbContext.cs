@@ -12,6 +12,7 @@ namespace SemesterOppgave1.DAL
         public int Id { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
+        public string Street { get; set; }
         public string Phonenr { get; set; }
         public string Email { get; set; }
         virtual public PostPlaces Postplace { get; set; }
@@ -24,7 +25,6 @@ namespace SemesterOppgave1.DAL
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string ZipCode { get; set; }
-        public string Street { get; set; }
         public string City { get; set; }
 
         // denne listen ikke nødvendig med mindre man skal finne kundene på et gitt postnr (altså gå inn via Poststeder-collection)
@@ -43,6 +43,7 @@ namespace SemesterOppgave1.DAL
     {
         public int Id { get; set; }
         public string TerminalName { get; set; }
+        public string Street { get; set; }
         public virtual PostPlaces TerminalAddress{ get; set; }
         
     }

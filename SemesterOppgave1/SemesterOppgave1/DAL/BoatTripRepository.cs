@@ -32,7 +32,7 @@ namespace SemesterOppgave1.DAL
                         Id = c.Id,
                         Firstname = c.Firstname,
                         Lastname = c.Lastname,
-                        Street = c.Postplace.Street,
+                        Street = c.Street,
                         Phonenr = c.Phonenr,
                         Email = c.Email,
                         ZipCode = c.Postplace.ZipCode,
@@ -56,7 +56,7 @@ namespace SemesterOppgave1.DAL
                     Id = customer.Id,
                     Firstname = customer.Firstname,
                     Lastname = customer.Lastname,
-                    Street = customer.Postplace.Street,
+                    Street = customer.Street,
                     Phonenr = customer.Phonenr,
                     Email = customer.Email,
                     ZipCode = customer.Postplace.ZipCode,
@@ -90,7 +90,6 @@ namespace SemesterOppgave1.DAL
                     {
                         ZipCode = customer.ZipCode,
                         City = customer.City,
-                        Street = customer.Street
                     };
                 }
                 else
@@ -139,7 +138,6 @@ namespace SemesterOppgave1.DAL
                         {
                             ZipCode = changedCustomer.ZipCode,
                             City = changedCustomer.City,
-                            Street = changedCustomer.Street
                         };
                     }
                     else
@@ -248,11 +246,11 @@ namespace SemesterOppgave1.DAL
                     TicketPrice = r.Boat.TicketPrice,
                     ArrivalTerminalName = r.ArrivalPlace.TerminalName,
                     ArrivalTerminalCity = r.ArrivalPlace.TerminalAddress.City,
-                    ArrivalTerminalStreet = r.ArrivalPlace.TerminalAddress.Street,
+                    ArrivalTerminalStreet = r.ArrivalPlace.Street,
                     ArrivalTerminalZipCode = r.ArrivalPlace.TerminalAddress.ZipCode,
                     DepartureTerminalName = r.DeparturePlace.TerminalName,
                     DepartureTerminalCity = r.DeparturePlace.TerminalAddress.City,
-                    DepartureTerminalStreet = r.DeparturePlace.TerminalAddress.Street,
+                    DepartureTerminalStreet = r.DeparturePlace.Street,
                     DepartureTerminalZipCode = r.DeparturePlace.TerminalAddress.ZipCode
                 }).ToListAsync();
                 return allRoutes;
@@ -278,11 +276,11 @@ namespace SemesterOppgave1.DAL
                     TicketPrice = route.Boat.TicketPrice,
                     ArrivalTerminalName = route.ArrivalPlace.TerminalName,
                     ArrivalTerminalCity = route.ArrivalPlace.TerminalAddress.City,
-                    ArrivalTerminalStreet = route.ArrivalPlace.TerminalAddress.Street,
+                    ArrivalTerminalStreet = route.ArrivalPlace.Street,
                     ArrivalTerminalZipCode = route.ArrivalPlace.TerminalAddress.ZipCode,
                     DepartureTerminalName = route.DeparturePlace.TerminalName,
                     DepartureTerminalCity = route.DeparturePlace.TerminalAddress.City,
-                    DepartureTerminalStreet = route.DeparturePlace.TerminalAddress.Street,
+                    DepartureTerminalStreet = route.DeparturePlace.Street,
                     DepartureTerminalZipCode = route.DeparturePlace.TerminalAddress.ZipCode
                 };
                 return fetchedRoute;
@@ -310,7 +308,7 @@ namespace SemesterOppgave1.DAL
                     ArrivalPlace = o.Route.ArrivalPlace.TerminalName,
                     Firstname = o.Customer.Firstname,
                     Lastname = o.Customer.Lastname,
-                    Street = o.Customer.Postplace.Street,
+                    Street = o.Customer.Street,
                     Phonenr = o.Customer.Phonenr,
                     Email = o.Customer.Email,
                     ZipCode= o.Customer.Postplace.ZipCode,
@@ -342,7 +340,7 @@ namespace SemesterOppgave1.DAL
                     ArrivalPlace = order.Route.ArrivalPlace.TerminalName,
                     Firstname = order.Customer.Firstname,
                     Lastname = order.Customer.Lastname,
-                    Street = order.Customer.Postplace.Street,
+                    Street = order.Customer.Street,
                     Phonenr = order.Customer.Phonenr,
                     Email = order.Customer.Email,
                     ZipCode = order.Customer.Postplace.ZipCode,
@@ -368,12 +366,12 @@ namespace SemesterOppgave1.DAL
                 {
                     Firstname = order.Firstname,
                     Lastname = order.Lastname,
+                    Street = order.Street,
                     Phonenr = order.Phonenr,
                     Email = order.Email
                 };
                 customer.Postplace.City = order.City;
                 customer.Postplace.ZipCode = order.ZipCode;
-                customer.Postplace.Street = order.Street;
 
                 //The route for the order
                 var route = new Routes
