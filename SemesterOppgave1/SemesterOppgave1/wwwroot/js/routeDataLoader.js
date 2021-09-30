@@ -1,61 +1,60 @@
-﻿$(function () {
-    const selectTo = $("#toPlace");
-    const arrayPlaces = getDeparturePlaces();
-    console.log(arrayPlaces);
-    console.log(arrayPlaces[0])
+﻿let toList = []
+let fromList = []
 
-    for (var i = 0; i < arrayPlaces.length; i++) {
-        console.log(arrayPlaces[i])
-    }
+$(function () {
+    getDeparturePlaces();
 
-
-    /*arrayPlaces.each(function (place) {
-        console.log(place);
-
-    });*/
-
-
-
-    /*
-    selectTo.append($('<option>', {
-        value: "Oslo",
-        text: "Oslo"
-    }));
-    selectTo.append($('<option>', {
-        value: "Kiel",
-        text: "Kiel"
-    }));
-    selectTo.append($('<option>', {
-        value: "Koben",
-        text: "Koben"
-    }));
-    selectTo.append($('<option>', {
-        value: "Gøteborg",
-        text: "Gøteborg"
-    }));*/
-
-
-    const selectFrom = $("fromPlace");
-
-
-
+    $("#fromPlace").on('change', function () {
+        setToPlaces();
+    });
 });
 
-
 function getDeparturePlaces() {
-
-    //save departure times
-    const departurePlaces = []
-    //get all routes
     $.get("order/GetAllRoutes", function (routes) {
-        //get departure time for each route
-        $.each(routes, function (index, value) {
-            const place = value.departureTerminalCity;
-
-            if (departurePlaces.indexOf(place) == -1) {
-                departurePlaces.push(place)
-            }
-        });
+        initialPlaces(routes);
     });
-    return departurePlaces
+}
+
+function setToPlaces() {
+    $.get("order/GetAllRoutes", function (routes) {
+        AddOptionsToTo(routes);
+    });
+}
+
+function initialPlaces(routes) {
+    for (let route of routes) {
+        let arrivalCity = route.arrivalTerminalCity
+        let departureCity = route.departureTerminalCity
+        if (toList.indexOf(arrivalCity) == -1) {
+            toList.push(arrivalCity)
+            $("#fromPlace").append($('<option>', {
+                value: arrivalCity,
+                text: arrivalCity
+            }));
+        } else if (toList.indexOf(departureCity) == -1) {
+            toList.push(departureCity)
+            $("#fromPlace").append($('<option>', {
+                value: departureCity,
+                text: departureCity
+            }));
+        }
+    }
+}
+
+function AddOptionsToTo(routes) {
+    fromList = []
+    $("#toPlace").empty()
+    let selectedCity = $("#fromPlace").children("option:selected").val();
+    for (let route of routes) {
+        if (route.departureTerminalCity == selectedCity) {
+            let arrivalCity = route.arrivalTerminalCity
+            if (fromList.indexOf(arrivalCity) == -1) {
+                fromList.push(arrivalCity)
+                $("#toPlace").append($('<option>', {
+                    value: arrivalCity,
+                    text: arrivalCity
+                }));
+            }
+        }
+    }
 }
