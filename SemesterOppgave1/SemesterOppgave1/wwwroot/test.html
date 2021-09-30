@@ -4,9 +4,21 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/index.css" media="screen" />
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="js/kunde.js"></script>
+    <script src="js/routeDataLoader.js"></script>
 </head>
 <body>
-    
+    <div id="orderbox-params-when" class="orderbox-params-dropdown">
+        <label for="fromPlace">From</label>
+        <select id="fromPlace" name="date">
+            <option value="" disabled selected hidden>From...</option>
+
+        </select>
+    </div>
+    <div id="orderbox-params-to" class="orderbox-params-dropdown">
+        <label for="toPlace">To</label>
+        <select id="toPlace" name="to">
+            <option value="" disabled selected hidden>Select your from destination first...</option>
+        </select>
+    </div>
 </body>
 </html>

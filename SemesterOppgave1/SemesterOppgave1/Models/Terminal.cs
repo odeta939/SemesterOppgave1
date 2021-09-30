@@ -15,7 +15,7 @@ namespace SemesterOppgave1.Models
         public string Street { get; set; }
         [RegularExpression(@"^[0-9a-zA-ZøæåØÆÅ. \-]{2,30}$")]
         public string City { get; set; }
-        [RegularExpression(@"^([0-9]{4})|([1-9]{1}[0-9]{4})|([1-9]{3} [1-9]{2})$")]
+        [RegularExpression(@"^([0-9]{4})|([1-9]{1}[0-9]{4})|([1-9]{3} [0-9]{2})$")]
         public string ZipCode { get; set; }
     }
 }
