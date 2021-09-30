@@ -6,12 +6,8 @@
 
 
 $(function () {
-
     getDepartureDates()
-   
     let myCalendar = new TavoCalendar('#my-calendar', options)
-   
-    
 });
 
 function getDepartureDates() {
@@ -41,6 +37,7 @@ function available(dates) {
     console.log( dates)
     $.each(dates, function (index, value) {
         options.highlight.push(value)
-    
     });
 }
+
+//filter out the routes!!!
