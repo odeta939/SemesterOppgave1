@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "fullcalendar": "^5.9.0",
+    "fullcalendar-scheduler": "^5.9.0"
+  }
+}
