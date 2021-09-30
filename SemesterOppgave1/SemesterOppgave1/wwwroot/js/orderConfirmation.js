@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿    $(document).ready(function () {
     $("#buyTicket").click(function () {
         $("#popUp").css("display", "block");
     });

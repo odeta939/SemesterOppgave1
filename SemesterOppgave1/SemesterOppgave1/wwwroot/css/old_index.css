@@ -1,0 +1,152 @@
+body{
+    margin:0;
+}
+
+
+nav {
+    height: 100px;
+    background-color: #395461;
+    margin: 0px;
+}
+.nav-logo{
+    height: inherit;
+    width: 150px;
+    background-color: white;
+    display: flex;
+
+}
+
+nav p {
+    color: white;
+    margin: 0;
+    display: flex;
+}
+
+/*Ordering*/
+
+#image {
+    position: relative;
+    height:fit-content;
+}
+
+#orderingPicture {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+#content {
+    position: relative;
+    left: 20%;
+    right: 20%;
+    width: 60%;
+
+    margin-top:-100px; /* 1/3 of picture since image is 400px*/
+}
+
+#ordering {
+    width: 100%;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: white;
+}
+
+#ordering h3 {
+    margin: 10px 0 10px 0;
+}
+
+
+    #ordering #fromTo {
+        width: 30%;
+        margin: 20px 50px 20px 50px;
+        text-align: center;
+        background-color: rgb(70,130,180, 1);
+        border-radius: 5px;
+        padding: 10px 25px 10px 25px;
+        display: inline-block;
+    }
+   
+        #ordering div label {
+            float: left;
+            width: 20%;
+            padding-right: 20px;
+            max-width: 50px;
+            text-align: right;
+            color: black;
+        }
+
+        #ordering div select {
+            float: right;
+            width: 70%;
+            max-width: 300px;
+        }
+
+    #ordering #order {
+        width: 30%;
+        margin: 20px 50px 20px 50px;
+        text-align: center;
+        background-color: rgb(70,130,180, 1);
+        border-radius: 5px;
+        padding: 10px 25px 10px 25px;
+        display: inline-block;
+    }
+
+        #ordering div button {
+            float: left;
+            position: relative;
+            left: 25%;
+            width: 50%;
+            background-color: #d3d3d3;
+            border: 0px;
+            border-radius: 5px;
+            padding: 10px;
+        }
+            #ordering div button:hover,
+            #ordering div button:focus {
+                cursor: pointer;
+            }
+
+
+
+/*Based on: https://www.w3schools.com/howto/howto_css_modals.asp*/
+/*PopUP*/
+#popUp { /*Background of the popup*/
+    display: none; /* Not showing by default */
+    position: fixed;
+    z-index: 1; 
+    padding-top: 100px;
+    left: auto;
+    right: auto;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.6); /* dark background with 0.6 opacity, 
+        opacity is not possible to use here since child will inherit the same opacity */
+}
+
+/* Modal Content */
+#popUp-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #d3d3d3;
+    border-radius: 10px;
+    width: 80%;
+}
+
+/* The Close Button */
+#popUp-content-close {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    #popUp-content-close:hover,
+    #popUp-content-close:focus {
+        color: #d3d3d3;
+        text-decoration: none;
+        cursor: pointer;
+    }
