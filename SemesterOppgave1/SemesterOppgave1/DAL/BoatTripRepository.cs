@@ -392,8 +392,9 @@ namespace SemesterOppgave1.DAL
                 await _db.SaveChangesAsync();
                 return true;
             }
-            catch
+            catch (Exception e)
             {
+                _log.LogInformation(e.Message);
                 return false;
             }
         }
