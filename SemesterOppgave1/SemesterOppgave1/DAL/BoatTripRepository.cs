@@ -231,6 +231,30 @@ namespace SemesterOppgave1.DAL
             }
         }
 
+        //Terminal methods:
+
+        public async Task<List<Terminal>> GetAllTerminals()
+        {
+            try
+            {
+                List<Terminal> AllTerminals = await _db.Terminals.Select(t => new Terminal
+                {
+                    Id = t.Id,
+                    TerminalName = t.TerminalName,
+                    Street = t.Street,
+                    City = t.TerminalAddress.City,
+                    ZipCode = t.TerminalAddress.ZipCode
+
+                }).ToListAsync();
+                return AllTerminals;
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
         //Route methods:
         public async Task<List<Route>> GetAllRoutes()
         {

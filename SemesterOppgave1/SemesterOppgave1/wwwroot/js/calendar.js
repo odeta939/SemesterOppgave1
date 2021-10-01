@@ -7,6 +7,7 @@
 
 $(function () {
     getDepartureDates()
+    getTerminals()
     let myCalendar = new TavoCalendar('#my-calendar', options)
 });
 
@@ -16,6 +17,7 @@ function getDepartureDates() {
     //get all routes
     $.get("order/GetAllRoutes", function (routes) {
         //get departure time for each route
+        console.log(routes)
         $.each(routes, function (index, value) {
             //add the time to array
             
@@ -25,6 +27,19 @@ function getDepartureDates() {
         available(departureTimes)
     });
     return departureTimes
+}
+
+function getTerminals() {
+    let departure = []
+    //get all terminals
+    $.get("order/getAllTerminals", function (terminals) {
+        console.log(terminals)
+       /* $.each(terminals, function (index, value) {
+            departure.push(value)
+        });*/
+    });
+
+
 }
 
 var options = {

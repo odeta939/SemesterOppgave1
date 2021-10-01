@@ -10,7 +10,7 @@ namespace SemesterOppgave1.Models
     {
         public int Id { get; set; }
         [RegularExpression(@"^[a-zA-ZøæåØÆÅ. \-]{2,20}$")]
-        public string Name { get; set; }
+        public string TerminalName { get; set; }
         [RegularExpression(@"^[0-9a-zA-ZøæåØÆÅ. \-]{2,50}$")]
         public string Street { get; set; }
         [RegularExpression(@"^[0-9a-zA-ZøæåØÆÅ. \-]{2,30}$")]
