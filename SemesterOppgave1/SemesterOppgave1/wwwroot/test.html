@@ -10,15 +10,18 @@
     <div id="orderbox-params-when" class="orderbox-params-dropdown">
         <label for="fromPlace">From</label>
         <select id="fromPlace" name="date">
-            <option value="" disabled selected hidden>From...</option>
+            <option value="noPlace" disabled selected hidden>From...</option>
 
         </select>
     </div>
     <div id="orderbox-params-to" class="orderbox-params-dropdown">
         <label for="toPlace">To</label>
         <select id="toPlace" name="to">
-            <option value="" disabled selected hidden>Select your from destination first...</option>
+            <option value="noPlace" disabled selected hidden>Select your from destination first...</option>
         </select>
+    </div>
+    <div>
+        <button onclick="orderTickets()">Order tickets</button>
     </div>
 </body>
 </html>

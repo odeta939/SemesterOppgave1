@@ -58,3 +58,20 @@ function AddOptionsToTo(routes) {
         }
     }
 }
+
+//Adding departure and arrival place to localstorage to retrieve them in another file!
+function orderTickets() {
+    console.log($("#fromPlace").val());
+    console.log($("#toPlace").val());
+    
+    if (($("#toPlace").val() === null) || ($("#fromPlace").val() === null)) {
+        alert("Select both a departure city and a destination!");
+    } else {
+        let departurePlace = $("#fromPlace").children("option:selected").text();
+        let arrivalPlace = $("#toPlace").children("option:selected").text();
+        localStorage.setItem("departure", departurePlace);
+        localStorage.setItem("arrival", arrivalPlace);
+        window.location.href = "order.html";
+    }
+    
+}
