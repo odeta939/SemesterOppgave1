@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/index.css" media="screen" />
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="js/order.js"></script>
+    <title>Holbergs Båte - Database</title>
+</head>
+<body>
+<nav>
+
+</nav>
+<main>
+    <h1>Order tickets!</h1>
+    <div id="content">
+        <p id="tripInfo"></p>
+        <form onsubmit="createOrder()">
+            <label for="departureTime">Departure time:</label>
+            <input type="date" name="departureTime" id="departureTime" />
+            <label for="arrivalTime">Arrival time:</label>
+            <input type="date" name="arrivalTime" id="arrivalTime" />
+            <label for="firstName">Enter first name:</label>
+            <input type="text" name="firstName" id="firstName" placeholder="First name" />
+            <label for="lastName">Enter last name:</label>
+            <input type="text" name="lastName" id="lastName" placeholder="Last name" />
+            <label for="phoneNr">Enter phone number:</label>
+            <input type="text" name="phoneNr" id="phoneNr" placeholder="Phone number" />
+            <label for="email">Enter email:</label>
+            <input type="text" name="email" id="email" placeholder="Email" />
+            <label for="streetName">Enter street name:</label>
+            <input type="text" name="streetName" id="streetName" placeholder="Street name" />
+            <label for="zipCode">Enter zip code:</label>
+            <input type="text" name="zipCode" id="zipCode" placeholder="Zip code" />
+            <label for="cityName">Enter city:</label>
+            <input type="text" name="cityName" id="cityName" placeholder="City name" />
+            <label for="ticketAmount">Amount of tickets:</label>
+            <input type="number" name="ticketAmount" id="ticketAmount" placeholder="Ticket amount" />
+            <input type="submit" value="Order ticket" />
+        </form>
+    </div>
+</main>
+<footer>
+
+</footer>
+<div></div>
+</body>
+</html>
