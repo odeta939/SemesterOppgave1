@@ -20,7 +20,7 @@ async function createOrder() {
     const order = {
         //Add the orders input fields here :D
     };
-    $.post("Order/SaveOrder", order, function {
+    $.post("Order/SaveOrder", order, function() {
         //If the post request returns an OK we do this:
         localStorage.removeItem("arrival");
         localStorage.removeItem("departure");
