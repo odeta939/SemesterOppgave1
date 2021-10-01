@@ -2,9 +2,6 @@ $(function () {
     setOrder();
 })
 
-GET_ORDERS = "";
-
-
 function setOrder() {
     if (localStorage.getItem("departure") && localStorage.getItem("arrival")) {
         let departurePlace = localStorage.getItem("departure");
