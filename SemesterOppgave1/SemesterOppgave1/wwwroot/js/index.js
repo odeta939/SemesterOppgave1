@@ -1,13 +1,13 @@
 $(function () {
-  supportWarning();
+  const proceed = supportWarning();
+  if (proceed) {
+    setCalendarBtn();
+  }
 });
 
 function supportWarning() {
   const supportsCustomElementsv0 = "registerElement" in document;
   const supportsCustomElementsv1 = "customElements" in window;
-
-  console.log(supportsCustomElementsv1);
-  console.log(supportsCustomElementsv0);
 
   if (!supportsCustomElementsv0 && !supportsCustomElementsv1) {
     const main = document.getElementsByTagName("body")[0];
@@ -33,5 +33,19 @@ function supportWarning() {
     p.innerHTML =
       "This website uses Web Components, which your browser does not support. <br> Are you using <strong>Safari</strong> or <strong>Internet Explorer</strong>? <br> Try using Firefox or a Chromium-based browser instead.";
     div.appendChild(p);
+
+    return false;
   }
+
+  return true;
+}
+
+function setCalendarBtn() {
+  const btn = $("#date")[0];
+  btn.addEventListener("click", (e) => {
+    const container = $("#orderbox-extend")[0];
+    container.innerHTML = "";
+    const calendar = document.createElement("expand-calendar");
+    container.appendChild(calendar);
+  });
 }
