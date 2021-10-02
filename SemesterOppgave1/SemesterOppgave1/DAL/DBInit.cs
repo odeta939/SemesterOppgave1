@@ -99,7 +99,7 @@ namespace SemesterOppgave1.DAL
                     string arrivalDateString = arrivalDate.ToString("dd-MM-yyyy");
 
                     //The Boats go back and forward and it takes one day to get there. On even days they go one way on the uneven days the go back.
-                    if(dateToday.Day % 2 == 0)
+                    if(departureDate.Day % 2 == 0)
                     {
                         routeList.Add(new Routes { Boat = boat1, DeparturePlace = Terminal1, ArrivalPlace = Terminal2, DepartureTime = departureDateString, ArrivalTime = arrivalDateString });
                         routeList.Add(new Routes { Boat = boat2, DeparturePlace = Terminal1, ArrivalPlace = Terminal4, DepartureTime = departureDateString, ArrivalTime = arrivalDateString });

@@ -27,7 +27,7 @@ namespace SemesterOppgave1.Models
         public string ArrivalTerminalName { get; set; }
         [RegularExpression(@"^[a-zA-ZøæåØÆÅöÖäÄ. \-]{2,20}$")]
         public string ArrivalTerminalCity { get; set; }
-        [RegularExpression(@"^([0-9]{4})|([1-9]{1}[0-9]{4})|([1-9]{3} [1-9]{2})$")]
+        [RegularExpression(@"^([0-9]{4})|([1-9]{1}[0-9]{4})|([1-9]{3} [0-9]{2})$")]
         public string ArrivalTerminalZipCode { get; set; }
         [RegularExpression(@"^[a-zA-ZøæåØÆÅöÖäÄ. \-]{2,30}$")]
         public string ArrivalTerminalStreet { get; set; }
@@ -37,7 +37,7 @@ namespace SemesterOppgave1.Models
         public string DepartureTerminalName { get; set; }
         [RegularExpression(@"^[a-zA-ZøæåØÆÅöÖäÄ. \-]{2,20}$")]
         public string DepartureTerminalCity { get; set; }
-        [RegularExpression(@"^([0-9]{4})|([1-9]{1}[0-9]{4})|([1-9]{3} [1-9]{2})$")]
+        [RegularExpression(@"^([0-9]{4})|([1-9]{1}[0-9]{4})|([1-9]{3} [0-9]{2})$")]
         public string DepartureTerminalZipCode { get; set; }
         [RegularExpression(@"^[a-zA-ZøæåØÆÅöÖäÄ. \-]{2,30}$")]
         public string DepartureTerminalStreet { get; set; }

@@ -134,6 +134,14 @@ namespace SemesterOppgave1.Controllers
             }
         }
 
+        //Terminal methods:
+        public async Task<ActionResult> GetAllTerminals()
+        {
+            List<Terminal> allTerminals = await _db.GetAllTerminals();
+            return Ok(allTerminals);
+        }
+
+
         //Route methods:
         public async Task<ActionResult> GetAllRoutes()
         {
@@ -189,6 +197,8 @@ namespace SemesterOppgave1.Controllers
             }
         }
 
+
+      
         //Something random:
         public string Index()
         {

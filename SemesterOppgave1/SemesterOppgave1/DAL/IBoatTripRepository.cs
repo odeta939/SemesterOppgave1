@@ -26,5 +26,7 @@ namespace SemesterOppgave1.DAL
         Task<List<Order>> GetAllOrders();
         Task<Order> GetOneOrder(int id);
         Task<bool> SaveOrder(Order order);
+
+        Task<List<Terminal>> GetAllTerminals();
     }
 }

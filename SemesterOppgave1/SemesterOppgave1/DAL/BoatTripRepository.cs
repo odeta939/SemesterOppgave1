@@ -8,7 +8,6 @@ using SemesterOppgave1.Models;
 
 
 
-
 namespace SemesterOppgave1.DAL
 {
     public class BoatTripRepository : IBoatTripRepository
@@ -229,6 +228,30 @@ namespace SemesterOppgave1.DAL
             {
                 return false;
             }
+        }
+
+        //Terminal methods:
+
+        public async Task<List<Terminal>> GetAllTerminals()
+        {
+            try
+            {
+                List<Terminal> AllTerminals = await _db.Terminals.Select(t => new Terminal
+                {
+                    Id = t.Id,
+                    TerminalName = t.TerminalName,
+                    Street = t.Street,
+                    City = t.TerminalAddress.City,
+                    ZipCode = t.TerminalAddress.ZipCode
+
+                }).ToListAsync();
+                return AllTerminals;
+            }
+            catch
+            {
+                return null;
+            }
+
         }
 
         //Route methods:
