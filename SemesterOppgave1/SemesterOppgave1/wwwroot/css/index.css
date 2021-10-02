@@ -1,108 +1,88 @@
-:root{
-    --black: rgb(10, 12, 16);
-    --blue-700: rgb(41, 50, 65);
-    --blue-700-v: 41, 50, 65;
-    --blue-500: rgb(61, 90, 128);
-    --blue-300: rgb(152, 193, 217);
-    --blue-100: rgb(224, 251, 252);
-    --white: rgb(246, 254, 254);
-    --accent-500: rgb(238, 108, 77);
-    
-    --borderradius-100: 7px;
-    
-    --shadow-700: 2px 2px 10px rgba(var(--blue-700-v), .5);
-
-    --padding-050: 0.5rem;
-    --padding-100: 1rem;
-    --padding-200: 2rem;
-    
-    --footer-height: 5rem;
-}
-
-html,
-body {
-    margin:0;
-    padding:0;
-    height:100%;
-    font-family: Roboto, Arial, sans-serif;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-}
-
-#nav {
-    width: 100%;
-    background: var(--blue-700);
-}
-
-.nav-logo{
-    padding: var(--padding-050) var(--padding-200) ;
-}
-
-.nav-logo-img {
-    height: clamp(120px, 8rem, 10vh);;
-}
-
 #hero {
-    position: relative;
-    height:fit-content;
+  position: relative;
+  height: fit-content;
 }
 
 .hero-img {
-    inset: 0;
-    margin: auto;
-    width: 100%;
-    height: 33vh;
-    object-fit: cover;
-    overflow: hidden;
+  inset: 0;
+  margin: auto;
+  width: 100%;
+  height: 33vh;
+  object-fit: cover;
+  overflow: hidden;
 }
 
 #orderbox {
-    width: clamp(20rem, 1100px , 90%);
-    margin: auto;
-    transform: translate(0, -40%);
-    border-radius: var(--borderradius-100);
-    box-shadow: var(--shadow-700);
-    background-color: white;
-    padding: var(--padding-200);
+  margin: auto;
+  transform: translate(0, -40%);
+  border-radius: var(--borderradius-100);
+  box-shadow: var(--shadow-700);
+  background-color: white;
+  padding: var(--padding-200);
 }
 
 #orderbox-params {
-    display: grid;
-    grid-template-columns: 2fr 2fr 2fr 1fr;
-    width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 1fr;
+  width: 100%;
 }
 
 #orderbox-params > * {
-    margin-right: var(--padding-100);
-}
-
-#orderbox-params > * + * {
-    margin-left: var(--padding-100);
+  margin-right: var(--padding-200);
 }
 
 .orderbox-params-dropdown label {
-    text-align: start;
-    text-transform: uppercase;
-    color: var(--blue-500);
+  display: block;
+  text-align: start;
+  text-transform: uppercase;
+  color: var(--blue-500);
+  font-family: var(--font-accent);
+  font-weight: 500;
+  font-size: var(--font-size-300);
 }
 
-.orderbox-params-dropdown select{
-    width: 90%;
-    width: -moz-available;
-    width: available;
+.orderbox-params-dropdown select {
+  width: 100%;
+  background: transparent;
+  border: unset;
+  padding: var(--padding-050) 0;
+  font-size: var(--font-size-500);
+  margin-left: -0.25rem;
+  border-bottom: var(--font-size-200) solid rgba(var(--blue-300-v), 0.15);
 }
 
-#footer {
-    margin-top: auto;
-    /*width: 100%;*/
-    background: var(--blue-700);
-    color: var(--blue-100);
-    text-align: center;
+#travelinfo {
+  display: flex;
+  max-width: 100%;
+  gap: var(--padding-400);
+  margin-bottom: var(--padding-200);
 }
 
-#footer > p {
-    padding: 1rem;
+.travelinfo-box {
+  flex-basis: 100%;
+  text-align: center;
+}
+
+.travelinfo-img {
+  width: var(--img-size-500);
+}
+
+.travelinfo-box {
+  margin: var(--padding-200) var(--padding-400);
+  padding: var(--padding-200) var(--padding-200) var(--padding-100);
+  border-radius: var(--borderradius-100);
+}
+
+.travelinfo-txt {
+  font-size: var(--font-size-400);
+}
+
+.travelinfo-title {
+  font-size: var(--font-size-600);
+}
+
+@supports (gap: var(--padding-400)) {
+  .travelinfo-box {
+    margin: unset var(--padding-400);
+  }
 }

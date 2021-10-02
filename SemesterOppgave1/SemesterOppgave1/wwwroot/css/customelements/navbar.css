@@ -1,0 +1,12 @@
+#nav {
+  width: 100%;
+  background: var(--blue-700);
+}
+
+.nav-logo {
+  padding: var(--padding-050) var(--padding-200);
+}
+
+.nav-logo-img {
+  height: clamp(120px, 8rem, 10vh);
+}
