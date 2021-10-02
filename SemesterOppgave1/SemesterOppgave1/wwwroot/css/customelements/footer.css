@@ -1,3 +1,8 @@
+custom-footer {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
 #footer {
   background: var(--blue-700);
   margin-top: auto;
@@ -8,4 +13,5 @@
 
 #footer > p {
   padding: calc(var(--padding-100) + var(--padding-050));
+  margin: 0;
 }
