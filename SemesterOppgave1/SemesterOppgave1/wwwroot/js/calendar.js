@@ -12,6 +12,12 @@ $(function () {
 });
 
 function getDepartureDates() {
+    $.get("order/GetAllCustomers", function (customers) {
+        //get departure time for each route
+        console.log(customers)
+    });
+
+
     //save departure times
     let departureTimes = []
     //get all routes

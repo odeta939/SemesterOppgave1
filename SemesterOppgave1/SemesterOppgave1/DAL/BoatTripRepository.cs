@@ -8,7 +8,6 @@ using SemesterOppgave1.Models;
 
 
 
-
 namespace SemesterOppgave1.DAL
 {
     public class BoatTripRepository : IBoatTripRepository
