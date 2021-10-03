@@ -35,7 +35,7 @@ namespace SemesterOppgave1.DAL
 
 
                 //Customers
-                var customer1 = new Customers { Firstname = "Eivind", Lastname = "Ekeberg", Street = "Osloveien 12", Phonenr = "11111111", Email = "eivind-ekeberg@gmail.com", Postplace = postplace1 };
+                var customer1 = new Customers { Firstname = "Eivind", Lastname = "Ekeberg", Street = "Osloveien 12", Phonenr = "21111111", Email = "eivind-ekeberg@gmail.com", Postplace = postplace1 };
                 var customer2 = new Customers { Firstname = "Lina", Lastname = "Hekkestad", Street = "Trondheimvei 12", Phonenr = "22222222", Email = "lina-hekkestad@gmail.com", Postplace = postplace2 };
                 var customer3 = new Customers { Firstname = "Håkon", Lastname = "Håkonsen", Street = "Kristiandsandgata 12", Phonenr = "33333333", Email = "haakon-haakonsen@gmail.com", Postplace = postplace3 };
                 var customer4 = new Customers { Firstname = "Vebjørn", Lastname = "Olsen", Street = "Aalesundgata 12", Phonenr = "44444444", Email = "v-olsen@gmail.com", Postplace = postplace4 };
@@ -79,8 +79,8 @@ namespace SemesterOppgave1.DAL
                 //Terminal
                 var Terminal1 = new Terminals { TerminalName = "Oslo", Street = "Schweigaards gate 1", TerminalAddress = postplaceOslo };
                 var Terminal2 = new Terminals { TerminalName = "Kiel", Street = "Kiel kai", TerminalAddress = postplaceKiel };
-                var Terminal3 = new Terminals { TerminalName = "Göteborg", Street = "Danmarksterminalen", TerminalAddress = postplaceGot };
-                var Terminal4 = new Terminals { TerminalName = "København", Street = "Dampfærgevej 30", TerminalAddress = postplaceKob };
+                var Terminal3 = new Terminals { TerminalName = "Goteborg", Street = "Danmarksterminalen", TerminalAddress = postplaceGot };
+                var Terminal4 = new Terminals { TerminalName = "Kobenhavn", Street = "Dampfergevej 30", TerminalAddress = postplaceKob };
 
                 context.Terminals.Add(Terminal1);
                 context.Terminals.Add(Terminal2);

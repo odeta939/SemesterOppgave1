@@ -28,7 +28,7 @@ function createOrder() {
         arrivalTerminalStreet = "Schweigaards gate 1";
         arrivalTerminalZipCode = "1111";
     } else if (localStorage.getItem("arrival") === "Kobenhavn") {
-        arrivalTerminalStreet = "Dampfærgevej 30";
+        arrivalTerminalStreet = "Dampfergevej 30";
         arrivalTerminalZipCode = "2100";
     } else if (localStorage.getItem("arrival") === "Goteborg") {
         arrivalTerminalStreet = "Danmarksterminalen";
@@ -42,7 +42,7 @@ function createOrder() {
         departureTerminalStreet = "Schweigaards gate 1";
         departureTerminalZipCode = "1111";
     } else if (localStorage.getItem("departure") === "Kobenhavn") {
-        departureTerminalStreet = "Dampfærgevej 30";
+        departureTerminalStreet = "Dampfergevej 30";
         departureTerminalZipCode = "2100";
     } else if (localStorage.getItem("departure") === "Goteborg") {
         departureTerminalStreet = "Danmarksterminalen";

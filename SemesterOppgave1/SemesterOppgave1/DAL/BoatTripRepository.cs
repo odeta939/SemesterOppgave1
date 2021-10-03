@@ -496,7 +496,12 @@ namespace SemesterOppgave1.DAL
                 newOrder.Route = route;
 
                 _db.Orders.Add(newOrder);
-                //_db.Customers.Add(customer);
+                var checkCustomer = await _db.Customers.FirstOrDefaultAsync(c => c.Email == customer.Email);
+                if(checkCustomer == null)
+                {
+                    _db.Customers.Add(customer);
+                }
+                
                 await _db.SaveChangesAsync();
                 return true;
             }
