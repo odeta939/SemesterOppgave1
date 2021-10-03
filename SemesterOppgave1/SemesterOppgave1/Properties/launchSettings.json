@@ -19,7 +19,7 @@
     "SemesterOppgave1": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "calendar.html",
+      "launchUrl": "index.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
