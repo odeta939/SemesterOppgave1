@@ -9,38 +9,60 @@ namespace SemesterOppgave1.Models
     public class Order
     {
         public int Id { get; set; }
-        [RegularExpression(@"^([1 - 9]{1})(\d{1})$")]
+        //[RegularExpression(@"^([1 - 9]{1})(\d{1})$")]
         public int TicketAmount { get; set; }
-        [RegularExpression(@"^([1 - 9]{1})(\d{1,6})$")]
+        //[RegularExpression(@"^([1 - 9]{1})(\d{1,6})$")]
         public int TotalPrice { get; set; }
 
         // route
-        [RegularExpression(@"^(0[1-9]|[1-2][0-9]|3[0-1])[\.\-\/](0[1-9]|1[0-2])[\.\-\/](20)[0-9]{2}$")]
+        //[RegularExpression(@"^(0[1-9]|[1-2][0-9]|3[0-1])[\.\-\/](0[1-9]|1[0-2])[\.\-\/](20)[0-9]{2}$")]
         public string DepartureTime { get; set; }
-        [RegularExpression(@"^(0[1-9]|[1-2][0-9]|3[0-1])[\.\-\/](0[1-9]|1[0-2])[\.\-\/](20)[0-9]{2}$")]
+        //[RegularExpression(@"^(0[1-9]|[1-2][0-9]|3[0-1])[\.\-\/](0[1-9]|1[0-2])[\.\-\/](20)[0-9]{2}$")]
         public string ArrivalTime { get; set; }
-        [RegularExpression(@"^[a-zA-ZøæåØÆÅ. \-]{2,20}$")]
+
+        //arrivalterminal
+        //[RegularExpression(@"^[a-zA-ZøæåØÆÅöÖäÄ. \-]{2,20}$")]
+        public string ArrivalTerminalName { get; set; }
+        //[RegularExpression(@"^[a-zA-ZøæåØÆÅöÖäÄ. \-]{2,20}$")]
+        public string ArrivalTerminalCity { get; set; }
+        //[RegularExpression(@"^([0-9]{4})|([1-9]{1}[0-9]{4})|([1-9]{3} [0-9]{2})$")]
+        public string ArrivalTerminalZipCode { get; set; }
+        //[RegularExpression(@"^[a-zA-ZøæåØÆÅöÖäÄ. \-]{2,30}$")]
+        public string ArrivalTerminalStreet { get; set; }
+
+        //departureterminal
+        //[RegularExpression(@"^[a-zA-ZøæåØÆÅöÖäÄ. \-]{2,20}$")]
+        public string DepartureTerminalName { get; set; }
+        //[RegularExpression(@"^[a-zA-ZøæåØÆÅöÖäÄ. \-]{2,20}$")]
+        public string DepartureTerminalCity { get; set; }
+        //[RegularExpression(@"^([0-9]{4})|([1-9]{1}[0-9]{4})|([1-9]{3} [0-9]{2})$")]
+        public string DepartureTerminalZipCode { get; set; }
+        //[RegularExpression(@"^[a-zA-ZøæåØÆÅöÖäÄ. \-]{2,30}$")]
+        public string DepartureTerminalStreet { get; set; }
+
+        //boat
+        //[RegularExpression(@"^[a-zA-ZøæåØÆÅ. \-]{2,20}$")]
         public string  BoatName { get; set; }
-        [RegularExpression(@"^[a-zA-ZøæåØÆÅ. \-]{2,20}$")]
-        public string  DeparturePlace { get; set; }
-        [RegularExpression(@"^[a-zA-ZøæåØÆÅ. \-]{2,20}$")]
-        public string  ArrivalPlace { get; set; }
+        //[RegularExpression(@"^([1-9]{1}[0-9]{1,3})$")]
+        public int Capacity { get; set; }
+        //[RegularExpression(@"^([1-9]{1}[0-9]{1,3})$")]
+        public int TicketPrice { get; set; }
 
         //customer
-        [RegularExpression(@"^[a-zA-ZøæåØÆÅ. \-]{2,20}$")]
+        //[RegularExpression(@"^[a-zA-ZøæåØÆÅ. \-]{2,20}$")]
         public string Firstname { get; set; }
-        [RegularExpression(@"^[a-zA-ZøæåØÆÅ. \-]{2,30}$")]
+        //[RegularExpression(@"^[a-zA-ZøæåØÆÅ. \-]{2,30}$")]
         public string Lastname { get; set; }
-        [RegularExpression(@"^[0-9a-zA-ZøæåØÆÅ. \-]{2,50}$")]
-        public string Street { get; set; }
         //[2-9] fordi telefonnummer som starter på 0 eller 1 er ugyldige i Norge.
-        [RegularExpression(@"^(\+47)?[2-9]\[0-9]{7}$")]
+        //[RegularExpression(@"^(\+47)?[2-9]\[0-9]{7}$")]
         public string Phonenr { get; set; }
-        [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)")]
+        //[RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)")]
         public string Email { get; set; }
-        [RegularExpression(@"^([0-9]{4})|([1-9]{1}[0-9]{4})|([1-9]{3} [0-9]{2})$")]
+        //[RegularExpression(@"^[0-9a-zA-ZøæåØÆÅ. \-]{2,50}$")]
+        public string Street { get; set; }
+        //[RegularExpression(@"^([0-9]{4})|([1-9]{1}[0-9]{4})|([1-9]{3} [0-9]{2})$")]
         public string ZipCode { get; set; }
-        [RegularExpression(@"^[0-9a-zA-ZøæåØÆÅ. \-]{2,30}$")]
+        //[RegularExpression(@"^[0-9a-zA-ZøæåØÆÅ. \-]{2,30}$")]
         public string City { get; set; }
     }
 }

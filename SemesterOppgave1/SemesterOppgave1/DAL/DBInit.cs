@@ -68,8 +68,8 @@ namespace SemesterOppgave1.DAL
                 //Postplaces Terminals
                 var postplaceOslo = new PostPlaces { ZipCode = "1111", City = "Oslo" };
                 var postplaceKiel = new PostPlaces { ZipCode = "24143", City = "Kiel-Gaarden" };
-                var postplaceGot = new PostPlaces { ZipCode = "405 19", City = "Göteborg" };
-                var postplaceKob = new PostPlaces { ZipCode = "2100", City = "København" };
+                var postplaceGot = new PostPlaces { ZipCode = "405 19", City = "Goteborg" };
+                var postplaceKob = new PostPlaces { ZipCode = "2100", City = "Kobenhavn" };
 
                 context.PostPlaces.Add(postplaceOslo);
                 context.PostPlaces.Add(postplaceKiel);

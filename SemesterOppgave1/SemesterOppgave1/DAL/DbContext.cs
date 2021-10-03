@@ -26,8 +26,6 @@ namespace SemesterOppgave1.DAL
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string ZipCode { get; set; }
         public string City { get; set; }
-
-        // denne listen ikke nødvendig med mindre man skal finne kundene på et gitt postnr (altså gå inn via Poststeder-collection)
     }
     public class Routes
     {

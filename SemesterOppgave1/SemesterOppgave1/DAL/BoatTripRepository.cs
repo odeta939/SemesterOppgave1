@@ -90,6 +90,7 @@ namespace SemesterOppgave1.DAL
                         ZipCode = customer.ZipCode,
                         City = customer.City,
                     };
+                    newCustomer.Postplace = newPostPlace;
                 }
                 else
                 {
@@ -136,8 +137,9 @@ namespace SemesterOppgave1.DAL
                         var newPostPlace = new PostPlaces
                         {
                             ZipCode = changedCustomer.ZipCode,
-                            City = changedCustomer.City,
+                            City = changedCustomer.City
                         };
+                        customer.Postplace = newPostPlace;
                     }
                     else
                     {
@@ -148,6 +150,7 @@ namespace SemesterOppgave1.DAL
                 customer.Lastname = changedCustomer.Lastname;
                 customer.Email = changedCustomer.Email;
                 customer.Phonenr = changedCustomer.Phonenr;
+                customer.Street = changedCustomer.Street;
 
                 await _db.SaveChangesAsync();
                 return true;
@@ -327,8 +330,16 @@ namespace SemesterOppgave1.DAL
                     DepartureTime = o.Route.DepartureTime,
                     ArrivalTime = o.Route.ArrivalTime,
                     BoatName = o.Route.Boat.BoatName,
-                    DeparturePlace = o.Route.DeparturePlace.TerminalName,
-                    ArrivalPlace = o.Route.ArrivalPlace.TerminalName,
+                    Capacity = o.Route.Boat.Capacity,
+                    TicketPrice = o.Route.Boat.TicketPrice,
+                    ArrivalTerminalName = o.Route.ArrivalPlace.TerminalName,
+                    ArrivalTerminalStreet = o.Route.ArrivalPlace.Street,
+                    ArrivalTerminalCity = o.Route.ArrivalPlace.TerminalAddress.City,
+                    ArrivalTerminalZipCode = o.Route.ArrivalPlace.TerminalAddress.ZipCode,
+                    DepartureTerminalName = o.Route.DeparturePlace.TerminalName,
+                    DepartureTerminalStreet = o.Route.DeparturePlace.Street,
+                    DepartureTerminalZipCode = o.Route.DeparturePlace.TerminalAddress.ZipCode,
+                    DepartureTerminalCity = o.Route.DeparturePlace.TerminalAddress.City,
                     Firstname = o.Customer.Firstname,
                     Lastname = o.Customer.Lastname,
                     Street = o.Customer.Street,
@@ -359,8 +370,16 @@ namespace SemesterOppgave1.DAL
                     DepartureTime = order.Route.DepartureTime,
                     ArrivalTime = order.Route.ArrivalTime,
                     BoatName = order.Route.Boat.BoatName,
-                    DeparturePlace = order.Route.DeparturePlace.TerminalName,
-                    ArrivalPlace = order.Route.ArrivalPlace.TerminalName,
+                    Capacity = order.Route.Boat.Capacity,
+                    TicketPrice = order.Route.Boat.TicketPrice,
+                    ArrivalTerminalName = order.Route.ArrivalPlace.TerminalName,
+                    ArrivalTerminalStreet = order.Route.ArrivalPlace.Street,
+                    ArrivalTerminalCity = order.Route.ArrivalPlace.TerminalAddress.City,
+                    ArrivalTerminalZipCode = order.Route.ArrivalPlace.TerminalAddress.ZipCode,
+                    DepartureTerminalName = order.Route.DeparturePlace.TerminalName,
+                    DepartureTerminalStreet = order.Route.DeparturePlace.Street,
+                    DepartureTerminalZipCode = order.Route.DeparturePlace.TerminalAddress.ZipCode,
+                    DepartureTerminalCity = order.Route.DeparturePlace.TerminalAddress.City,
                     Firstname = order.Customer.Firstname,
                     Lastname = order.Customer.Lastname,
                     Street = order.Customer.Street,
@@ -393,8 +412,73 @@ namespace SemesterOppgave1.DAL
                     Phonenr = order.Phonenr,
                     Email = order.Email
                 };
-                customer.Postplace.City = order.City;
-                customer.Postplace.ZipCode = order.ZipCode;
+
+                var checkPostPlace = await _db.PostPlaces.FirstOrDefaultAsync(p => p.ZipCode == order.ZipCode);
+                //If the postplace doesnt already exist we create a new PostPlace
+                if (checkPostPlace == null)
+                {
+                    var newPostPlace = new PostPlaces
+                    {
+                        ZipCode = order.ZipCode,
+                        City = order.City
+                    };
+                    customer.Postplace = newPostPlace;
+                }
+                else
+                {
+                    customer.Postplace = checkPostPlace;
+                }
+
+                //The boat for the route
+                var boat = new Boats
+                {
+                    BoatName = order.BoatName,
+                    Capacity = Convert.ToInt32(order.Capacity),
+                    TicketPrice = Convert.ToInt32(order.TicketPrice)
+                };
+
+                //The terminals for the route
+                var departureTerminal = new Terminals
+                {
+                    TerminalName = order.DepartureTerminalName,
+                    Street = order.DepartureTerminalStreet,
+                };
+                var checkTerminalPlace = await _db.PostPlaces.FirstOrDefaultAsync(p => p.ZipCode == order.DepartureTerminalZipCode);
+                //If the postplace doesnt already exist, we create a new PostPlace
+                if(checkTerminalPlace == null)
+                {
+                    var newTerminalPlace = new PostPlaces
+                    {
+                        ZipCode = order.DepartureTerminalZipCode,
+                        City = order.DepartureTerminalCity
+                    };
+                    departureTerminal.TerminalAddress = newTerminalPlace;
+                }
+                else
+                {
+                    departureTerminal.TerminalAddress = checkTerminalPlace;
+                }
+
+                var arrivalTerminal = new Terminals
+                {
+                    TerminalName = order.ArrivalTerminalName,
+                    Street = order.ArrivalTerminalStreet
+                };
+                var checkTerminal2Place = await _db.PostPlaces.FirstOrDefaultAsync(p => p.ZipCode == order.ArrivalTerminalZipCode);
+                //If the postplace doesnt already exist, we create a new PostPlace
+                if (checkTerminal2Place == null)
+                {
+                    var newTerminalPlace2 = new PostPlaces
+                    {
+                        ZipCode = order.ArrivalTerminalZipCode,
+                        City = order.ArrivalTerminalCity
+                    };
+                    arrivalTerminal.TerminalAddress = newTerminalPlace2;
+                }
+                else
+                {
+                    arrivalTerminal.TerminalAddress = checkTerminal2Place;
+                }
 
                 //The route for the order
                 var route = new Routes
@@ -402,9 +486,9 @@ namespace SemesterOppgave1.DAL
                     DepartureTime = order.DepartureTime,
                     ArrivalTime = order.ArrivalTime
                 };
-                route.Boat.BoatName = order.BoatName;
-                route.DeparturePlace.TerminalName = order.DeparturePlace;
-                route.ArrivalPlace.TerminalName = order.ArrivalPlace;
+                route.Boat = boat;
+                route.DeparturePlace = departureTerminal;
+                route.ArrivalPlace = arrivalTerminal;
 
                 newOrder.TicketAmount = order.TicketAmount;
                 newOrder.TotalPrice = order.TotalPrice;
@@ -412,6 +496,7 @@ namespace SemesterOppgave1.DAL
                 newOrder.Route = route;
 
                 _db.Orders.Add(newOrder);
+                //_db.Customers.Add(customer);
                 await _db.SaveChangesAsync();
                 return true;
             }

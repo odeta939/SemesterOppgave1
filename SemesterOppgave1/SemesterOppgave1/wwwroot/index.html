@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="css/general.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/index.css" media="screen" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>
     <script type="text/javascript" src="js/customelements/navbar.js"></script>
     <script type="text/javascript" src="js/customelements/footer.js"></script>
     <script type="text/javascript" src="js/customelements/calendar.js"></script>
@@ -37,15 +37,13 @@
                     <div id="orderbox-params-from" class="orderbox-params-dropdown">
                         <label for="fromPlace">From</label>
                         <select id="fromPlace" name="from">
-                            <option>Oslo</option>
-                            <option>Kristiansand</option>
+                            <option value="noPlace" disabled selected hidden>From...</option>
                         </select>
                     </div>
                     <div id="orderbox-params-to" class="orderbox-params-dropdown">
                         <label for="toPlace">To</label>
                         <select id="toPlace" name="from">
-                            <option>Oslo</option>
-                            <option>Kristiansand</option>
+                            <option value="noPlace" disabled selected hidden>Select your from destination first...</option>
                         </select>
                     </div>
                     <div id="orderbox-params-when" class="orderbox-params-dropdown">
@@ -55,7 +53,7 @@
                             <option>Test2</option>
                         </select>
                     </div>
-                    <button id="buyTicket">
+                    <button id="buyTicket" onclick="orderTickets()">
                         Buy ticket
                     </button>
                 </div>
