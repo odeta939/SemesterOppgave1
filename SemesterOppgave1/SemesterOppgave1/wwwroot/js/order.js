@@ -2,10 +2,28 @@ let arrival = ""
 let departure = "";
 
 $(function () {
+    
+
     setOrder();
 })
 
+function validateAndOrder() {
+    var fistnameOK = validateFirstname($("#firstName").val());
+    var lastnameOK = validateLastname($("#lastName").val());
+    var phonenrOK = validatePhonenr($("#phoneNr").val());
+    var emailOK = validateEmail($("#email").val());
+    var streetOK = validateStreet($("#streetName").val());
+    var zipOK = validateZipcode($("#zipCode").val());
+    var cityOK = validateCity($("#cityName").val());
+
+    if (fistnameOK && lastnameOK && phonenrOK && emailOK &&
+        streetOK && zipOK && cityOK) {
+        createOrder();
+    }
+}
+
 function setOrder() {
+    //----- set the date in index too and bring it to the order page maybe? ----//
     if (localStorage.getItem("departure") && localStorage.getItem("arrival")) {
         let departurePlace = localStorage.getItem("departure");
         let arrivalPlace = localStorage.getItem("arrival");
@@ -17,14 +35,24 @@ function setOrder() {
 }
 //La til noen tilfeldige verdier i visse felt
 function createOrder() {
-    let arrivalTerminalStreet = "";
+    /*let arrivalTerminalStreet = "";
     let arrivalTerminalZipCode = "";
     let departureTerminalStreet = "";
     let departureTerminalZipCode = "";
     let capacity = 0;
-    let ticketPrice = 0;
+    let ticketPrice = 0;*/
 
+    let arrivalTerminalStreet;
+    let arrivalTerminalZipCode ;
+    let departureTerminalStreet;
+    let departureTerminalZipCode;
+    let capacity;
+    let ticketPrice;
+
+    //getting travel information from index.html through local storage
     if (localStorage.getItem("arrival") === "Oslo") {
+
+        //---- get the date from DB instead of hard coding it---//
         arrivalTerminalStreet = "Schweigaards gate 1";
         arrivalTerminalZipCode = "1111";
     } else if (localStorage.getItem("arrival") === "Kobenhavn") {
