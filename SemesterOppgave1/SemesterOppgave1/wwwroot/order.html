@@ -10,8 +10,8 @@
     <link rel="stylesheet" type="text/css" href="css/index.css" media="screen" />
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="js/customelements/navbar.js"></script>
-    <script type="text/javascript" src="js/customelements/footer.js"></script>
+    
+    <script src="js/validering.js"></script>
     <script src="js/order.js"></script>
     <title>Holbergs Båte - Database</title>
 </head>
@@ -22,8 +22,9 @@
         <h1>Order tickets!</h1>
         <div id="content">
             <p id="tripInfo"></p>
-            <form onsubmit="validateAndOrder()">
+            <form onsubmit="return false">
 
+                <!--move data selector to the index.html-->
                 <div class="form-check-group">
                     <label for="departureTime">Departure time:</label>
                     <input type="date" name="departureTime" id="departureTime" />
@@ -36,6 +37,7 @@
 
                 <div class="form-check-group">
                     <label for="boatName">Boat:</label>
+                    <!--get boat names from DB-->
                     <select id="boatName">
                         <option value="Colorline">Colorline</option>
                         <option value="Hurtigruten">Hurtigruten</option>
@@ -47,36 +49,43 @@
                 <div class="form-check-group">
                     <label for="firstName">Enter first name:</label>
                     <input type="text" name="firstName" id="firstName" placeholder="First name" />
+                    <span id="failFirstname" style="color: red"></span>
                 </div>
 
                 <div class="form-check-group">
                     <label for="lastName">Enter last name:</label>
                     <input type="text" name="lastName" id="lastName" placeholder="Last name" />
+                    <span id="failLastname" style="color: red"></span>
                 </div>
 
                 <div class="form-check-group">
                     <label for="phoneNr">Enter phone number:</label>
                     <input type="text" name="phoneNr" id="phoneNr" placeholder="Phone number" />
+                    <span id="failPhonenr" style="color: red"></span>
                 </div>
 
                 <div class="form-check-group">
                     <label for="email">Enter email:</label>
                     <input type="text" name="email" id="email" placeholder="Email" />
+                    <span id="failEmail" style="color: red"></span>
                 </div>
 
                 <div class="form-check-group">
                     <label for="streetName">Enter street name:</label>
                     <input type="text" name="streetName" id="streetName" placeholder="Street name" />
+                    <span id="failStreet" style="color: red"></span>
                 </div>
 
                 <div class="form-check-group">
                     <label for="zipCode">Enter zip code:</label>
                     <input type="text" name="zipCode" id="zipCode" placeholder="Zip code" />
+                    <span id="failZip" style="color: red"></span>
                 </div>
 
                 <div class="form-check-group">
                     <label for="cityName">Enter city:</label>
                     <input type="text" name="cityName" id="cityName" placeholder="City name" />
+                    <span id="failCity" style="color: red"></span>
                 </div>
 
                 <div class="form-check-group">
@@ -84,12 +93,14 @@
                     <input type="number" min="0" name="ticketAmount" id="ticketAmount" placeholder="Ticket amount" />
                 </div>
 
-               
-                <input type="submit" value="Order ticket"/>
+
+                <input type="submit" onclick="validateAndOrder()" value="Order ticket" />
             </form>
         </div>
         <p id="info"></p>
     </main>
     <custom-footer></custom-footer>
+    <script type="text/javascript" src="js/customelements/navbar.js"></script>
+    <script type="text/javascript" src="js/customelements/footer.js"></script>
 </body>
 </html>

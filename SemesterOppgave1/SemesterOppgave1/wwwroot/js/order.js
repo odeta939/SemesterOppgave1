@@ -18,6 +18,7 @@ function validateAndOrder() {
 
     if (fistnameOK && lastnameOK && phonenrOK && emailOK &&
         streetOK && zipOK && cityOK) {
+        console.log("hi from validateAndOrder")
         createOrder();
     }
 }
@@ -35,19 +36,20 @@ function setOrder() {
 }
 //La til noen tilfeldige verdier i visse felt
 function createOrder() {
-    /*let arrivalTerminalStreet = "";
+    console.log("hi from createOrder")
+    let arrivalTerminalStreet = "";
     let arrivalTerminalZipCode = "";
     let departureTerminalStreet = "";
     let departureTerminalZipCode = "";
     let capacity = 0;
-    let ticketPrice = 0;*/
+    let ticketPrice = 0;
 
-    let arrivalTerminalStreet;
+  /*  let arrivalTerminalStreet;
     let arrivalTerminalZipCode ;
     let departureTerminalStreet;
     let departureTerminalZipCode;
     let capacity;
-    let ticketPrice;
+    let ticketPrice;*/
 
     //getting travel information from index.html through local storage
     if (localStorage.getItem("arrival") === "Oslo") {
@@ -120,13 +122,14 @@ function createOrder() {
         zipCode: $("#zipCode").val(),
         city: $("#cityName").val()
     };
-
+    console.log("order initiation")
     $.post("Order/SaveOrder", order, function() {
         //If the post request returns an OK remove the old storage and add the order to local storage:
         localStorage.setItem("order", JSON.stringify(order));
         localStorage.removeItem("arrival");
         localStorage.removeItem("departure");
-        window.location.href = "index.html";
+        //window.location.href = "index.html";
+        console.log("order post")
     }).fail(function (fail) {
         alert(fail.responseText);
     });

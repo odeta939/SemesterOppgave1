@@ -1,4 +1,6 @@
-﻿function validateFirstname(firstname) {
+﻿
+
+function validateFirstname(firstname) {
     const regex = /^[a-zA-ZæøåÆØÅ\.\ \-]{2,20}$/;
     const ok = regex.test(firstname);
     if (!ok) {
