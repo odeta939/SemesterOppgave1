@@ -1,10 +1,8 @@
-﻿
-
-function validateFirstname(firstname) {
+﻿function validateFirstname(firstname) {
     const regex = /^[a-zA-ZæøåÆØÅ\.\ \-]{2,20}$/;
     const ok = regex.test(firstname);
     if (!ok) {
-        $("#failFirstname").html("First name field must be added");
+        $("#failFirstname").html("First name is invalid");
         return false;
     }
     else {
@@ -17,7 +15,7 @@ function validateLastname(lastname) {
     const regex = /^[a-zA-ZæøåÆØÅ\.\ \-]{2,20}$/;
     const ok = regex.test(lastname);
     if (!ok) {
-        $("#failLastname").html("Last name field must be filled");
+        $("#failLastname").html("Last name is invalid");
         return false;
     }
     else {
@@ -88,6 +86,18 @@ function validateCity(city) {
     }
     else {
         $("#failCity").html("");
+        return true;
+    }
+}
+
+function validateTicketAmount(ticketAmount) {
+    const regex = /^[1-9]{1}[0-9]{0,3}$/
+    const ok = regex.test(ticketAmount);
+    if (!ok) {
+        $("#failTicketAmount").html("Ticket amount is invalid");
+        return false;
+    } else {
+        $("#failTicketAmount").html("");
         return true;
     }
 }

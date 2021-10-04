@@ -10,9 +10,10 @@
     <link rel="stylesheet" type="text/css" href="css/index.css" media="screen" />
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
-    <script src="js/validering.js"></script>
+    <script type="text/javascript" src="js/customelements/navbar.js"></script>
+    <script type="text/javascript" src="js/customelements/footer.js"></script>
     <script src="js/order.js"></script>
+    <script src="js/validering.js"></script>
     <title>Holbergs Båte - Database</title>
 </head>
 <body>
@@ -22,7 +23,7 @@
         <h1>Order tickets!</h1>
         <div id="content">
             <p id="tripInfo"></p>
-            <form onsubmit="return false">
+            <form id="orderForm" onsubmit="return false">
 
                 <!--move data selector to the index.html-->
                 <div class="form-check-group">
@@ -91,16 +92,13 @@
                 <div class="form-check-group">
                     <label for="ticketAmount">Amount of tickets:</label>
                     <input type="number" min="0" name="ticketAmount" id="ticketAmount" placeholder="Ticket amount" />
+                    <span id="failTicketAmount" style="color: red"></span>
                 </div>
-
 
                 <input type="submit" onclick="validateAndOrder()" value="Order ticket" />
             </form>
         </div>
-        <p id="info"></p>
     </main>
     <custom-footer></custom-footer>
-    <script type="text/javascript" src="js/customelements/navbar.js"></script>
-    <script type="text/javascript" src="js/customelements/footer.js"></script>
 </body>
 </html>

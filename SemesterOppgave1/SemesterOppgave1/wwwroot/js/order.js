@@ -1,24 +1,19 @@
-let arrival = ""
-let departure = "";
-
 $(function () {
-    
-
     setOrder();
 })
 
 function validateAndOrder() {
-    var fistnameOK = validateFirstname($("#firstName").val());
+    var firstnameOK = validateFirstname($("#firstName").val());
     var lastnameOK = validateLastname($("#lastName").val());
     var phonenrOK = validatePhonenr($("#phoneNr").val());
     var emailOK = validateEmail($("#email").val());
     var streetOK = validateStreet($("#streetName").val());
     var zipOK = validateZipcode($("#zipCode").val());
     var cityOK = validateCity($("#cityName").val());
+    var ticketAmountOK = validateTicketAmount($("#ticketAmount").val());
 
-    if (fistnameOK && lastnameOK && phonenrOK && emailOK &&
-        streetOK && zipOK && cityOK) {
-        console.log("hi from validateAndOrder")
+    if (firstnameOK && lastnameOK && phonenrOK && emailOK &&
+        streetOK && zipOK && cityOK && ticketAmountOK) {
         createOrder();
     }
 }
@@ -31,12 +26,15 @@ function setOrder() {
 
         let out = "Departure place: " + departurePlace + "\n" + "Arrival place: " + arrivalPlace;
         let tripInfo = $("#tripInfo").text(out);
-        tripInfo.html(tripInfo.html().replace(/\n/g, '<br/>'))
+        tripInfo.html(tripInfo.html().replace(/\n/g, '<br/>'));
+    } else {
+        $("#orderForm").html("");
+        let tripInfo = $("#tripInfo").text("You haven't chosen a trip yet! Go back to the home page. :)");
+        tripInfo.html(tripInfo.html().replace(/home page/g, '<a style="text-decoration: none" href="index.html">home page</a>'));
     }
 }
-//La til noen tilfeldige verdier i visse felt
+
 function createOrder() {
-    console.log("hi from createOrder")
     let arrivalTerminalStreet = "";
     let arrivalTerminalZipCode = "";
     let departureTerminalStreet = "";
@@ -44,16 +42,8 @@ function createOrder() {
     let capacity = 0;
     let ticketPrice = 0;
 
-  /*  let arrivalTerminalStreet;
-    let arrivalTerminalZipCode ;
-    let departureTerminalStreet;
-    let departureTerminalZipCode;
-    let capacity;
-    let ticketPrice;*/
-
     //getting travel information from index.html through local storage
     if (localStorage.getItem("arrival") === "Oslo") {
-
         //---- get the date from DB instead of hard coding it---//
         arrivalTerminalStreet = "Schweigaards gate 1";
         arrivalTerminalZipCode = "1111";
@@ -122,14 +112,13 @@ function createOrder() {
         zipCode: $("#zipCode").val(),
         city: $("#cityName").val()
     };
-    console.log("order initiation")
+
     $.post("Order/SaveOrder", order, function() {
         //If the post request returns an OK remove the old storage and add the order to local storage:
         localStorage.setItem("order", JSON.stringify(order));
         localStorage.removeItem("arrival");
         localStorage.removeItem("departure");
-        //window.location.href = "index.html";
-        console.log("order post")
+        window.location.href = "index.html";
     }).fail(function (fail) {
         alert(fail.responseText);
     });
