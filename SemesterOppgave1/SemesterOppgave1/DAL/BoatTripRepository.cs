@@ -316,6 +316,33 @@ namespace SemesterOppgave1.DAL
                 return null;
             }
         }
+
+        public async Task<bool> EditRoute(Route editedRoute)
+        {
+            try
+            {
+                Routes route = await _db.Routes.FindAsync(editedRoute.Id);
+                route.DepartureTime = editedRoute.DepartureTime;
+                route.ArrivalTime = editedRoute.ArrivalTime;
+                route.Boat.BoatName = editedRoute.BoatName;
+                route.Boat.Capacity = editedRoute.Capacity;
+                route.Boat.TicketPrice = editedRoute.TicketPrice;
+                route.ArrivalPlace.TerminalName = editedRoute.ArrivalTerminalName;
+                route.ArrivalPlace.Street = editedRoute.ArrivalTerminalStreet;
+                route.ArrivalPlace.TerminalAddress.City = editedRoute.ArrivalTerminalCity;
+                route.ArrivalPlace.TerminalAddress.ZipCode = editedRoute.ArrivalTerminalZipCode;
+                route.DeparturePlace.TerminalName = editedRoute.DepartureTerminalName;
+                route.DeparturePlace.Street = editedRoute.DepartureTerminalStreet;
+                route.DeparturePlace.TerminalAddress.City = editedRoute.DepartureTerminalCity;
+                route.DeparturePlace.TerminalAddress.ZipCode = editedRoute.DepartureTerminalZipCode;
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
       
         //Order methods:
         public async Task<List<Order>> GetAllOrders()

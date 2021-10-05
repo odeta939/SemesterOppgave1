@@ -22,6 +22,7 @@ namespace SemesterOppgave1.DAL
 
         Task<List<Route>> GetAllRoutes();
         Task<Route> GetOneRoute(int id);
+        Task<bool> EditRoute(Route editedRoute);
 
         Task<List<Order>> GetAllOrders();
         Task<Order> GetOneOrder(int id);

@@ -160,6 +160,25 @@ namespace SemesterOppgave1.Controllers
             return Ok(route);
         }
 
+        public async Task<ActionResult> EditRoute(Route route)
+        {
+            if (ModelState.IsValid)
+            {
+                bool editRoute = await _db.EditRoute(route);
+                if (!editRoute)
+                {
+                    _log.LogInformation("Could not edit that route!");
+                    return NotFound("Could not edit that route!");
+                }
+                return Ok("Route edited!");
+            }
+            else
+            {
+                _log.LogInformation("Input not valid!");
+                return BadRequest("Input not valid!");
+            }
+        }
+
         //Order methods:
         public async Task<ActionResult> GetAllOrders()
         {
