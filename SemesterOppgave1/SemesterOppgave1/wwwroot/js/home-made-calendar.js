@@ -16,6 +16,8 @@ let departureCity = "Oslo";
 let arrivalCity = "Kiel-Gaarden";
 let oneWay = false;
 
+let ticketsWanted;
+
 
 $(function () {
     monthInbound = inboundDate.getMonth(); //Getting the current month
@@ -76,6 +78,13 @@ function startNewMonth(monthName, date, direction) {//All months are based on di
             .addClass(direction)
             .append("<span/>")
             .text(monthName)
+    );
+    $(".monthText" + "." + direction).append( //Add month text
+        $('<div/>')
+            .addClass("textYear")
+            .addClass(direction)
+            .append("<span/>")
+            .text(date.getFullYear())
     );
     $(".monthText" + "." + direction).append( //Add month text
         $('<div/>')
@@ -225,27 +234,34 @@ function arrowOnClick(value, direction) { //We want to change the month of the c
 
 function getRoutes(departureCity, arrivalCity, direction) {
     $.get("order/GetAllRoutes", function (routes) { //Getting routes from database
-
+        console.log(routes)
         let routeList = [] //List of departure times
+        let capacityList = [] //List of capacity
+        let ticketPriceList = [] //List of prices per route
 
         $.each(routes, function (index, route) { //Check every route if matching arrivalcity and departurecity
             if (route.arrivalTerminalCity == arrivalCity && route.departureTerminalCity == departureCity) {
-                routeList.push(route.departureTime) //if the match we add it to the list
+                routeList.push(route.departureTime) 
+                capacityList.push(route.capacity) 
+                ticketPriceList.push(route.ticketPrice)
             }
         });
 
-        setOnclickListners(routeList, direction); //Setting all the onClick based on available routes
+        setOnclickListners(routeList, capacityList, ticketPriceList, direction); //Setting all the onClick based on available routes
     });
 }
 
 
-function setOnclickListners(departureDays, direction) {
+function setOnclickListners(departureDays, capacity, ticketprice, direction) {
     $(".day" + "." + direction).each(function () { //For every day
         let routeDay = 0;
         let routeMonth = 0;
         let inRoute = false;
 
-        for (let route = 0; route < departureDays.length; route++) { //Looping through all the routes
+        let route = 0
+        let routeIndex = 0;
+
+        for (; route < departureDays.length; route++) { //Looping through all the routes
             let dateArray = departureDays[route].split("-"); //day-month-year is the format we use in the database so we need to split it
             routeDay = dateArray[0]; //Getting the day
             routeMonth = dateArray[1]; //Getting the month
@@ -258,40 +274,73 @@ function setOnclickListners(departureDays, direction) {
             //In case the day is the same as the route. We check if route day matches, if the day is active or not and if the months matches
             if (($(this).text() == routeDay) && (!$(this).hasClass("notActiveDay")) && ($(".text" + "." + direction).text() == monthNames[routeMonth - 1])) {
                 inRoute = true; //Set inRoute true there is an available route
+                routeIndex = route; //capacity of the route has the same index as route since they are added to both the arrays at the same time
+                route = 1000; //We found the match so we dont need to look further we can jump out the for loop by changing route to 1000
             }
         }
 
         if (inRoute) { //here we set the onclick
-            $(this).click(function () { //Only one per outbound and inboud can be selected. This we can check based on antallClicked and directionn
-                if (antallClicked == 0) { //No days selected so the first is always going to be active
-                    $(this).addClass("dayActive");
-                    antallClicked = 1;
-                } else if (antallClicked == 1) { //If there is one active we will add another with dayActiv
-                    if ($(".dayActive").hasClass(direction)) { //If the active day has the same direction we replace it
-                        //If it is the same day we remove the class active from it
-                        if ($(".dayActive").attr("class") === $(this).attr("class") && $(".dayActive").text() && $(this).text()) {
-                            $(".dayActive").removeClass("dayActive");
-                            antallClicked -= 1; //  = 0
-                        } else { //Otherwise we replace the old one with the new selected
-                            $(".dayActive").removeClass("dayActive");
+            if (capacity[routeIndex] > 0) {
+                $('<p>' + "Tickets left: " + capacity[routeIndex] + '</p>').appendTo($(this));
+                $('<p>' + "Price per ticket: " + ticketprice[routeIndex] + '</p>').appendTo($(this));
+
+                $(this).click(function () { //Only one per outbound and inboud can be selected. This we can check based on antallClicked and directionn
+                    if (antallClicked == 0) { //No days selected so the first is always going to be active
+                        $(this).addClass("dayActive");
+                        let arrayDateText = $(this).text().split("T")
+                        let date = arrayDateText[0] //Getting the day     
+                        let selectedMonth = $(".text" + "." + direction).text()
+
+                        date += "-" + (monthNames.indexOf(selectedMonth) + 1)
+                        date += "-" + $(".textYear" + "." + direction).text() //Getting the year
+
+                        localStorage.setItem(direction, date) //Save selected date to locale storage
+                        antallClicked = 1;
+                    } else if (antallClicked == 1) { //If there is one active we will add another with dayActiv
+                        if ($(".dayActive").hasClass(direction)) { //If the active day has the same direction we replace it
+                            //If it is the same day we remove the class active from it
+                            if ($(".dayActive").attr("class") === $(this).attr("class") && $(".dayActive").text() && $(this).text()) {
+                                $(".dayActive").removeClass("dayActive");
+                                antallClicked -= 1; //  = 0
+                            } else { //Otherwise we replace the old one with the new selected
+                                $(".dayActive").removeClass("dayActive");
+                                $(this).addClass("dayActive");
+                                let arrayDateText = $(this).text().split("T")
+                                let date = arrayDateText[0] //Getting the day     
+                                let selectedMonth = $(".text" + "." + direction).text()
+
+                                date += "-" + (monthNames.indexOf(selectedMonth) + 1)
+                                date += "-" + $(".textYear" + "." + direction).text() //Getting the year
+
+                                localStorage.setItem(direction, date) //Save selected date to locale storage
+                                antallClicked = 1; // = 1
+                            }
+                        } else { //The clicked day has a different direction so we add it
                             $(this).addClass("dayActive");
-                            antallClicked = 1; // = 1
+                            antallClicked += 1; // = 2
                         }
-                    } else { //The clicked day has a different direction so we add it
-                        $(this).addClass("dayActive");
-                        antallClicked += 1; // = 2
+                    } else if (antallClicked == 2) { //When antallClicked is 2 we need to replace based on the direction
+                        //If the same day is clicked upon we remove it
+                        if ($("." + direction + ".dayActive").attr("class") === $(this).attr("class") && $(".dayActive").text() && $(this).text()) {
+                            $("." + direction + ".dayActive").removeClass("dayActive");
+                            antallClicked -= 1; // = 1
+                        } else { //Otherwise we replace the old with the new
+                            $("." + direction + ".dayActive").removeClass("dayActive");
+                            $(this).addClass("dayActive");
+                            let arrayDateText = $(this).text().split("T")
+                            let date = arrayDateText[0] //Getting the day     
+                            let selectedMonth = $(".text" + "." + direction).text()
+
+                            date += "-" + (monthNames.indexOf(selectedMonth) + 1)
+                            date += "-" + $(".textYear" + "." + direction).text() //Getting the year
+
+                            localStorage.setItem(direction, date) //Save selected date to locale storage
+                        }
                     }
-                } else if (antallClicked == 2) { //When antallClicked is 2 we need to replace based on the direction
-                    //If the same day is clicked upon we remove it
-                    if ($("." + direction + ".dayActive").attr("class") === $(this).attr("class") && $(".dayActive").text() && $(this).text()) {
-                        $("." + direction + ".dayActive").removeClass("dayActive");
-                        antallClicked -= 1; // = 1
-                    } else { //Otherwise we replace the old with the new
-                        $("." + direction + ".dayActive").removeClass("dayActive");
-                        $(this).addClass("dayActive");
-                    }
-                }
-            })
+                })
+            } else {
+                $(this).addClass("notActiveDay"); //Ticket is sold out day is set to not active
+            }
         } else {
             $(this).addClass("notActiveDay"); //No active route found so the div will get notActiveDay as extra class
             //This also means that the div will be not clickable
