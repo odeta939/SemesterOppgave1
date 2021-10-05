@@ -1,82 +1,43 @@
-// Define custom element
-class Calendar extends HTMLElement {
-  constructor() {
-    super();
+<<<<<<< HEAD
+=======
+// // Define custom element
+// class Calendar extends HTMLElement {
+//   constructor() {
+//     super();
 
-    this.attachShadow({ mode: "open" });
-    const link = document.createElement("link");
-    link.setAttribute("rel", "stylesheet");
-    link.setAttribute("href", "./css/customelements/calendar.css");
+//     this.attachShadow({ mode: "open" });
+//     const link = document.createElement("link");
+//     link.setAttribute("rel", "stylesheet");
+//     link.setAttribute("href", "./css/customelements/calendar.css");
 
-    this.shadowRoot.appendChild(link);
+//     this.shadowRoot.appendChild(link);
 
-    const wrapper = document.createElement("div");
-    wrapper.setAttribute("class", "orderbox-extended-calendar");
-    /**
-     * Create radio-button structure for one way/round trip
-     *  <nrTrips>
-     *      <radio>One way</radio>
-     *      <radio>Round trip</radio>
-     *  </nrTrips>
-     */
-    const nrTrips = wrapper.appendChild(document.createElement("div"));
-    nrTrips.setAttribute("class", "orderbox-extended-nrtrips");
+//     const wrapper = document.createElement("div");
+//     wrapper.setAttribute("class", "orderbox-extended-calendar");
 
-    const oneWay = nrTrips.appendChild(document.createElement("radio"));
-    oneWay.setAttribute("type", "radio");
-    oneWay.setAttribute("id", "oneway");
-    oneWay.setAttribute("class", "orderbox-extended-nrtrips-radio");
-    oneWay.setAttribute("name", "nrTrips");
-    oneWay.setAttribute("value", "One way");
-    oneWay.textContent = "One way";
-    oneWay.addEventListener("click", (e) => {
-      if (oneWay.getAttribute("checked") == "checked") {
-        isOneWay == true;
-      } else {
-        isOneWay = false;
-      }
-      initialise();
-    });
+//     /**
+//      * Create calendar placement structure
+//      * <body-calendar>
+//      *    <calendar-inbound>
+//      *    <calendar-outbound>
+//      * </body-calendar>
+//      */
+//     const calendars = wrapper.appendChild(document.createElement("div"));
+//     calendars.setAttribute("id", "body-calendar");
 
-    const roundTrip = nrTrips.appendChild(document.createElement("radio"));
-    roundTrip.setAttribute("type", "radio");
-    roundTrip.setAttribute("id", "roundtrip");
-    roundTrip.setAttribute("name", "nrTrips");
-    roundTrip.setAttribute("value", "Round trip");
-    roundTrip.setAttribute("class", "orderbox-extended-nrtrips-radio");
-    roundTrip.setAttribute("checked", "checked");
-    roundTrip.textContent = "Round trip";
-    roundTrip.addEventListener("click", (e) => {
-      if (roundTrip.getAttribute("checked") == "checked") {
-        isOneWay == false;
-      } else {
-        isOneWay = true;
-      }
-      initialise();
-    });
+//     const calOutbound = calendars.appendChild(document.createElement("div"));
+//     calOutbound.setAttribute("class", "calendar outbound");
 
-    /**
-     * Create calendar placement structure
-     * <body-calendar>
-     *    <calendar-inbound>
-     *    <calendar-outbound>
-     * </body-calendar>
-     */
-    const calendars = wrapper.appendChild(document.createElement("div"));
-    calendars.setAttribute("id", "body-calendar");
+//     const calInbound = calendars.appendChild(document.createElement("div"));
+//     calInbound.setAttribute("class", "calendar inbound");
 
-    const calOutbound = calendars.appendChild(document.createElement("div"));
-    calOutbound.setAttribute("class", "calendar outbound");
+//     this.shadowRoot.append(wrapper);
+//   }
+// }
 
-    const calInbound = calendars.appendChild(document.createElement("div"));
-    calInbound.setAttribute("class", "calendar inbound");
+// customElements.define("expand-calendar", Calendar);
 
-    this.shadowRoot.append(wrapper);
-  }
-}
-
-customElements.define("expand-calendar", Calendar);
-
+>>>>>>> a4b94a7 (Not working)
 const monthNames = [
   "January",
   "February",
@@ -91,7 +52,7 @@ const monthNames = [
   "November",
   "December",
 ];
-const daysOfTheWeek = [
+const daysOfTheWeeks = [
   "Monday",
   "Tuesday",
   "Wednesday",
@@ -108,34 +69,25 @@ let inbound = "inbound"; //Direction
 let monthInbound; //which inbound month to show
 let monthOutbound; //Which outbound month to show
 
-let inboundDate;
-let outboundDate;
-let departureCity;
-let arrivalCity;
-let isOneWay = false;
+let inboundDate = new Date(); //Current date to start with
+let outboundDate = new Date(); //Current date to start with
+let departureCity = "Oslo";
+let arrivalCity = "Goteborg";
+let oneWay = false;
 
-function initialise() {
-  // Proceed only if departure and arrival places are selected
-  const departureSelect = $("#fromPlace").selectedIndex;
-  const arrivalSelect = $("#toPlace").selectedIndex;
-  if (departureSelect == -1 && arrivalSelect == -1) {
-    alert("You must choose the departure and arrival places.");
-    return;
-  } else if (departureSelect == -1) {
-    alert("You must choose where you are departing from.");
-    return;
-  } else if (arrivalSelect == -1) {
-    alert("You must choose where you are going to.");
-    return;
-  }
-  departureCity = $("#fromPlace").value;
-  arrivalCity = $("#toPlace").value;
-  inboundDate = new Date();
-  outboundDate = new Date();
+let ticketsWanted;
+
+<<<<<<< HEAD
+function initializeCalendars() {
+  oneWay = $('input[name="nrTrips"]:checked').val() == "oneway" ? true : false;
+=======
+function initialize() {
+  console.log("In initialise");
+>>>>>>> a4b94a7 (Not working)
   monthInbound = inboundDate.getMonth(); //Getting the current month
   monthOutbound = outboundDate.getMonth(); //Getting the current month
 
-  if (isOneWay) {
+  if (oneWay) {
     // One way
     createCalendar(outbound, outboundDate); //Creating outbound calendar
   } else {
@@ -146,6 +98,9 @@ function initialise() {
 }
 
 function createCalendar(direction, date) {
+  console.log("In create calendar");
+  console.log($(".calendar" + "." + direction));
+  console.log($(".calendar" + "." + direction).attr("class"));
   //Creating the calendar one month at the time
   $(".calendar" + "." + direction).append(
     //Setting titel of the month
@@ -198,6 +153,14 @@ function startNewMonth(monthName, date, direction) {
   $(".monthText" + "." + direction).append(
     //Add month text
     $("<div/>")
+      .addClass("textYear")
+      .addClass(direction)
+      .append("<span/>")
+      .text(date.getFullYear())
+  );
+  $(".monthText" + "." + direction).append(
+    //Add month text
+    $("<div/>")
       .addClass("arrow")
       .addClass("right")
       .addClass(direction)
@@ -205,7 +168,7 @@ function startNewMonth(monthName, date, direction) {
       .text(">")
   );
 
-  for (let days = 0; days < daysOfTheWeek.length; days++) {
+  for (let days = 0; days < daysOfTheWeeks.length; days++) {
     //Add the days of the week to make it look more readible
     $(".calendar" + "." + direction)
       .children()
@@ -214,7 +177,7 @@ function startNewMonth(monthName, date, direction) {
         $("<div/>")
           .addClass("dayOfTheWeek")
           .append("<span/>")
-          .text(daysOfTheWeek[days].slice(0, 3)) //Only the first three letters are used so that it is also readable on a phone
+          .text(daysOfTheWeeks[days].slice(0, 3)) //Only the first three letters are used so that it is also readable on a phone
       );
   }
 
@@ -365,8 +328,9 @@ function arrowOnClick(value, direction) {
 function getRoutes(departureCity, arrivalCity, direction) {
   $.get("order/GetAllRoutes", function (routes) {
     //Getting routes from database
-
     let routeList = []; //List of departure times
+    let capacityList = []; //List of capacity
+    let ticketPriceList = []; //List of prices per route
 
     $.each(routes, function (index, route) {
       //Check every route if matching arrivalcity and departurecity
@@ -374,22 +338,27 @@ function getRoutes(departureCity, arrivalCity, direction) {
         route.arrivalTerminalCity == arrivalCity &&
         route.departureTerminalCity == departureCity
       ) {
-        routeList.push(route.departureTime); //if the match we add it to the list
+        routeList.push(route.departureTime);
+        capacityList.push(route.ticketsLeft);
+        ticketPriceList.push(route.ticketPrice);
       }
     });
 
-    setOnclickListners(routeList, direction); //Setting all the onClick based on available routes
+    setOnclickListners(routeList, capacityList, ticketPriceList, direction); //Setting all the onClick based on available routes
   });
 }
 
-function setOnclickListners(departureDays, direction) {
+function setOnclickListners(departureDays, capacity, ticketprice, direction) {
   $(".day" + "." + direction).each(function () {
     //For every day
     let routeDay = 0;
     let routeMonth = 0;
     let inRoute = false;
 
-    for (let route = 0; route < departureDays.length; route++) {
+    let route = 0;
+    let routeIndex = 0;
+
+    for (; route < departureDays.length; route++) {
       //Looping through all the routes
       let dateArray = departureDays[route].split("-"); //day-month-year is the format we use in the database so we need to split it
       routeDay = dateArray[0]; //Getting the day
@@ -409,58 +378,95 @@ function setOnclickListners(departureDays, direction) {
         $(".text" + "." + direction).text() == monthNames[routeMonth - 1]
       ) {
         inRoute = true; //Set inRoute true there is an available route
+        routeIndex = route; //capacity of the route has the same index as route since they are added to both the arrays at the same time
+        route = 1000; //We found the match so we dont need to look further we can jump out the for loop by changing route to 1000
       }
     }
 
     if (inRoute) {
       //here we set the onclick
-      $(this).click(function () {
-        //Only one per outbound and inboud can be selected. This we can check based on antallClicked and directionn
-        if (antallClicked == 0) {
-          //No days selected so the first is always going to be active
-          $(this).addClass("dayActive");
-          antallClicked = 1;
-        } else if (antallClicked == 1) {
-          //If there is one active we will add another with dayActiv
-          if ($(".dayActive").hasClass(direction)) {
-            //If the active day has the same direction we replace it
-            //If it is the same day we remove the class active from it
+      if (capacity[routeIndex] > 0) {
+        $("<p>" + "Tickets left: " + capacity[routeIndex] + "</p>").appendTo(
+          $(this)
+        );
+        $(
+          "<p>" + "Price per ticket: " + ticketprice[routeIndex] + "</p>"
+        ).appendTo($(this));
+
+        $(this).click(function () {
+          //Only one per outbound and inboud can be selected. This we can check based on antallClicked and directionn
+          if (antallClicked == 0) {
+            //No days selected so the first is always going to be active
+            $(this).addClass("dayActive");
+            let arrayDateText = $(this).text().split("T");
+            let date = arrayDateText[0]; //Getting the day
+            let selectedMonth = $(".text" + "." + direction).text();
+
+            date += "-" + (monthNames.indexOf(selectedMonth) + 1);
+            date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
+
+            localStorage.setItem(direction, date); //Save selected date to locale storage
+            antallClicked = 1;
+          } else if (antallClicked == 1) {
+            //If there is one active we will add another with dayActiv
+            if ($(".dayActive").hasClass(direction)) {
+              //If the active day has the same direction we replace it
+              //If it is the same day we remove the class active from it
+              if (
+                $(".dayActive").attr("class") === $(this).attr("class") &&
+                $(".dayActive").text() &&
+                $(this).text()
+              ) {
+                $(".dayActive").removeClass("dayActive");
+                antallClicked -= 1; //  = 0
+              } else {
+                //Otherwise we replace the old one with the new selected
+                $(".dayActive").removeClass("dayActive");
+                $(this).addClass("dayActive");
+                let arrayDateText = $(this).text().split("T");
+                let date = arrayDateText[0]; //Getting the day
+                let selectedMonth = $(".text" + "." + direction).text();
+
+                date += "-" + (monthNames.indexOf(selectedMonth) + 1);
+                date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
+
+                localStorage.setItem(direction, date); //Save selected date to locale storage
+                antallClicked = 1; // = 1
+              }
+            } else {
+              //The clicked day has a different direction so we add it
+              $(this).addClass("dayActive");
+              antallClicked += 1; // = 2
+            }
+          } else if (antallClicked == 2) {
+            //When antallClicked is 2 we need to replace based on the direction
+            //If the same day is clicked upon we remove it
             if (
-              $(".dayActive").attr("class") === $(this).attr("class") &&
+              $("." + direction + ".dayActive").attr("class") ===
+                $(this).attr("class") &&
               $(".dayActive").text() &&
               $(this).text()
             ) {
-              $(".dayActive").removeClass("dayActive");
-              antallClicked -= 1; //  = 0
+              $("." + direction + ".dayActive").removeClass("dayActive");
+              antallClicked -= 1; // = 1
             } else {
-              //Otherwise we replace the old one with the new selected
-              $(".dayActive").removeClass("dayActive");
+              //Otherwise we replace the old with the new
+              $("." + direction + ".dayActive").removeClass("dayActive");
               $(this).addClass("dayActive");
-              antallClicked = 1; // = 1
+              let arrayDateText = $(this).text().split("T");
+              let date = arrayDateText[0]; //Getting the day
+              let selectedMonth = $(".text" + "." + direction).text();
+
+              date += "-" + (monthNames.indexOf(selectedMonth) + 1);
+              date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
+
+              localStorage.setItem(direction, date); //Save selected date to locale storage
             }
-          } else {
-            //The clicked day has a different direction so we add it
-            $(this).addClass("dayActive");
-            antallClicked += 1; // = 2
           }
-        } else if (antallClicked == 2) {
-          //When antallClicked is 2 we need to replace based on the direction
-          //If the same day is clicked upon we remove it
-          if (
-            $("." + direction + ".dayActive").attr("class") ===
-              $(this).attr("class") &&
-            $(".dayActive").text() &&
-            $(this).text()
-          ) {
-            $("." + direction + ".dayActive").removeClass("dayActive");
-            antallClicked -= 1; // = 1
-          } else {
-            //Otherwise we replace the old with the new
-            $("." + direction + ".dayActive").removeClass("dayActive");
-            $(this).addClass("dayActive");
-          }
-        }
-      });
+        });
+      } else {
+        $(this).addClass("notActiveDay"); //Ticket is sold out day is set to not active
+      }
     } else {
       $(this).addClass("notActiveDay"); //No active route found so the div will get notActiveDay as extra class
       //This also means that the div will be not clickable

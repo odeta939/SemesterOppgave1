@@ -10,12 +10,13 @@
         rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/general.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/index.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/customelements/calendar.css" media="screen" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>
+    <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/customelements/navbar.js"></script>
     <script type="text/javascript" src="js/customelements/footer.js"></script>
     <script type="text/javascript" src="js/customelements/calendar.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
     <script src="js/orderConfirmation.js"></script>
     <title>Holbergs Båter</title>
 </head>
@@ -33,44 +34,57 @@
         <div id="content">
             <div id="orderbox">
                 <h2>Select route</h2>
+                <div id="orderbox-ways">
+
+                    <label for="orderbox-oneway" class="orderbox-ways-lbl" tabindex="0">
+                        <input type="radio" name="nrTrips" id="orderbox-oneway" class="orderbox-ways-radio">
+                        <span>One way</span>
+                    </label>
+
+                    <label for="orderbox-roundtrip" class="orderbox-ways-lbl" tabindex="0">
+                        <input type="radio" name="nrTrips" id="orderbox-roundtrip" class="orderbox-ways-radio"
+                            checked="checked">
+                        <span>Round trip</span>
+                    </label>
+                </div>
                 <div id="orderbox-params">
                     <div id="orderbox-params-from" class="orderbox-params-dropdown">
                         <label for="fromPlace">From</label>
                         <select id="fromPlace" name="from">
-                            <option value="noPlace" disabled selected hidden>From...</option>
+                            <option value="noPlace" disabled selected hidden>Select departure location</option>
+                            <option value="test">Test</option>
                         </select>
                     </div>
                     <div id="orderbox-params-to" class="orderbox-params-dropdown">
                         <label for="toPlace">To</label>
                         <select id="toPlace" name="from">
-                            <option value="noPlace" disabled selected hidden>Select your from destination first...</option>
+                            <option value="noPlace" disabled selected hidden>Select your from destination first...
+                            </option>
                         </select>
                     </div>
                     <div id="orderbox-params-when" class="orderbox-params-dropdown">
                         <label for="date">Date</label>
-                        <input id="date" name="date" />
-                            <!--<option>Test</option>
-                            <option>Test2</option>
-                        </select>-->
+                        <button id="orderbox-params-when-btn" onclick="initializeCalendars()" disabled>
+                            <p>Select date</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M 3 1 L 3 2 L 2.5 2 C 1.675781 2 1 2.675781 1 3.5 L 1 12.5 C 1 13.324219 1.675781 14 2.5 14 L 12.5 14 C 13.324219 14 14 13.324219 14 12.5 L 14 3.5 C 14 2.675781 13.324219 2 12.5 2 L 12 2 L 12 1 L 11 1 L 11 2 L 4 2 L 4 1 Z M 2.5 3 L 3 3 L 3 4 L 4 4 L 4 3 L 11 3 L 11 4 L 12 4 L 12 3 L 12.5 3 C 12.78125 3 13 3.21875 13 3.5 L 13 5 L 2 5 L 2 3.5 C 2 3.21875 2.21875 3 2.5 3 Z M 2 6 L 13 6 L 13 12.5 C 13 12.78125 12.78125 13 12.5 13 L 2.5 13 C 2.21875 13 2 12.78125 2 12.5 Z M 5 7 L 5 8 L 6 8 L 6 7 Z M 7 7 L 7 8 L 8 8 L 8 7 Z M 9 7 L 9 8 L 10 8 L 10 7 Z M 11 7 L 11 8 L 12 8 L 12 7 Z M 3 9 L 3 10 L 4 10 L 4 9 Z M 5 9 L 5 10 L 6 10 L 6 9 Z M 7 9 L 7 10 L 8 10 L 8 9 Z M 9 9 L 9 10 L 10 10 L 10 9 Z M 11 9 L 11 10 L 12 10 L 12 9 Z M 3 11 L 3 12 L 4 12 L 4 11 Z M 5 11 L 5 12 L 6 12 L 6 11 Z M 7 11 L 7 12 L 8 12 L 8 11 Z">
+                                </path>
+                            </svg>
+                        </button>
                     </div>
                     <button id="buyTicket" onclick="orderTickets()">
                         Buy ticket
                     </button>
                 </div>
                 <div id="orderbox-extend">
+                    <div id="body-calendar">
+                        <div class="calendar outbound"></div>
+                        <div class="calendar inbound"></div>
+                    </div>
                 </div>
             </div>
-
-
-            <!--    <div id="popUp">-->
-            <!--        <div id="popUp-content">-->
-            <!--            <div id="popUp-content-close">-->
-            <!--                &times;-->
-            <!--            </div>-->
-            <!--            <h3>Your order has been succesfully placed.</h3>-->
-            <!--            <p>Thank you so much for ordering a ticket. We will get back to you ...</p>-->
-            <!--        </div>-->
-            <!--    </div>-->
 
             <div id="travelinfo">
                 <div class="travelinfo-box">

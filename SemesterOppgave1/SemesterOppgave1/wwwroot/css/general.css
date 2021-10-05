@@ -16,6 +16,7 @@
 
   --padding-050: 0.5rem;
   --padding-100: 1rem;
+  --padding-150: 1.5rem;
   --padding-200: 2rem;
   --padding-400: 4rem;
 
@@ -23,6 +24,7 @@
 
   --font-size-200: 0.4rem;
   --font-size-300: 0.8rem;
+  --font-size-350: 0.9rem;
   --font-size-400: 1rem;
   --font-size-500: 1.2rem;
   --font-size-600: 1.4rem;
@@ -40,11 +42,17 @@ body {
   height: 100%;
   font-family: var(--font-default);
   font-size: 1.2rem;
+  color: var(--black);
 }
 
 body {
   display: flex;
   flex-direction: column;
+}
+
+#content {
+  width: clamp(70%, 80rem, 90%);
+  margin: auto;
 }
 
 button {
@@ -57,7 +65,43 @@ button {
   font-weight: 700;
 }
 
-#content {
-  width: clamp(70%, 80rem, 90%);
-  margin: auto;
+/*Custom radio button*/
+/*Source: https://dev.to/kallmanation/styling-a-radio-button-with-only-css-4llc*/
+label > input[type="radio"] {
+  display: none;
+}
+
+label > input[type="radio"] + * {
+  display: inline-block;
+  padding-bottom: 1px;
+}
+
+label + label {
+  margin-left: var(--padding-150);
+}
+
+label > input[type="radio"] + *::before {
+  content: "";
+  display: inline-block;
+  vertical-align: text-top;
+
+  width: 0.8rem;
+  height: 0.8rem;
+  margin-right: 0.3rem;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--blue-300);
+}
+label > input[type="radio"]:checked + * {
+  color: var(--blue-700);
+}
+label > input[type="radio"]:checked + *::before {
+  background: radial-gradient(
+    var(--blue-700) 0%,
+    var(--blue-700) 40%,
+    transparent 50%,
+    transparent
+  );
+  border-color: var(--blue-700);
 }

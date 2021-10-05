@@ -21,6 +21,16 @@
   padding: var(--padding-200);
 }
 
+.orderbox-ways-lbl {
+  display: inline-block;
+  margin-bottom: var(--padding-100);
+  font-size: var(--font-size-350);
+}
+
+.orderbox-ways-lbl + .orderbox-ways-radio {
+  margin-left: var(--padding-150);
+}
+
 #orderbox-params {
   display: grid;
   grid-template-columns: 2fr 2fr 2fr 1fr;
@@ -46,9 +56,42 @@
   background: transparent;
   border: unset;
   padding: var(--padding-050) 0;
-  font-size: var(--font-size-500);
+  color: rgba(var(--blue-700-v), 0.7);
+  font-family: var(--font-default);
+  font-size: var(--font-size-400);
   margin-left: -0.25rem;
   border-bottom: var(--font-size-200) solid rgba(var(--blue-300-v), 0.15);
+}
+
+.orderbox-params-dropdown select:disabled,
+#orderbox-params-when-btn:disabled {
+  color: rgba(var(--blue-700-v), 0.2);
+  border-bottom: var(--font-size-200) solid rgba(var(--blue-300-v), 0.1);
+}
+
+#orderbox-params-when-btn {
+  all: unset;
+  width: 100%;
+  padding: var(--padding-050) 0;
+  color: rgba(var(--blue-700-v), 0.7);
+  font-family: var(--font-default);
+  font-size: var(--font-size-400);
+  border-bottom: var(--font-size-200) solid rgba(var(--blue-300-v), 0.15);
+  display: flex;
+}
+
+#orderbox-params-when-btn > p {
+  all: unset;
+  display: block;
+  flex-basis: 100%;
+}
+
+#orderbox-params-when-btn > svg {
+  fill: rgba(var(--blue-700), 0.7);
+}
+
+#orderbox-params-when-btn:disabled > svg {
+  fill: rgba(var(--blue-700-v), 0.2);
 }
 
 #travelinfo {
