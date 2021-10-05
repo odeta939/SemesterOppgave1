@@ -4,6 +4,7 @@ let departureTerminalStreet = "";
 let departureTerminalZipCode = "";
 let capacity = 0;
 let ticketPrice = 0;
+let ticketsLeft = 0;
 let boatName = "";
 let ourRoute = {};
 
@@ -31,13 +32,14 @@ function getRoutes() {
     $.get("Order/GetAllRoutes", function (routes) {
         for (let route of routes) {
             if (route.arrivalTerminalCity == localStorage.getItem("arrival") && route.departureTerminalCity == localStorage.getItem("departure")
-                && route.arrivalTime == localStorage.getItem("arrivalTime") && route.departureTime == localStorage.getItem("departureTime")) {
+                && route.arrivalTime == localStorage.getItem("inbound") && route.departureTime == localStorage.getItem("outbound")) {
                 arrivalTerminalStreet = route.arrivalTerminalStreet;
                 arrivalTerminalZipCode = route.arrivalTerminalZipCode;
                 departureTerminalStreet = route.departureTerminalStreet;
                 departureTerminalZipCode = route.departureTerminalZipCode;
                 capacity = route.boatName.capacity;
                 ticketPrice = route.boatName.ticketPrice;
+                ticketsLeft = route.ticketsLeft;
                 boatName = route.boatName.boatName;
                 ourRoute = route;
             }
@@ -45,25 +47,31 @@ function getRoutes() {
     });
 }
 
-function reduceCapacity(capacity) {
-    ourRoute.capacity = capacity;
+function reduceTicketsLeft(ticketsLeft) {
+    ourRoute.ticketsLeft = ticketsLeft;
 
-    $.get("Order/EditRoute", ourRoute).fail(function (fail) {
+    $.get("Order/EditRoute", ourRoute, function () {
+        //Do nothing :D
+    }).fail(function (fail) {
         alert(fail.responseText);
     });
 }
 
 function setOrder() {
     //----- set the date in index too and bring it to the order page maybe? ----//
-    if (localStorage.getItem("departure") && localStorage.getItem("arrival")) {
+    if (localStorage.getItem("departure") && localStorage.getItem("arrival") && localStorage.getItem("outbound") && localStorage.getItem("inbound")) {
+        //Calling getRoutes to initiate the variables for the order - as well as getting the route object to reduce tickets left depending on the ticketamount chosen.
+        getRoutes();
+
         let departurePlace = localStorage.getItem("departure");
         let arrivalPlace = localStorage.getItem("arrival");
 
-        let out = "Departure place: " + departurePlace + "\n" + "Arrival place: " + arrivalPlace;
+        let departureTime = localStorage.getItem("outbound");
+        let arrivalTime = localStorage.getItem("inbound");
+
+        let out = "Departure place: " + departurePlace + "\n" + "Arrival place: " + arrivalPlace + "\n" + "Departure time: " + departureTime + "\n" + "Arrival time: " + arrivalTime + "\n\n" + "You'll be travelling with " + boatName;
         let tripInfo = $("#tripInfo").text(out);
-        tripInfo.html(tripInfo.html().replace(/\n/g, '<br/>'));
-        //Calling getRoutes to initiate the variables for the order - as well as getting the route object to reduce capacity depending on the ticketamount chosen.
-        //getRoutes();
+        tripInfo.html(tripInfo.html().replace(/\n/g, '<br/>'));        
     } else {
         $("#orderForm").html("");
         let tripInfo = $("#tripInfo").text("You haven't chosen a trip yet! Go back to the home page. :)");
@@ -71,66 +79,24 @@ function setOrder() {
     }
 }
 
-function createOrder() {
-    //getting travel information from index.html through local storage
-    if (localStorage.getItem("arrival") === "Oslo") {
-        //---- get the date from DB instead of hard coding it---//
-        arrivalTerminalStreet = "Schweigaards gate 1";
-        arrivalTerminalZipCode = "1111";
-    } else if (localStorage.getItem("arrival") === "Kobenhavn") {
-        arrivalTerminalStreet = "Dampfergevej 30";
-        arrivalTerminalZipCode = "2100";
-    } else if (localStorage.getItem("arrival") === "Goteborg") {
-        arrivalTerminalStreet = "Danmarksterminalen";
-        arrivalTerminalZipCode = "405 19";
-    } else if (localStorage.getItem("arrival") === "Kiel-Gaarden") {
-        arrivalTerminalStreet = "Kiel kai";
-        arrivalTerminalZipCode = "24143";
-    }
+function createOrder() {   
+    let ticketAmount = $("#ticketAmount").val();
 
-    if (localStorage.getItem("departure") === "Oslo") {
-        departureTerminalStreet = "Schweigaards gate 1";
-        departureTerminalZipCode = "1111";
-    } else if (localStorage.getItem("departure") === "Kobenhavn") {
-        departureTerminalStreet = "Dampfergevej 30";
-        departureTerminalZipCode = "2100";
-    } else if (localStorage.getItem("departure") === "Goteborg") {
-        departureTerminalStreet = "Danmarksterminalen";
-        departureTerminalZipCode = "405 19";
-    } else if (localStorage.getItem("departure") === "Kiel-Gaarden") {
-        departureTerminalStreet = "Kiel kai";
-        departureTerminalZipCode = "24143";
-    }
-
-    if ($("#boatName").val() === "Colorline") {
-        capacity = 1000;
-        ticketPrice = 400;
-    } else if ($("#boatName").val() === "Hurtigruten") {
-        capacity = 600;
-        ticketPrice = 1250;
-    } else if ($("#boatName").val() === "DFDS") {
-        capacity = 400;
-        ticketPrice = 650;
-    } else if ($("#boatName").val() === "FjordLine") {
-        capacity = 500;
-        ticketPrice = 750;
+    if (ticketsLeft >= ticketAmount) {
+        ticketsLeft -= ticketAmount;
+    } else {
+        alert("There are not that many tickets left for this route!");
+        return;
     }
     
-    let ticketAmount = $("#ticketAmount").val();
-    /*
-    if (capacity - ticketAmount < 0) {
-        alert("There are not that many seats available on the boat, go back and choose another route.");
-    } else {
-        capacity = capacity - ticketAmount;
-    }
-    */
-
+    //Creating the order based on the order.cs model
     const order = {
         ticketAmount: ticketAmount,
         totalPrice: ticketAmount * ticketPrice,
-        departureTime: $("#departureTime").val(),
-        arrivalTime: $("#arrivalTime").val(),
-        boatName: $("#boatName").val(),
+        departureTime: localStorage.getItem("outbound"),
+        arrivalTime: localStorage.getItem("inbound"),
+        ticketsLeft: ticketsLeft,
+        boatName: boatName,
         capacity: capacity,
         ticketPrice: ticketPrice,
         arrivalTerminalName: localStorage.getItem("arrival"),
@@ -155,7 +121,10 @@ function createOrder() {
         localStorage.setItem("order", JSON.stringify(order));
         localStorage.removeItem("arrival");
         localStorage.removeItem("departure");
-        //reduceCapacity(capacity);
+        localStorage.removeItem("outbound");
+        localStorage.removeItem("inbound");
+        //Reducing the amount of tickets left for the route in the database:
+        reduceTicketsLeft(ticketsLeft);
         //Will redirect to an order confirmation page when thats created:
         window.location.href = "index.html";
     }).fail(function (fail) {
