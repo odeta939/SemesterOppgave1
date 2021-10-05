@@ -14,7 +14,7 @@
 
 #orderbox {
   margin: auto;
-  transform: translate(0, -40%);
+  transform: translate(0, -100px);
   border-radius: var(--borderradius-100);
   box-shadow: var(--shadow-700);
   background-color: white;
@@ -128,4 +128,12 @@
   .travelinfo-box {
     margin: unset var(--padding-400);
   }
+}
+
+#orderbox-confirm {
+  text-align: center;
+}
+
+#buyTicket {
+  margin: var(--padding-050) auto 0 auto;
 }

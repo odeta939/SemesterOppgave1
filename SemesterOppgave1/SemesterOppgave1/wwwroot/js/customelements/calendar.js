@@ -54,10 +54,12 @@ function initializeCalendars() {
 
 function createCalendar(direction, date) {
   //Creating the calendar one month at the time
-  $(".calendar" + "." + direction).append(
-    //Setting titel of the month
-    $("<div/>").addClass("calendar-titel").append("<span/>").text(direction)
-  );
+  $(".calendar" + "." + direction)
+    .empty()
+    .append(
+      //Setting title of the month
+      $("<div/>").addClass("calendar-title").append("<span/>").text(direction)
+    );
 
   let day = new Date(date.getFullYear(), date.getMonth(), 1); //first of the given month
 
@@ -100,15 +102,17 @@ function startNewMonth(monthName, date, direction) {
       .addClass("text")
       .addClass(direction)
       .append("<span/>")
-      .text(monthName)
-  );
-  $(".monthText" + "." + direction).append(
-    //Add month text
-    $("<div/>")
-      .addClass("textYear")
-      .addClass(direction)
-      .append("<span/>")
-      .text(date.getFullYear())
+      .html(
+        "<span class='textMonth " +
+          direction +
+          "'>" +
+          monthName +
+          "</span> <span class='textYear " +
+          direction +
+          "'>" +
+          date.getFullYear() +
+          "</span>"
+      )
   );
   $(".monthText" + "." + direction).append(
     //Add month text
@@ -120,18 +124,33 @@ function startNewMonth(monthName, date, direction) {
       .text(">")
   );
 
+  //add container for days
+  const containerDoW = $("<div/>")
+    .addClass("daysOfTheWeek")
+    .addClass("calendar-cells");
+  $(".calendar" + "." + direction)
+    .children()
+    .last()
+    .append(containerDoW);
+
   for (let days = 0; days < daysOfTheWeeks.length; days++) {
     //Add the days of the week to make it look more readible
-    $(".calendar" + "." + direction)
-      .children()
-      .last()
-      .append(
-        $("<div/>")
-          .addClass("dayOfTheWeek")
-          .append("<span/>")
-          .text(daysOfTheWeeks[days].slice(0, 3)) //Only the first three letters are used so that it is also readable on a phone
-      );
+    containerDoW.append(
+      $("<div/>")
+        .addClass("dayOfTheWeek")
+        .append("<span/>")
+        .text(daysOfTheWeeks[days].slice(0, 3)) //Only the first three letters are used so that it is also readable on a phone
+    );
   }
+
+  //add container for days
+  const containerDays = $("<div/>")
+    .addClass("daysInCalendar")
+    .addClass("calendar-cells");
+  $(".calendar" + "." + direction)
+    .children()
+    .last()
+    .append(containerDays);
 
   let startingWeekDay = date.getDay(); //Get the starting day of the week of the date that was provided
 
@@ -142,10 +161,9 @@ function startNewMonth(monthName, date, direction) {
 
   for (let day = 1; day < startingWeekDay; day++) {
     //We create empty days so that the calendar starts on the right day
-    $(".calendar" + "." + direction)
-      .children()
-      .last()
-      .append($("<div/>").addClass("emptyDay").append("<span/>").text(""));
+    containerDays.append(
+      $("<div/>").addClass("emptyDay").append("<span/>").text("")
+    );
   }
 
   for (let days = 0; days < 31; days++) {
@@ -175,29 +193,23 @@ function startNewMonth(monthName, date, direction) {
         today.getMonth() == newDay.getMonth()
       ) {
         //If day is before today we set it to notActive
-        $(".calendar" + "." + direction)
-          .children()
-          .last()
-          .append(
-            $("<div/>")
-              .addClass("day") //day class so that they all look the same
-              .addClass(direction) //direction so that we can track the days
-              .addClass("notActiveDay") //notActive since the user is not able to use it
-              .append("<span/>")
-              .text(newDay.getDate()) //The date
-          );
+        containerDays.append(
+          $("<div/>")
+            .addClass("day") //day class so that they all look the same
+            .addClass(direction) //direction so that we can track the days
+            .addClass("notActiveDay") //notActive since the user is not able to use it
+            .append("<span/>")
+            .text(newDay.getDate()) //The date
+        );
       } else {
         //Otherwise we have a normal day
-        $(".calendar" + "." + direction)
-          .children()
-          .last()
-          .append(
-            $("<div/>")
-              .addClass("day") //day class so that they all look the same
-              .addClass(direction) //direction so that we can track the days
-              .append("<span/>")
-              .text(newDay.getDate()) //The date
-          );
+        containerDays.append(
+          $("<div/>")
+            .addClass("day") //day class so that they all look the same
+            .addClass(direction) //direction so that we can track the days
+            .append("<span/>")
+            .text(newDay.getDate()) //The date
+        );
       }
     }
   }
@@ -327,7 +339,7 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
       if (
         $(this).text() == routeDay &&
         !$(this).hasClass("notActiveDay") &&
-        $(".text" + "." + direction).text() == monthNames[routeMonth - 1]
+        $(".textMonth" + "." + direction).text() == monthNames[routeMonth - 1]
       ) {
         inRoute = true; //Set inRoute true there is an available route
         routeIndex = route; //capacity of the route has the same index as route since they are added to both the arrays at the same time
@@ -338,21 +350,30 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
     if (inRoute) {
       //here we set the onclick
       if (capacity[routeIndex] > 0) {
-        $("<p>" + "Tickets left: " + capacity[routeIndex] + "</p>").appendTo(
-          $(this)
-        );
-        $(
-          "<p>" + "Price per ticket: " + ticketprice[routeIndex] + "</p>"
-        ).appendTo($(this));
+        //   $("<p>" + "Tickets left: " + capacity[routeIndex] + "</p>").appendTo(
+        //     $(this)
+        //   );
+        //   $(
+        //     "<p>" + "Price per ticket: " + ticketprice[routeIndex] + "</p>"
+        //   ).appendTo($(this));
 
         $(this).click(function () {
+          showTicketData(
+            direction,
+            "",
+            "",
+            capacity[routeIndex],
+            "",
+            ticketprice[routeIndex]
+          );
+
           //Only one per outbound and inboud can be selected. This we can check based on antallClicked and directionn
           if (antallClicked == 0) {
             //No days selected so the first is always going to be active
             $(this).addClass("dayActive");
             let arrayDateText = $(this).text().split("T");
             let date = arrayDateText[0]; //Getting the day
-            let selectedMonth = $(".text" + "." + direction).text();
+            let selectedMonth = $(".textMonth" + "." + direction).text();
 
             date += "-" + (monthNames.indexOf(selectedMonth) + 1);
             date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
@@ -377,7 +398,7 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
                 $(this).addClass("dayActive");
                 let arrayDateText = $(this).text().split("T");
                 let date = arrayDateText[0]; //Getting the day
-                let selectedMonth = $(".text" + "." + direction).text();
+                let selectedMonth = $(".textMonth" + "." + direction).text();
 
                 date += "-" + (monthNames.indexOf(selectedMonth) + 1);
                 date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
@@ -407,7 +428,7 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
               $(this).addClass("dayActive");
               let arrayDateText = $(this).text().split("T");
               let date = arrayDateText[0]; //Getting the day
-              let selectedMonth = $(".text" + "." + direction).text();
+              let selectedMonth = $(".textMonth" + "." + direction).text();
 
               date += "-" + (monthNames.indexOf(selectedMonth) + 1);
               date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
@@ -424,4 +445,29 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
       //This also means that the div will be not clickable
     }
   });
+}
+
+function showTicketData(direction, from, to, seatsLeft, time, price) {
+  console.log(direction);
+  console.log(from);
+  console.log(to);
+  console.log(seatsLeft);
+  console.log(time);
+  console.log(price);
+
+  const elem = $("#" + direction + "-details")[0];
+  elem.innerHTML = "";
+  const route = document.createElement("p");
+  route.innerText =
+    direction === "outbound" ? from + " to " + to : to + " to " + from;
+  const seats = document.createElement("p");
+  seats.innerText = "Available seats: " + seatsLeft;
+  const ti = document.createElement("p");
+  ti.innerText = "Departure time: " + time;
+  const pr = document.createElement("p");
+  pr.innerText = "Price per ticket: " + price;
+  elem.append(route);
+  elem.append(seats);
+  elem.append(ti);
+  elem.append(pr);
 }

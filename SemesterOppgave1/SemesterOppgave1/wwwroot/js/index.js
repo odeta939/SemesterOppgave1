@@ -5,8 +5,11 @@ $(function () {
   checkOrder();
   const proceed = supportWarning();
   if (proceed) {
+    addPassengerNrs();
+
     getDeparturePlaces();
 
+    // Handle reloading edge cases
     enableFrom();
     enableDate();
 
@@ -53,6 +56,17 @@ function supportWarning() {
   }
 
   return true;
+}
+
+function addPassengerNrs() {
+  for (let i = 1; i < 100; i++) {
+    $("#passengers").append(
+      $("<option>", {
+        value: i,
+        text: i,
+      })
+    );
+  }
 }
 
 function getDeparturePlaces() {

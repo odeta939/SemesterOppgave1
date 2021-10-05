@@ -39,7 +39,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
+  height: 100vh;
   font-family: var(--font-default);
   font-size: 1.2rem;
   color: var(--black);
@@ -50,14 +50,19 @@ body {
   flex-direction: column;
 }
 
+main {
+  margin-bottom: auto;
+}
+
 #content {
   width: clamp(70%, 80rem, 90%);
   margin: auto;
 }
 
 button {
+  padding: var(--padding-100);
   background: var(--blue-700);
-  border: 2px solid var(--blue-100);
+  border: 2px solid rbga(var(--blue-700), 0.3);
   color: var(--blue-100);
   text-transform: uppercase;
   font-family: var(--font-accent);

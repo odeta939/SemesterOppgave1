@@ -34,8 +34,7 @@
         <div id="content">
             <div id="orderbox">
                 <h2>Select route</h2>
-                <div id="orderbox-ways">
-
+                <div>
                     <label for="orderbox-oneway" class="orderbox-ways-lbl" tabindex="0">
                         <input type="radio" value="oneway" name="nrTrips" id="orderbox-oneway"
                             class="orderbox-ways-radio">
@@ -73,15 +72,28 @@
                             </svg>
                         </button>
                     </div>
-                    <button id="buyTicket" onclick="orderTickets()">
-                        Buy ticket
-                    </button>
+                    <div id="orderbox-params-passengers" class="orderbox-params-dropdown">
+                        <label for="passengers">Passengers</label>
+                        <select id="passengers" name="passengers">
+                        </select>
+                    </div>
                 </div>
                 <div id="orderbox-extend">
                     <div id="body-calendar">
-                        <div class="calendar outbound"></div>
-                        <div class="calendar inbound"></div>
+                        <div>
+                            <div class="calendar outbound"></div>
+                            <div class="ticket-details" id="outbound-details"></div>
+                        </div>
+                        <div>
+                            <div class="calendar inbound" class="ticket-details" id="outbound-details"></div>
+                            <div class="ticket-details" id="inbound-details"></div>
+                        </div>
                     </div>
+                </div>
+                <div id="orderbox-confirm">
+                    <button id="buyTicket" onclick="orderTickets()">
+                        Buy ticket
+                    </button>
                 </div>
             </div>
 

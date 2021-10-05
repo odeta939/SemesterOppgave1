@@ -1,11 +1,10 @@
 custom-footer {
   margin-bottom: 0;
-  margin-top: 0;
+  margin-top: auto;
 }
 
 #footer {
   background: var(--blue-700);
-  margin-top: auto;
   text-align: center;
   font-size: var(--font-size-300);
   color: var(--blue-100);
