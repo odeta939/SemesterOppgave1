@@ -7,13 +7,15 @@ $(function () {
   if (proceed) {
     getDeparturePlaces();
 
+    enableFrom();
+    enableDate();
+
     $("#fromPlace").on("change", function () {
-      $("#toPlace").removeAttr("disabled");
-      setToPlaces();
+      enableFrom();
     });
 
     $("#toPlace").on("change", function () {
-      $("#orderbox-params-when-btn").removeAttr("disabled");
+      enableDate();
     });
   }
 });
@@ -59,6 +61,30 @@ function getDeparturePlaces() {
   });
 }
 
+function enableFrom() {
+  const from = $('select[name="from"]')[0].value;
+  const to = $("#toPlace")[0];
+  if (from !== "noPlace" && from !== "") {
+    console.log(from);
+    to.removeAttribute("disabled");
+    setToPlaces();
+  } else {
+    console.log("In else");
+    to.setAttribute("disabled", true);
+  }
+}
+
+function enableDate() {
+  const date = $("#orderbox-params-when-btn")[0];
+  const to = $('select[name="to"]')[0].value;
+  if (to !== "noPlace" && to !== "") {
+    date.removeAttribute("disabled");
+  } else {
+    addPlaceholder("Select destination", "#toPlace");
+    date.setAttribute("disabled", true);
+  }
+}
+
 function setToPlaces() {
   $.get("order/GetAllRoutes", function (routes) {
     AddOptionsToTo(routes);
@@ -66,6 +92,8 @@ function setToPlaces() {
 }
 
 function initialPlaces(routes) {
+  addPlaceholder("Select origin", "#fromPlace");
+
   for (let route of routes) {
     let arrivalCity = route.arrivalTerminalCity;
     let departureCity = route.departureTerminalCity;
@@ -93,6 +121,9 @@ function AddOptionsToTo(routes) {
   fromList = [];
   $("#toPlace").empty();
   let selectedCity = $("#fromPlace").children("option:selected").val();
+
+  addPlaceholder("Select destination", "#toPlace");
+
   for (let route of routes) {
     if (route.departureTerminalCity == selectedCity) {
       let arrivalCity = route.arrivalTerminalCity;
@@ -107,6 +138,17 @@ function AddOptionsToTo(routes) {
       }
     }
   }
+}
+
+// Adds placeholder option (edge-case handling)
+function addPlaceholder(text, parent) {
+  const option = document.createElement("option");
+  option.value = "noPlace";
+  option.setAttribute("disabled", true);
+  option.setAttribute("selected", true);
+  option.setAttribute("hidden", true);
+  option.innerText = text;
+  $(parent).append(option);
 }
 
 //Adding departure and arrival place to localstorage to retrieve them in another file!
