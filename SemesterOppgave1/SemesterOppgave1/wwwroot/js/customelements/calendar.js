@@ -1,43 +1,3 @@
-<<<<<<< HEAD
-=======
-// // Define custom element
-// class Calendar extends HTMLElement {
-//   constructor() {
-//     super();
-
-//     this.attachShadow({ mode: "open" });
-//     const link = document.createElement("link");
-//     link.setAttribute("rel", "stylesheet");
-//     link.setAttribute("href", "./css/customelements/calendar.css");
-
-//     this.shadowRoot.appendChild(link);
-
-//     const wrapper = document.createElement("div");
-//     wrapper.setAttribute("class", "orderbox-extended-calendar");
-
-//     /**
-//      * Create calendar placement structure
-//      * <body-calendar>
-//      *    <calendar-inbound>
-//      *    <calendar-outbound>
-//      * </body-calendar>
-//      */
-//     const calendars = wrapper.appendChild(document.createElement("div"));
-//     calendars.setAttribute("id", "body-calendar");
-
-//     const calOutbound = calendars.appendChild(document.createElement("div"));
-//     calOutbound.setAttribute("class", "calendar outbound");
-
-//     const calInbound = calendars.appendChild(document.createElement("div"));
-//     calInbound.setAttribute("class", "calendar inbound");
-
-//     this.shadowRoot.append(wrapper);
-//   }
-// }
-
-// customElements.define("expand-calendar", Calendar);
-
->>>>>>> a4b94a7 (Not working)
 const monthNames = [
   "January",
   "February",
@@ -77,13 +37,8 @@ let oneWay = false;
 
 let ticketsWanted;
 
-<<<<<<< HEAD
 function initializeCalendars() {
   oneWay = $('input[name="nrTrips"]:checked').val() == "oneway" ? true : false;
-=======
-function initialize() {
-  console.log("In initialise");
->>>>>>> a4b94a7 (Not working)
   monthInbound = inboundDate.getMonth(); //Getting the current month
   monthOutbound = outboundDate.getMonth(); //Getting the current month
 
@@ -98,9 +53,6 @@ function initialize() {
 }
 
 function createCalendar(direction, date) {
-  console.log("In create calendar");
-  console.log($(".calendar" + "." + direction));
-  console.log($(".calendar" + "." + direction).attr("class"));
   //Creating the calendar one month at the time
   $(".calendar" + "." + direction).append(
     //Setting titel of the month

@@ -53,30 +53,6 @@ function supportWarning() {
   return true;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-function setCalendarBtn() {
-  const btn = $("#date")[0];
-  btn.addEventListener("click", (e) => {
-    const container = $("#orderbox-extend")[0];
-    container.innerHTML = "";
-    const calendar = document.createElement("expand-calendar");
-    container.appendChild(calendar);
-  });
-}
-
-
-=======
->>>>>>> 7cc7e17 (Calendar working + initial style)
-=======
-function loadCalendars() {
-  const wrapper = $("#orderbox-extend")[0];
-  wrapper.innerHTML = "";
-  wrapper.appendChild(document.createElement("expand-calendar"));
-  initialize();
-}
-
->>>>>>> a4b94a7 (Not working)
 function getDeparturePlaces() {
   $.get("order/GetAllRoutes", function (routes) {
     initialPlaces(routes);
