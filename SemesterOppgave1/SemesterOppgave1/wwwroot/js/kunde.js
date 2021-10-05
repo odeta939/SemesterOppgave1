@@ -1,24 +1,23 @@
 ﻿$(function () {
-    getCustomers();
-    //getIndex();
+    getAll();
 });
 
-function getCustomers() {
+function getAll() {
     $.get("order/GetAllRoutes", function ( routes) {
-        //skrivUt();
         console.log(routes)
     });
     $.get("order/GetAllOrders", function (orders) {
-        //skrivUt();
         console.log(orders)
     });
+    $.get("order/GetAllCustomers", function (customers) {
+        console.log(customers);
+    });
+    $.get("order/GetAllTerminals", function (terminals) {
+        console.log(terminals);
+    });
+    $.get("order/GetAllBoats", function (boats) {
+        console.log(boats);
+    });
 }
-/*
-function skrivUt(customers) {
-    for (let customer of customers) {
-        console.log(customer.firstname);
-        console.log(customer.lastname);
-    }
-}*/
 
 

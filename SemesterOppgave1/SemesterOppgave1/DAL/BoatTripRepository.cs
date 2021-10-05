@@ -436,14 +436,18 @@ namespace SemesterOppgave1.DAL
                 var newOrder = new Orders();
 
                 //The customer for the order, gets its info from the order parameter sent from the frontend
-                var customer = new Customers
+                var customer = await _db.Customers.FirstOrDefaultAsync(c => c.Email == order.Email);
+                if(customer == null)
                 {
-                    Firstname = order.Firstname,
-                    Lastname = order.Lastname,
-                    Street = order.Street,
-                    Phonenr = order.Phonenr,
-                    Email = order.Email
-                };
+                    customer = new Customers
+                    {
+                        Firstname = order.Firstname,
+                        Lastname = order.Lastname,
+                        Street = order.Street,
+                        Phonenr = order.Phonenr,
+                        Email = order.Email
+                    };
+                }                
 
                 var checkPostPlace = await _db.PostPlaces.FirstOrDefaultAsync(p => p.ZipCode == order.ZipCode);
                 //If the postplace doesnt already exist we create a new PostPlace
@@ -460,68 +464,11 @@ namespace SemesterOppgave1.DAL
                 {
                     customer.Postplace = checkPostPlace;
                 }
-
-                //The boat for the route
-                var boat = new Boats
-                {
-                    BoatName = order.BoatName,
-                    Capacity = Convert.ToInt32(order.Capacity),
-                    TicketPrice = Convert.ToInt32(order.TicketPrice)
-                };
-
-                //The terminals for the route
-                var departureTerminal = new Terminals
-                {
-                    TerminalName = order.DepartureTerminalName,
-                    Street = order.DepartureTerminalStreet,
-                };
-                var checkTerminalPlace = await _db.PostPlaces.FirstOrDefaultAsync(p => p.ZipCode == order.DepartureTerminalZipCode);
-                //If the postplace doesnt already exist, we create a new PostPlace
-                if(checkTerminalPlace == null)
-                {
-                    var newTerminalPlace = new PostPlaces
-                    {
-                        ZipCode = order.DepartureTerminalZipCode,
-                        City = order.DepartureTerminalCity
-                    };
-                    departureTerminal.TerminalAddress = newTerminalPlace;
-                }
-                else
-                {
-                    departureTerminal.TerminalAddress = checkTerminalPlace;
-                }
-
-                var arrivalTerminal = new Terminals
-                {
-                    TerminalName = order.ArrivalTerminalName,
-                    Street = order.ArrivalTerminalStreet
-                };
-                var checkTerminal2Place = await _db.PostPlaces.FirstOrDefaultAsync(p => p.ZipCode == order.ArrivalTerminalZipCode);
-                //If the postplace doesnt already exist, we create a new PostPlace
-                if (checkTerminal2Place == null)
-                {
-                    var newTerminalPlace2 = new PostPlaces
-                    {
-                        ZipCode = order.ArrivalTerminalZipCode,
-                        City = order.ArrivalTerminalCity
-                    };
-                    arrivalTerminal.TerminalAddress = newTerminalPlace2;
-                }
-                else
-                {
-                    arrivalTerminal.TerminalAddress = checkTerminal2Place;
-                }
-
-                //The route for the order
-                var route = new Routes
-                {
-                    DepartureTime = order.DepartureTime,
-                    ArrivalTime = order.ArrivalTime,
-                    TicketsLeft = order.TicketsLeft
-                };
-                route.Boat = boat;
-                route.DeparturePlace = departureTerminal;
-                route.ArrivalPlace = arrivalTerminal;
+                
+                //The route for the order                
+                var route = await _db.Routes.FirstOrDefaultAsync(r => r.DepartureTime == order.DepartureTime 
+                && r.DeparturePlace.TerminalName == order.DepartureTerminalName 
+                && r.ArrivalPlace.TerminalName == order.ArrivalTerminalName);
 
                 newOrder.TicketAmount = order.TicketAmount;
                 newOrder.TotalPrice = order.TotalPrice;
@@ -529,11 +476,6 @@ namespace SemesterOppgave1.DAL
                 newOrder.Route = route;
 
                 _db.Orders.Add(newOrder);
-                var checkCustomer = await _db.Customers.FirstOrDefaultAsync(c => c.Email == customer.Email);
-                if(checkCustomer == null)
-                {
-                    _db.Customers.Add(customer);
-                }
                 
                 await _db.SaveChangesAsync();
                 return true;
