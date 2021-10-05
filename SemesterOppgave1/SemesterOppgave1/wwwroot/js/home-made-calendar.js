@@ -13,7 +13,7 @@ let monthOutbound; //Which outbound month to show
 let inboundDate = new Date(); //Current date to start with
 let outboundDate = new Date(); //Current date to start with
 let departureCity = "Oslo"; 
-let arrivalCity = "Kiel-Gaarden";
+let arrivalCity = "Goteborg";
 let oneWay = false;
 
 let ticketsWanted;
@@ -234,7 +234,6 @@ function arrowOnClick(value, direction) { //We want to change the month of the c
 
 function getRoutes(departureCity, arrivalCity, direction) {
     $.get("order/GetAllRoutes", function (routes) { //Getting routes from database
-        console.log(routes)
         let routeList = [] //List of departure times
         let capacityList = [] //List of capacity
         let ticketPriceList = [] //List of prices per route
@@ -242,7 +241,7 @@ function getRoutes(departureCity, arrivalCity, direction) {
         $.each(routes, function (index, route) { //Check every route if matching arrivalcity and departurecity
             if (route.arrivalTerminalCity == arrivalCity && route.departureTerminalCity == departureCity) {
                 routeList.push(route.departureTime) 
-                capacityList.push(route.capacity) 
+                capacityList.push(route.ticketsLeft) 
                 ticketPriceList.push(route.ticketPrice)
             }
         });
