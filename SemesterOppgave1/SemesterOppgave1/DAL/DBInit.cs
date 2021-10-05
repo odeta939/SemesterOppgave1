@@ -97,26 +97,22 @@ namespace SemesterOppgave1.DAL
                     string departureDateString = departureDate.ToString("dd-MM-yyyy");
                     DateTime arrivalDate = dateToday.AddDays(i + 1);
                     string arrivalDateString = arrivalDate.ToString("dd-MM-yyyy");
-
+                    
                     //The Boats go back and forward and it takes one day to get there. On even days they go one way on the uneven days the go back.
                     if(departureDate.Day % 2 == 0)
                     {
-                        routeList.Add(new Routes { Boat = boat1, DeparturePlace = Terminal1, ArrivalPlace = Terminal2, DepartureTime = departureDateString, ArrivalTime = arrivalDateString });
-                        routeList.Add(new Routes { Boat = boat2, DeparturePlace = Terminal1, ArrivalPlace = Terminal4, DepartureTime = departureDateString, ArrivalTime = arrivalDateString });
-                        routeList.Add(new Routes { Boat = boat3, DeparturePlace = Terminal1, ArrivalPlace = Terminal3, DepartureTime = departureDateString, ArrivalTime = arrivalDateString });
-                        routeList.Add(new Routes { Boat = boat4, DeparturePlace = Terminal3, ArrivalPlace = Terminal4, DepartureTime = departureDateString, ArrivalTime = arrivalDateString });
+                        routeList.Add(new Routes { Boat = boat1, DeparturePlace = Terminal1, ArrivalPlace = Terminal2, DepartureTime = departureDateString, ArrivalTime = arrivalDateString, TicketsLeft = boat1.Capacity });
+                        routeList.Add(new Routes { Boat = boat2, DeparturePlace = Terminal1, ArrivalPlace = Terminal4, DepartureTime = departureDateString, ArrivalTime = arrivalDateString, TicketsLeft = boat2.Capacity });
+                        routeList.Add(new Routes { Boat = boat3, DeparturePlace = Terminal1, ArrivalPlace = Terminal3, DepartureTime = departureDateString, ArrivalTime = arrivalDateString, TicketsLeft = boat3.Capacity });
+                        routeList.Add(new Routes { Boat = boat4, DeparturePlace = Terminal3, ArrivalPlace = Terminal4, DepartureTime = departureDateString, ArrivalTime = arrivalDateString, TicketsLeft = boat4.Capacity });
                     }
                     else
                     {
-                        routeList.Add(new Routes { Boat = boat1, DeparturePlace = Terminal2, ArrivalPlace = Terminal1, DepartureTime = departureDateString, ArrivalTime = arrivalDateString });
-                        routeList.Add(new Routes { Boat = boat2, DeparturePlace = Terminal4, ArrivalPlace = Terminal1, DepartureTime = departureDateString, ArrivalTime = arrivalDateString });
-                        routeList.Add(new Routes { Boat = boat3, DeparturePlace = Terminal3, ArrivalPlace = Terminal1, DepartureTime = departureDateString, ArrivalTime = arrivalDateString });
-                        routeList.Add(new Routes { Boat = boat4, DeparturePlace = Terminal4, ArrivalPlace = Terminal3, DepartureTime = departureDateString, ArrivalTime = arrivalDateString });
+                        routeList.Add(new Routes { Boat = boat1, DeparturePlace = Terminal2, ArrivalPlace = Terminal1, DepartureTime = departureDateString, ArrivalTime = arrivalDateString, TicketsLeft = boat1.Capacity });
+                        routeList.Add(new Routes { Boat = boat2, DeparturePlace = Terminal4, ArrivalPlace = Terminal1, DepartureTime = departureDateString, ArrivalTime = arrivalDateString, TicketsLeft = boat2.Capacity });
+                        routeList.Add(new Routes { Boat = boat3, DeparturePlace = Terminal3, ArrivalPlace = Terminal1, DepartureTime = departureDateString, ArrivalTime = arrivalDateString, TicketsLeft = boat3.Capacity });
+                        routeList.Add(new Routes { Boat = boat4, DeparturePlace = Terminal4, ArrivalPlace = Terminal3, DepartureTime = departureDateString, ArrivalTime = arrivalDateString, TicketsLeft = boat4.Capacity });
                     }
-                }
-                foreach (Routes route in routeList)
-                {
-                    context.Routes.Add(route);
                 }
 
                 
@@ -134,11 +130,18 @@ namespace SemesterOppgave1.DAL
                         randomTicketAmount = rnd.Next(250, 600);
                     }
 
+                    route.TicketsLeft -= randomTicketAmount;
+
                     int totalPrice = route.Boat.TicketPrice * randomTicketAmount;
                     var order = new Orders { Route = route, Customer = customers[index], TicketAmount = randomTicketAmount, TotalPrice = totalPrice };
                     context.Orders.Add(order);
                 }
-                
+
+                foreach (Routes route in routeList)
+                {
+                    context.Routes.Add(route);
+                }
+
                 // context.Orders.Add(order);
                 context.SaveChanges();
 

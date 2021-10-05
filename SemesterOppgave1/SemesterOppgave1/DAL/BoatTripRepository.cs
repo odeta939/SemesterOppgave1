@@ -267,6 +267,7 @@ namespace SemesterOppgave1.DAL
                     Id = r.Id,
                     DepartureTime = r.DepartureTime,
                     ArrivalTime = r.ArrivalTime,
+                    TicketsLeft = r.TicketsLeft,
                     BoatName = r.Boat.BoatName,
                     Capacity = r.Boat.Capacity,
                     TicketPrice = r.Boat.TicketPrice,
@@ -297,6 +298,7 @@ namespace SemesterOppgave1.DAL
                     Id = route.Id,
                     DepartureTime = route.DepartureTime,
                     ArrivalTime = route.ArrivalTime,
+                    TicketsLeft = route.TicketsLeft,
                     BoatName = route.Boat.BoatName,
                     Capacity = route.Boat.Capacity,
                     TicketPrice = route.Boat.TicketPrice,
@@ -324,6 +326,7 @@ namespace SemesterOppgave1.DAL
                 Routes route = await _db.Routes.FindAsync(editedRoute.Id);
                 route.DepartureTime = editedRoute.DepartureTime;
                 route.ArrivalTime = editedRoute.ArrivalTime;
+                route.TicketsLeft = editedRoute.TicketsLeft;
                 route.Boat.BoatName = editedRoute.BoatName;
                 route.Boat.Capacity = editedRoute.Capacity;
                 route.Boat.TicketPrice = editedRoute.TicketPrice;
@@ -356,6 +359,7 @@ namespace SemesterOppgave1.DAL
                     TotalPrice = o.TotalPrice,
                     DepartureTime = o.Route.DepartureTime,
                     ArrivalTime = o.Route.ArrivalTime,
+                    TicketsLeft = o.Route.TicketsLeft,
                     BoatName = o.Route.Boat.BoatName,
                     Capacity = o.Route.Boat.Capacity,
                     TicketPrice = o.Route.Boat.TicketPrice,
@@ -396,6 +400,7 @@ namespace SemesterOppgave1.DAL
                     TotalPrice = order.TotalPrice,
                     DepartureTime = order.Route.DepartureTime,
                     ArrivalTime = order.Route.ArrivalTime,
+                    TicketsLeft = order.Route.TicketsLeft,
                     BoatName = order.Route.Boat.BoatName,
                     Capacity = order.Route.Boat.Capacity,
                     TicketPrice = order.Route.Boat.TicketPrice,
@@ -511,7 +516,8 @@ namespace SemesterOppgave1.DAL
                 var route = new Routes
                 {
                     DepartureTime = order.DepartureTime,
-                    ArrivalTime = order.ArrivalTime
+                    ArrivalTime = order.ArrivalTime,
+                    TicketsLeft = order.TicketsLeft
                 };
                 route.Boat = boat;
                 route.DeparturePlace = departureTerminal;

@@ -32,6 +32,7 @@ namespace SemesterOppgave1.DAL
         public int Id { get; set; }
         public string DepartureTime { get; set; }
         public string ArrivalTime { get; set; }
+        public int TicketsLeft { get; set; }
         public virtual Boats Boat { get; set; }
         public virtual Terminals DeparturePlace { get; set; }
         public virtual Terminals ArrivalPlace { get; set; }
