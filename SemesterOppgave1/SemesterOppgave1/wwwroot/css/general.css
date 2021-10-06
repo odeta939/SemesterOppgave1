@@ -62,6 +62,12 @@ main {
   margin-bottom: var(--padding-100);
 }
 
+#return-content {
+    width: clamp(70%, 80rem, 90%);
+    margin: auto;
+    margin-bottom: var(--padding-100);
+}
+
 h1,
 h2,
 h3 {

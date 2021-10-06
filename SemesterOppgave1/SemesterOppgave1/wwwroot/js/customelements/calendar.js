@@ -31,21 +31,23 @@ let monthOutbound; //Which outbound month to show
 
 let inboundDate = new Date(); //Current date to start with
 let outboundDate = new Date(); //Current date to start with
-let departureCity = localStorage.getItem("departure");
-let arrivalCity = localStorage.getItem("arrival");
+let departureCity = "";
+let arrivalCity = "";
 let oneWay = false;
 
 let ticketsWanted;
 
 function initializeCalendars() {
+  departureCity = localStorage.getItem("departure");
+  arrivalCity = localStorage.getItem("arrival");
   oneWay = $('input[name="nrTrips"]:checked').val() == "oneway" ? true : false;
   monthInbound = inboundDate.getMonth(); //Getting the current month
   monthOutbound = outboundDate.getMonth(); //Getting the current month
 
   if (oneWay) {
     // One way
-      createCalendar(outbound, outboundDate); //Creating outbound calendar
-      $(".calendar.inbound").children().empty();
+    createCalendar(outbound, outboundDate); //Creating outbound calendar
+    $(".calendar.inbound").children().empty();
   } else {
     // Back and forth
     createCalendar(outbound, outboundDate); //Creating outbound calendar

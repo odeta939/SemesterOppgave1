@@ -381,8 +381,10 @@ namespace SemesterOppgave1.DAL
                 }).ToListAsync();
                 return allOrders;
             }
-            catch
+            catch (Exception e)
             {
+                _log.LogInformation(e.Message);
+                _log.LogInformation(e.InnerException.Message);
                 return null;
             }
         }

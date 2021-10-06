@@ -186,6 +186,7 @@ function orderTickets() {
     if ($("#toPlace").val() === null || $("#fromPlace").val() === null || !localStorage.getItem("outbound")) {
     alert("Select a departure city, a destination and a date!");
     } else {
+        localStorage.setItem("ticketAmount", $("#passengers").children("option:selected").text());
         if (localStorage.getItem("inbound")) {
             let outbound = localStorage.getItem("outbound");
             let outboundArr = outbound.split("-");

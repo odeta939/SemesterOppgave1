@@ -142,7 +142,9 @@ function setOrder() {
   }
   //If there are no values in localStorage:
   else {
-    $("#orderForm").html("");
+      $("#orderForm").html("");
+      $("#selected-title").html("");
+      $("#personal-title").html("");
     let tripInfo = $("#tripInfo").text(
       "You haven't chosen a trip yet! Go back to the home page. :)"
     );
@@ -159,7 +161,7 @@ function setOrder() {
 }
 
 function createOrder() {
-  let ticketAmount = $("#ticketAmount").val();
+  let ticketAmount = localStorage.getItem("ticketAmount");
   let firstname = $("#firstName").val();
   let lastname = $("#lastName").val();
   let phonenr = $("#phoneNr").val();
@@ -246,6 +248,7 @@ function createOrder() {
       localStorage.removeItem("departure");
       localStorage.removeItem("outbound");
       localStorage.removeItem("inbound");
+      localStorage.removeItem("ticketAmount");
       //Reducing the amount of tickets left for the route in the database:
       reduceTicketsLeft(firstRoute);
     }).fail(function (fail) {
@@ -261,6 +264,7 @@ function createOrder() {
       localStorage.removeItem("departure");
       localStorage.removeItem("outbound");
       localStorage.removeItem("inbound");
+      localStorage.removeItem("ticketAmount");
       //Reducing the amount of tickets left for the roundtrip route in the database:
       reduceTicketsLeft(roundTripRoute);
       //Will redirect to an order confirmation page when thats created:
@@ -311,6 +315,7 @@ function createOrder() {
       localStorage.removeItem("departure");
       localStorage.removeItem("outbound");
       localStorage.removeItem("inbound");
+      localStorage.removeItem("ticketAmount");
       //Reducing the amount of tickets left for the route in the database:
       reduceTicketsLeft(firstRoute);
       //Will redirect to an order confirmation page when thats created:
