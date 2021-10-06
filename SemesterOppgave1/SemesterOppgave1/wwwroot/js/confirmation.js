@@ -14,6 +14,7 @@ function loadConfirmation() {
     $("#content").append("<h2 id='info'>Your order has been registered</h2>")
     $("#content").append(`<div id="dep-info">
                                 <h3>Outbound:</h3>
+                                    <p><b>Departure</b></p>
                                     <p><b>Terminal:</b> ${orderOut.departureTerminalName}</p>
                                     <p id="address"><b>Address:</b>
                                                      ${orderOut.departureTerminalStreet}, 
@@ -22,7 +23,7 @@ function loadConfirmation() {
                                     <p><b>departure date:</b> ${orderOut.departureTime}</p>
                            </div>`)
     $("#content").append(`<div id="arr-info">
-                                <h3>Arrival:</h3>
+                                <p><b>Arrival</b></p>
                                     <p><b>Terminal:</b> ${orderOut.arrivalTerminalName}</p>
                                     <p id="address"><b>Address:</b>
                                                      ${orderOut.arrivalTerminalStreet}, 
@@ -37,6 +38,7 @@ function loadConfirmation() {
     if (Object.keys(orderIn).length != 0) {
         $("#content").append(`<div id="dep-info">
                                 <h3>Return:</h3>
+                                    <p><b>Departure</b></p>
                                     <p><b>Terminal:</b> ${orderIn.departureTerminalName}</p>
                                     <p id="address"><b>Address:</b>
                                                      ${orderIn.departureTerminalStreet}, 
@@ -45,15 +47,14 @@ function loadConfirmation() {
                                     <p><b>departure date:</b> ${orderIn.departureTime}</p>
                            </div>`)
         $("#content").append(`<div id="arr-info">
-                                <h3>Arrival:</h3>
+                                <p><b>Departure</b></p>
                                     <p><b>Terminal:</b> ${orderIn.arrivalTerminalName}</p>
                                     <p id="address"><b>Address:</b>
                                                      ${orderIn.arrivalTerminalStreet}, 
                                                      ${orderIn.arrivalTerminalZipCode}
                                                      ${orderIn.arrivalTerminalCity}</p>
                                    <p><b>Arrival date:</b> ${orderIn.arrivalTime}</p>
-                           </div>`)
-        $("#content").append(``)
+                           </div>`
     }
   
 
