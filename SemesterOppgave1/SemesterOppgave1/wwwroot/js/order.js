@@ -110,7 +110,8 @@ function setOrder() {
     let arrivalPlace = localStorage.getItem("arrival");
     let departureTime = localStorage.getItem("outbound");
 
-    let out =
+      let out =
+      "Inbound trip:\n\n" +
       "Departure place: " +
       departurePlace +
       "\n" +
@@ -126,7 +127,7 @@ function setOrder() {
     let departureTime2 = localStorage.getItem("inbound");
 
     let out2 =
-      "You chose a round trip so your return boat trip will be as shown below: \n\n" +
+      "Outbound trip:\n\n" +
       "Departure place: " +
       arrivalPlace +
       "\n" +
@@ -158,6 +159,13 @@ function setOrder() {
 
 function createOrder() {
   let ticketAmount = $("#ticketAmount").val();
+  let firstname = $("#firstName").val();
+  let lastname = $("#lastName").val();
+  let phonenr = $("#phoneNr").val();
+  let email = $("#email").val();
+  let street = $("#streetName").val();
+  let zipCode = $("#zipCode").val();
+  let city = $("#cityName").val();
 
   console.log(roundtrip);
 
@@ -194,13 +202,13 @@ function createOrder() {
       departureTerminalStreet: firstRoute.departureTerminalStreet,
       departureTerminalZipCode: firstRoute.departureTerminalZipCode,
       departureTerminalCity: localStorage.getItem("departure"),
-      firstname: $("#firstName").val(),
-      lastname: $("#lastName").val(),
-      phonenr: $("#phoneNr").val(),
-      email: $("#email").val(),
-      street: $("#streetName").val(),
-      zipCode: $("#zipCode").val(),
-      city: $("#cityName").val(),
+      firstname: firstname,
+      lastname: lastname,
+      phonenr: phonenr,
+      email: email,
+      street: street,
+      zipCode: zipCode,
+      city: city,
     };
 
     const order2 = {
@@ -220,13 +228,13 @@ function createOrder() {
       departureTerminalStreet: roundTripRoute.departureTerminalStreet,
       departureTerminalZipCode: roundTripRoute.departureTerminalZipCode,
       departureTerminalCity: localStorage.getItem("arrival"),
-      firstname: $("#firstName").val(),
-      lastname: $("#lastName").val(),
-      phonenr: $("#phoneNr").val(),
-      email: $("#email").val(),
-      street: $("#streetName").val(),
-      zipCode: $("#zipCode").val(),
-      city: $("#cityName").val(),
+      firstname: firstname,
+      lastname: lastname,
+      phonenr: phonenr,
+      email: email,
+      street: street,
+      zipCode: zipCode,
+      city: city,
     };
 
     $.post("Order/SaveOrder", order, function () {
@@ -285,13 +293,13 @@ function createOrder() {
       departureTerminalStreet: firstRoute.departureTerminalStreet,
       departureTerminalZipCode: firstRoute.departureTerminalZipCode,
       departureTerminalCity: localStorage.getItem("departure"),
-      firstname: $("#firstName").val(),
-      lastname: $("#lastName").val(),
-      phonenr: $("#phoneNr").val(),
-      email: $("#email").val(),
-      street: $("#streetName").val(),
-      zipCode: $("#zipCode").val(),
-      city: $("#cityName").val(),
+      firstname: firstname,
+      lastname: lastname,
+      phonenr: phonenr,
+      email: email,
+      street: street,
+      zipCode: zipCode,
+      city: city,
     };
 
     $.post("Order/SaveOrder", order, function () {

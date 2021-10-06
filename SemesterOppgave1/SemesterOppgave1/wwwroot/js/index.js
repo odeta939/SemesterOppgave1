@@ -2,7 +2,7 @@ let toList = [];
 let fromList = [];
 
 $(function () {
-  window.localStorage.clear();
+  localStorage.clear();
   checkOrder();
   const proceed = supportWarning();
   if (proceed) {
@@ -18,7 +18,6 @@ $(function () {
         enableFrom();
         let departurePlace = $("#fromPlace").children("option:selected").text();
         $(".calendar.inbound").children().empty();
-        $(".calendar.outbound").children().empty();
         $(".calendar.outbound").children().empty();
         $("#inbound-details").children().empty();
         $("#outbound-details").children().empty();
@@ -187,8 +186,26 @@ function addPlaceholder(text, parent) {
 function orderTickets() {
     if ($("#toPlace").val() === null || $("#fromPlace").val() === null || !localStorage.getItem("outbound")) {
     alert("Select a departure city, a destination and a date!");
-  } else {
-    window.location.href = "order.html";
+    } else {
+        if (localStorage.getItem("inbound")) {
+            let outbound = localStorage.getItem("outbound");
+            let outboundArr = outbound.split("-");
+            let outboundCorrectOrder = outboundArr[2] + "-" + outboundArr[1] + "-" + outboundArr[0];
+            var outboundDate = new Date(outboundCorrectOrder);
+
+            let inbound = localStorage.getItem("inbound");
+            let inboundArr = inbound.split("-");
+            let inboundCorrectOrder = inboundArr[2] + "-" + inboundArr[1] + "-" + inboundArr[0];
+            var inboundDate = new Date(inboundCorrectOrder);
+
+            if (inboundDate < outboundDate) {
+                alert("Your return trip is before your first trip! Choose a new date for your inbound (return) trip.");
+            } else {
+                window.location.href = "order.html";
+            }
+        } else {
+            window.location.href = "order.html";
+        }
   }
 }
 

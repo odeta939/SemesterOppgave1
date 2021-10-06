@@ -44,7 +44,8 @@ function initializeCalendars() {
 
   if (oneWay) {
     // One way
-    createCalendar(outbound, outboundDate); //Creating outbound calendar
+      createCalendar(outbound, outboundDate); //Creating outbound calendar
+      $(".calendar.inbound").children().empty();
   } else {
     // Back and forth
     createCalendar(outbound, outboundDate); //Creating outbound calendar
@@ -357,13 +358,16 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
         //     "<p>" + "Price per ticket: " + ticketprice[routeIndex] + "</p>"
         //   ).appendTo($(this));
 
-        $(this).click(function () {
+          $(this).click(function () {
+
+          let ticketDate = $(this).text().split("T")[0] + "-" + (monthNames.indexOf($(".textMonth" + "." + direction).text()) + 1) + "-" + $(".textYear" + "." + direction).text();
+
           showTicketData(
             direction,
             localStorage.getItem("departure"),
             localStorage.getItem("arrival"),
             capacity[routeIndex],
-            "",
+            ticketDate,
             ticketprice[routeIndex]
           );
 
@@ -461,14 +465,6 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
 }
 
 function showTicketData(direction, from, to, seatsLeft, time, price) {
-  /*console.log(direction);
-  console.log(from);
-  console.log(to);
-  console.log(seatsLeft);
-  console.log(time);
-  console.log(price);
-  */
-
   const elem = $("#" + direction + "-details")[0];
   elem.innerHTML = "";
   const route = document.createElement("p");
