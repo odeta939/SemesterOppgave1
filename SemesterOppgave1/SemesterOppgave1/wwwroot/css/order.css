@@ -1,0 +1,61 @@
+#orderForm {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: var(--padding-100);
+  margin-bottom: var(--padding-100);
+}
+
+.form-check-group {
+  margin: var(--padding-025) var(--padding-050);
+}
+
+@supports (gap: var(--padding-100)) {
+  .form-check-group {
+    margin: var(--padding-025) 0;
+  }
+}
+
+.form-check-group label {
+  display: block;
+  text-align: start;
+  text-transform: uppercase;
+  color: var(--blue-500);
+  font-family: var(--font-accent);
+  font-weight: 600;
+  font-size: var(--font-size-300);
+}
+
+.form-check-group input {
+  width: 100%;
+  background: transparent;
+  border: unset;
+  padding: var(--padding-025) 0;
+  color: rgba(var(--blue-700-v), 0.7);
+  font-family: var(--font-default);
+  font-size: var(--font-size-400);
+  border-bottom: var(--font-size-200) solid rgba(var(--blue-300-v), 0.15);
+}
+
+.form-check-group input:focus {
+  outline: none;
+  border-bottom: var(--font-size-200) solid rgba(var(--blue-300-v), 1);
+}
+
+.form-check-group-fail {
+  color: var(--accent-500);
+  font-weight: 600;
+  font-size: var(--font-size-400);
+  font-family: var(--font-accent);
+}
+
+@media only screen and (max-width: 1000px) {
+  #orderForm {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  #orderForm {
+    grid-template-columns: 1fr;
+  }
+}
