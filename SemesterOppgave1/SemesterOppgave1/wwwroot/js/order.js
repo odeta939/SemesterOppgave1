@@ -200,7 +200,7 @@ function createOrder() {
             //Reducing the amount of tickets left for the roundtrip route in the database:
             reduceTicketsLeft(roundTripRoute);
             //Will redirect to an order confirmation page when thats created:
-            //window.location.href = "index.html";
+            window.location.href = "confirmation.html";
         }).fail(function (fail) {
             alert(fail.responseText);
         });
@@ -250,7 +250,7 @@ function createOrder() {
             //Reducing the amount of tickets left for the route in the database:
             reduceTicketsLeft(firstRoute);
             //Will redirect to an order confirmation page when thats created:
-            //window.location.href = "index.html";
+            window.location.href = "confirmation.html";
         }).fail(function (fail) {
             alert(fail.responseText);
         });
