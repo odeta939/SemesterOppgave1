@@ -12,7 +12,9 @@ class Navbar extends HTMLElement {
     nav.setAttribute("id", "nav");
     const div = nav.appendChild(document.createElement("div"));
     div.setAttribute("class", "nav-logo");
-    const img = div.appendChild(document.createElement("img"));
+    const href = div.appendChild(document.createElement("a"));
+    href.setAttribute("href", "index.html");
+    const img = href.appendChild(document.createElement("img"));
     img.setAttribute("class", "nav-logo-img");
     img.setAttribute("src", "static/Logo.png");
     img.setAttribute("alt", "Logo");
