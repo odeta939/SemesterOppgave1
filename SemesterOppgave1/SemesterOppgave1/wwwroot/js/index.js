@@ -3,7 +3,6 @@ let fromList = [];
 
 $(function () {
   localStorage.clear();
-  checkOrder();
   const proceed = supportWarning();
   if (proceed) {
     addPassengerNrs();
@@ -207,10 +206,4 @@ function orderTickets() {
             window.location.href = "order.html";
         }
   }
-}
-
-function checkOrder() {
-  $.get("Order/GetAllOrders", function (orders) {
-    console.log(orders);
-  });
 }
