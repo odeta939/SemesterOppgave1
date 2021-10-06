@@ -32,6 +32,10 @@ function validateAndOrder() {
 function getRoutes() {
     $.get("Order/GetAllRoutes", function (routes) {
         console.log(routes);
+        console.log(localStorage.getItem("arrival"));
+        console.log(localStorage.getItem("departure"));
+        console.log(localStorage.getItem("outbound"));
+        console.log(localStorage.getItem("inbound"));
         for (let route of routes) {
             if (route.arrivalTerminalCity == localStorage.getItem("arrival") && route.departureTerminalCity == localStorage.getItem("departure")
                 && route.departureTime == localStorage.getItem("outbound")) {
@@ -120,7 +124,6 @@ function createOrder() {
         const order = {
             ticketAmount: ticketAmount,
             totalPrice: ticketAmount * firstRoute.ticketPrice,
-            routeId: firstRoute.routeId,
             departureTime: localStorage.getItem("outbound"),
             arrivalTime: firstRoute.arrivalTime,
             ticketsLeft: firstRoute.ticketsLeft,
@@ -147,7 +150,6 @@ function createOrder() {
         const order2 = {
             ticketAmount: ticketAmount,
             totalPrice: ticketAmount * roundTripRoute.ticketPrice,
-            routeId: roundTripRoute.routeId,
             departureTime: localStorage.getItem("inbound"),
             arrivalTime: roundTripRoute.arrivalTime,
             ticketsLeft: roundTripRoute.ticketsLeft,
@@ -184,6 +186,7 @@ function createOrder() {
             reduceTicketsLeft(firstRoute);
         }).fail(function (fail) {
             alert(fail.responseText);
+            return;
         });
 
         $.post("Order/SaveOrder", order2, function () {
@@ -213,7 +216,6 @@ function createOrder() {
         const order = {
             ticketAmount: ticketAmount,
             totalPrice: ticketAmount * firstRoute.ticketPrice,
-            routeId: firstRoute.routeId,
             departureTime: localStorage.getItem("outbound"),
             arrivalTime: firstRoute.arrivalTime,
             ticketsLeft: firstRoute.ticketsLeft,

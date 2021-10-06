@@ -94,9 +94,11 @@ namespace SemesterOppgave1.DAL
                 {
                     DateTime dateToday = DateTime.Today;
                     DateTime departureDate = dateToday.AddDays(i);
-                    string departureDateString = departureDate.ToString("dd-MM-yyyy");
+                    //The date format is d-M-yyyy which means that if its the 7th of a month it shows as 7-xx-xxxx, but if its the 11th it still
+                    //says 11-xx-xxxx.
+                    string departureDateString = departureDate.ToString("d-M-yyyy");
                     DateTime arrivalDate = dateToday.AddDays(i + 1);
-                    string arrivalDateString = arrivalDate.ToString("dd-MM-yyyy");
+                    string arrivalDateString = arrivalDate.ToString("d-M-yyyy");
                     
                     //The Boats go back and forward and it takes one day to get there. On even days they go one way on the uneven days the go back.
                     if(departureDate.Day % 2 == 0)

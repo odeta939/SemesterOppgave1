@@ -2,6 +2,7 @@ let toList = [];
 let fromList = [];
 
 $(function () {
+  window.localStorage.clear();
   checkOrder();
   const proceed = supportWarning();
   if (proceed) {
@@ -14,11 +15,28 @@ $(function () {
     enableDate();
 
     $("#fromPlace").on("change", function () {
-      enableFrom();
+        enableFrom();
+        let departurePlace = $("#fromPlace").children("option:selected").text();
+        $(".calendar.inbound").children().empty();
+        $(".calendar.outbound").children().empty();
+        $(".calendar.outbound").children().empty();
+        $("#inbound-details").children().empty();
+        $("#outbound-details").children().empty();
+        localStorage.removeItem("inbound");
+        localStorage.removeItem("outbound");
+        localStorage.setItem("departure", departurePlace);
     });
 
     $("#toPlace").on("change", function () {
-      enableDate();
+        enableDate(); 
+        let arrivalPlace = $("#toPlace").children("option:selected").text();
+        $(".calendar.inbound").children().empty();
+        $(".calendar.outbound").children().empty();
+        $("#inbound-details").children().empty();
+        $("#outbound-details").children().empty();
+        localStorage.removeItem("inbound");
+        localStorage.removeItem("outbound");
+        localStorage.setItem("arrival", arrivalPlace);
     });
   }
 });
@@ -167,13 +185,9 @@ function addPlaceholder(text, parent) {
 
 //Adding departure and arrival place to localstorage to retrieve them in another file!
 function orderTickets() {
-  if ($("#toPlace").val() === null || $("#fromPlace").val() === null) {
-    alert("Select both a departure city and a destination!");
+    if ($("#toPlace").val() === null || $("#fromPlace").val() === null || !localStorage.getItem("outbound")) {
+    alert("Select a departure city, a destination and a date!");
   } else {
-    let departurePlace = $("#fromPlace").children("option:selected").text();
-    let arrivalPlace = $("#toPlace").children("option:selected").text();
-    localStorage.setItem("departure", departurePlace);
-    localStorage.setItem("arrival", arrivalPlace);
     window.location.href = "order.html";
   }
 }

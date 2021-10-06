@@ -31,8 +31,8 @@ let monthOutbound; //Which outbound month to show
 
 let inboundDate = new Date(); //Current date to start with
 let outboundDate = new Date(); //Current date to start with
-let departureCity = "Oslo";
-let arrivalCity = "Goteborg";
+let departureCity = localStorage.getItem("departure");
+let arrivalCity = localStorage.getItem("arrival");
 let oneWay = false;
 
 let ticketsWanted;
@@ -360,8 +360,8 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
         $(this).click(function () {
           showTicketData(
             direction,
-            "",
-            "",
+            localStorage.getItem("departure"),
+            localStorage.getItem("arrival"),
             capacity[routeIndex],
             "",
             ticketprice[routeIndex]
@@ -377,6 +377,7 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
 
             date += "-" + (monthNames.indexOf(selectedMonth) + 1);
             date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
+            console.log(date);
 
             localStorage.setItem(direction, date); //Save selected date to locale storage
             antallClicked = 1;
@@ -390,6 +391,7 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
                 $(".dayActive").text() &&
                 $(this).text()
               ) {
+                localStorage.removeItem(direction);
                 $(".dayActive").removeClass("dayActive");
                 antallClicked -= 1; //  = 0
               } else {
@@ -402,13 +404,23 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
 
                 date += "-" + (monthNames.indexOf(selectedMonth) + 1);
                 date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
+                console.log(date);
 
                 localStorage.setItem(direction, date); //Save selected date to locale storage
                 antallClicked = 1; // = 1
               }
             } else {
               //The clicked day has a different direction so we add it
-              $(this).addClass("dayActive");
+                $(this).addClass("dayActive");
+                let arrayDateText = $(this).text().split("T");
+                let date = arrayDateText[0]; //Getting the day
+                let selectedMonth = $(".textMonth" + "." + direction).text();
+
+                date += "-" + (monthNames.indexOf(selectedMonth) + 1);
+                date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
+                console.log(date);
+
+                localStorage.setItem(direction, date); //Save selected date to locale storage
               antallClicked += 1; // = 2
             }
           } else if (antallClicked == 2) {
@@ -420,6 +432,7 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
               $(".dayActive").text() &&
               $(this).text()
             ) {
+              localStorage.removeItem(direction);
               $("." + direction + ".dayActive").removeClass("dayActive");
               antallClicked -= 1; // = 1
             } else {
@@ -432,7 +445,7 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
 
               date += "-" + (monthNames.indexOf(selectedMonth) + 1);
               date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
-
+              console.log(date);
               localStorage.setItem(direction, date); //Save selected date to locale storage
             }
           }
@@ -448,12 +461,13 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
 }
 
 function showTicketData(direction, from, to, seatsLeft, time, price) {
-  console.log(direction);
+  /*console.log(direction);
   console.log(from);
   console.log(to);
   console.log(seatsLeft);
   console.log(time);
   console.log(price);
+  */
 
   const elem = $("#" + direction + "-details")[0];
   elem.innerHTML = "";
