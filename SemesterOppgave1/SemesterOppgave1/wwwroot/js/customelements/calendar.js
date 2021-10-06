@@ -351,18 +351,19 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
     }
 
     if (inRoute) {
+      const nrOfTravellers = Number(
+        $("#passengers").children("option:selected").text()
+      );
+
       //here we set the onclick
-      if (capacity[routeIndex] > 0) {
-        //   $("<p>" + "Tickets left: " + capacity[routeIndex] + "</p>").appendTo(
-        //     $(this)
-        //   );
-        //   $(
-        //     "<p>" + "Price per ticket: " + ticketprice[routeIndex] + "</p>"
-        //   ).appendTo($(this));
-
-          $(this).click(function () {
-
-          let ticketDate = $(this).text().split("T")[0] + "-" + (monthNames.indexOf($(".textMonth" + "." + direction).text()) + 1) + "-" + $(".textYear" + "." + direction).text();
+      if (capacity[routeIndex] > nrOfTravellers) {
+        $(this).click(function () {
+          let ticketDate =
+            $(this).text().split("T")[0] +
+            "-" +
+            (monthNames.indexOf($(".textMonth" + "." + direction).text()) + 1) +
+            "-" +
+            $(".textYear" + "." + direction).text();
 
           showTicketData(
             direction,
@@ -417,16 +418,16 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
               }
             } else {
               //The clicked day has a different direction so we add it
-                $(this).addClass("dayActive");
-                let arrayDateText = $(this).text().split("T");
-                let date = arrayDateText[0]; //Getting the day
-                let selectedMonth = $(".textMonth" + "." + direction).text();
+              $(this).addClass("dayActive");
+              let arrayDateText = $(this).text().split("T");
+              let date = arrayDateText[0]; //Getting the day
+              let selectedMonth = $(".textMonth" + "." + direction).text();
 
-                date += "-" + (monthNames.indexOf(selectedMonth) + 1);
-                date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
-                console.log(date);
+              date += "-" + (monthNames.indexOf(selectedMonth) + 1);
+              date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
+              console.log(date);
 
-                localStorage.setItem(direction, date); //Save selected date to locale storage
+              localStorage.setItem(direction, date); //Save selected date to locale storage
               antallClicked += 1; // = 2
             }
           } else if (antallClicked == 2) {
@@ -469,17 +470,31 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
 function showTicketData(direction, from, to, seatsLeft, time, price) {
   const elem = $("#" + direction + "-details")[0];
   elem.innerHTML = "";
-  const route = document.createElement("p");
+
+  const route = document.createElement("h4");
   route.innerText =
     direction === "outbound" ? from + " to " + to : to + " to " + from;
-  const seats = document.createElement("p");
-  seats.innerText = "Available seats: " + seatsLeft;
-  const ti = document.createElement("p");
-  ti.innerText = "Departure time: " + time;
-  const pr = document.createElement("p");
-  pr.innerText = "Price per ticket: " + price;
+  route.classList.add("ticket-details-title");
   elem.append(route);
-  elem.append(seats);
-  elem.append(ti);
-  elem.append(pr);
+
+  createTicketDetails("Available seats", seatsLeft, elem);
+  createTicketDetails("Departure time", time, elem);
+  createTicketDetails("Price per ticket", "kr " + String(price) + ",-", elem);
+}
+
+function createTicketDetails(label, data, parentElement) {
+  const p1 = document.createElement("p");
+  p1.innerHTML = label;
+  p1.classList.add("ticket-details-infoType");
+  p1.classList.add("ticket-details-infoAll");
+  const p2 = document.createElement("p");
+  p2.innerHTML = label === "Departure time" ? data + " 09:00" : data;
+  p2.classList.add("ticket-details-infoData");
+  p2.classList.add("ticket-details-infoAll");
+
+  const div = document.createElement("div");
+  div.classList.add("ticket-details-info");
+  div.appendChild(p1);
+  div.appendChild(p2);
+  $(parentElement).append(div);
 }

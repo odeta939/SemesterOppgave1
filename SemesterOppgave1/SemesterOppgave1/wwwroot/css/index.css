@@ -96,6 +96,39 @@
   fill: rgba(var(--blue-700-v), 0.2);
 }
 
+#orderbox-confirm {
+  text-align: center;
+}
+
+#buyTicket {
+  margin: var(--padding-050) auto 0 auto;
+}
+
+@media only screen and (max-width: 800px) {
+  #orderbox-params {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  .orderbox-params-dropdown {
+    margin-bottom: var(--padding-100);
+  }
+
+  .orderbox-params-dropdown:nth-of-type(2),
+  .orderbox-params-dropdown:nth-of-type(4) {
+    margin-right: 0 !important;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  #orderbox-params {
+    grid-template-columns: 1fr;
+  }
+
+  .orderbox-params-dropdown {
+    margin-right: 0 !important;
+  }
+}
+
 #travelinfo {
   display: flex;
   max-width: 100%;
@@ -115,7 +148,12 @@
 .travelinfo-box {
   margin: var(--padding-200) var(--padding-400);
   padding: var(--padding-200) var(--padding-200) var(--padding-100);
-  border-radius: var(--borderradius-100);
+}
+
+@supports (gap: var(--padding-400)) {
+  .travelinfo-box {
+    margin: unset var(--padding-400);
+  }
 }
 
 .travelinfo-txt {
@@ -126,16 +164,42 @@
   font-size: var(--font-size-600);
 }
 
-@supports (gap: var(--padding-400)) {
+@media only screen and (max-width: 1250px) {
+  #travelinfo {
+    gap: var(--padding-200);
+  }
+
   .travelinfo-box {
-    margin: unset var(--padding-400);
+    margin: var(--padding-200) var(--padding-100);
+    padding: var(--padding-100);
+  }
+
+  @supports (gap: var(--padding-200)) {
+    .travelinfo-box {
+      margin: var(--padding-200) unset;
+    }
   }
 }
 
-#orderbox-confirm {
-  text-align: center;
+@media only screen and (max-width: 1030px) {
+  #travelinfo {
+    display: block;
+  }
+
+  .travelinfo-box {
+    margin: var(--padding-200) var(--padding-100);
+    padding: var(--padding-100);
+  }
+
+  @supports (gap: var(--padding-200)) {
+    .travelinfo-box {
+      margin: var(--padding-200) unset;
+    }
+  }
 }
 
-#buyTicket {
-  margin: var(--padding-050) auto 0 auto;
+@media only screen and (max-width: 8rem) {
+  .travelinfo-img {
+    width: calc(var(--img-size-500) / 2);
+  }
 }

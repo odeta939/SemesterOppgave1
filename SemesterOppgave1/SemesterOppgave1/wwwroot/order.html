@@ -23,12 +23,12 @@
     <custom-navbar></custom-navbar>
     <main>
         <div id="content">
-            <h1>Place order</h1>
+            <h1 id="content-title">Place order</h1>
             <div id="ticketInfo">
                 <h2 id="selected-title">Selected tickets</h2>
                 <div id="ticketInfo-trips">
-                    <p id="tripInfo"></p>
-                    <p id="tripInfo2"></p>
+                    <div id="tripInfo" class="tripInfo"></div>
+                    <div id="tripInfo2" class="tripInfo"></div>
                 </div>
             </div>
             <div id="personalInfo">
@@ -76,9 +76,10 @@
                         <input type="text" name="cityName" id="cityName" placeholder="City name" />
                         <span id="failCity" class="form-check-group-fail"></span>
                     </div>
-                    <input type="submit" onclick="validateAndOrder()" value="Order ticket" aria-roledescription="button" />
+                    <input type="submit" onclick="validateAndOrder()" value="Order ticket"
+                        aria-roledescription="button" />
                 </form>
-                
+
             </div>
         </div>
     </main>

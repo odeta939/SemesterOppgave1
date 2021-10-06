@@ -80,23 +80,17 @@ function setOrder() {
   ) {
     //Calling getRoutes to initiate the variables for the order - as well as getting the route object to reduce tickets left depending on the ticketamount chosen.
 
-    let departurePlace = localStorage.getItem("departure");
-    let arrivalPlace = localStorage.getItem("arrival");
+    const departurePlace = localStorage.getItem("departure");
+    const arrivalPlace = localStorage.getItem("arrival");
+    const departureTime = localStorage.getItem("outbound");
 
-    let departureTime = localStorage.getItem("outbound");
-
-    let out =
-      "Departure place: " +
-      departurePlace +
-      "\n" +
-      "Arrival place: " +
-      arrivalPlace +
-      "\n" +
-      "Departure time: " +
-      departureTime +
-      " 09:00";
-    let tripInfo = $("#tripInfo").text(out);
-    tripInfo.html(tripInfo.html().replace(/\n/g, "<br/>"));
+    populateTicket(
+      "Outbound",
+      "#tripInfo",
+      departurePlace,
+      arrivalPlace,
+      departureTime
+    );
   }
   //If it's a round trip:
   else if (
@@ -107,57 +101,72 @@ function setOrder() {
   ) {
     //Calling getRoutes to initiate the variables for the order - as well as getting the route object to reduce tickets left depending on the ticketamount chosen.
 
-    let departurePlace = localStorage.getItem("departure");
-    let arrivalPlace = localStorage.getItem("arrival");
-    let departureTime = localStorage.getItem("outbound");
+    const departurePlace = localStorage.getItem("departure");
+    const arrivalPlace = localStorage.getItem("arrival");
+    const departureTime = localStorage.getItem("outbound");
 
-    let out =
-      "Inbound trip:\n\n" +
-      "Departure place: " +
-      departurePlace +
-      "\n" +
-      "Arrival place: " +
-      arrivalPlace +
-      "\n" +
-      "Departure time: " +
-      departureTime;
-    let tripInfo = $("#tripInfo").text(out);
-    tripInfo.html(tripInfo.html().replace(/\n/g, "<br/>"));
+    populateTicket(
+      "Outbound",
+      "#tripInfo",
+      departurePlace,
+      arrivalPlace,
+      departureTime
+    );
 
     //Setting the trip info for the round trip (arrivalPlace will be departurePlace and vice versa):
-    let departureTime2 = localStorage.getItem("inbound");
+    const departureTime2 = localStorage.getItem("inbound");
 
-    let out2 =
-      "Outbound trip:\n\n" +
-      "Departure place: " +
-      arrivalPlace +
-      "\n" +
-      "Arrival place: " +
-      departurePlace +
-      "\n" +
-      "Departure time: " +
-      departureTime2;
-    let tripInfo2 = $("#tripInfo2").text(out2);
-    tripInfo2.html(tripInfo2.html().replace(/\n/g, "<br/>"));
+    populateTicket(
+      "Inbound",
+      "#tripInfo2",
+      arrivalPlace,
+      departurePlace,
+      departureTime2
+    );
   }
   //If there are no values in localStorage:
   else {
-      $("#orderForm").html("");
-      $("#selected-title").html("");
-      $("#personal-title").html("");
-    let tripInfo = $("#tripInfo").text(
-      "You haven't chosen a trip yet! Go back to the home page. :)"
+    $("#content-title").html("Oops...");
+    $("#orderForm").html("");
+    $("#selected-title").html("");
+    $("#personal-title").html("");
+    $("#tripInfo").html(
+      "You have not chosen a trip yet. Go back to the <a href='index.html'>home page</a>."
     );
     $("#tripInfo2").text("");
-    tripInfo.html(
-      tripInfo
-        .html()
-        .replace(
-          /home page/g,
-          '<a style="text-decoration: none" href="index.html">home page</a>'
-        )
-    );
   }
+}
+
+function populateTicket(
+  direction,
+  parentElement,
+  departurePlace,
+  arrivalPlace,
+  departureTime
+) {
+  const h3 = document.createElement("h3");
+  h3.innerHTML = "<span class='capitalize'>" + direction + "</span> trip";
+  $(parentElement).append(h3);
+  createInfoType("Departure place", departurePlace, parentElement);
+  createInfoType("Arrival place", arrivalPlace, parentElement);
+  createInfoType("Departure time", departureTime, parentElement);
+}
+
+function createInfoType(label, data, parentElement) {
+  const p1 = document.createElement("p");
+  p1.innerHTML = label;
+  p1.classList.add("ticketInfo-infoType");
+  p1.classList.add("ticketInfo-infoAll");
+  const p2 = document.createElement("p");
+  p2.innerHTML = label === "Departure time" ? data + " 09:00" : data;
+  p2.classList.add("ticketInfo-infoData");
+  p2.classList.add("ticketInfo-infoAll");
+
+  const div = document.createElement("div");
+  div.classList.add("ticketInfo-info");
+  div.appendChild(p1);
+  div.appendChild(p2);
+  $(parentElement).append(div);
 }
 
 function createOrder() {

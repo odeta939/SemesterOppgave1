@@ -4,7 +4,7 @@
 }
 
 .calendar {
-  margin: 0 50px 0 50px;
+  margin: 0 var(--padding-300);
 }
 
 .calendar-title {
@@ -77,7 +77,6 @@
 
 .emptyDay:last-of-type + .dayOfTheWeek {
   text-align: center;
-  padding-top: 5px;
   font-weight: bold;
 }
 
@@ -90,7 +89,6 @@
 .emptyDay {
   border: none;
   text-align: center;
-  padding-top: 5px;
 }
 
 .dayActive {
@@ -102,5 +100,49 @@
 @media only screen and (max-width: 1000px) {
   #body-calendar {
     grid-template-columns: 1fr;
+  }
+}
+
+.ticket-details {
+  margin: var(--padding-050) var(--padding-300);
+}
+
+.ticket-details-info {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+}
+
+.ticket-details-infoAll {
+  margin: var(--padding-025) var(--padding-050) var(--padding-050) 0;
+  align-self: center;
+}
+
+.ticket-details-infoType {
+  text-transform: uppercase;
+  font-family: var(--font-accent);
+  font-weight: 600;
+  font-size: var(--font-size-400);
+  color: var(--blue-700);
+}
+
+.ticket-details-infoData {
+  margin-left: var(--padding-100);
+}
+
+@media only screen and (max-width: 500px) {
+  .calendar {
+    margin: 0 var(--padding-050);
+  }
+
+  .ticket-details-info {
+    grid-template-columns: 1fr;
+  }
+
+  .ticket-details-infoType {
+    margin-bottom: 0;
+  }
+
+  .ticket-details-infoData {
+    margin-left: 0;
   }
 }

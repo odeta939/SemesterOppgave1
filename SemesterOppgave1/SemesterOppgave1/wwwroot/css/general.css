@@ -20,6 +20,7 @@
   --padding-100: 1rem;
   --padding-150: calc(var(--padding-100) * 1.5);
   --padding-200: calc(var(--padding-100) * 2);
+  --padding-300: calc(var(--padding-100) * 3);
   --padding-400: calc(var(--padding-100) * 4);
 
   --footer-height: 5rem;
@@ -63,14 +64,15 @@ main {
 }
 
 #return-content {
-    width: clamp(70%, 80rem, 90%);
-    margin: auto;
-    margin-bottom: var(--padding-100);
+  width: clamp(70%, 80rem, 90%);
+  margin: auto;
+  margin-bottom: var(--padding-100);
 }
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   margin: var(--padding-100) 0 var(--padding-050);
 }
 
@@ -135,4 +137,8 @@ label > input[type="radio"]:checked + *::before {
     transparent
   );
   border-color: var(--blue-700);
+}
+
+.capitalize {
+  text-transform: capitalize;
 }
