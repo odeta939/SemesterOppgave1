@@ -21,9 +21,11 @@ function validatePhonenr(phonenr) {
   const ok = regex.test(phonenr);
   if (!ok) {
     $("#failPhonenr").html("Phone number is invalid");
+    styleBorder(true, $("#failPhonenr")[0]);
     return false;
   } else {
     $("#failPhonenr").html("");
+    styleBorder(true, $("#failPhonenr")[0]);
     return true;
   }
 }
@@ -33,9 +35,11 @@ function validateEmail(email) {
   const ok = regex.test(email);
   if (!ok) {
     $("#failEmail").html("Email is invalid");
+    styleBorder(true, $("#failEmail")[0]);
     return false;
   } else {
     $("#failEmail").html("");
+    styleBorder(true, $("#failEmail")[0]);
     return true;
   }
 }
@@ -54,9 +58,11 @@ function validateZipcode(zip) {
   const ok = regex.test(zip);
   if (!ok) {
     $("#failZip").html("Zip code is invalid");
+    styleBorder(true, $("#failZip")[0]);
     return false;
   } else {
     $("#failZip").html("");
+    styleBorder(true, $("#failZip")[0]);
     return true;
   }
 }
@@ -67,6 +73,8 @@ function validateCity(city) {
 
 function textEntryValidation(toValidate, elemTag, msg, maxChars) {
   let regex;
+  const element = $(elemTag)[0];
+
   switch (maxChars) {
     case 30:
       regex = /^[0-9a-zA-ZøæåØÆÅ. \-]{2,30}$/;
@@ -80,10 +88,28 @@ function textEntryValidation(toValidate, elemTag, msg, maxChars) {
   }
   const ok = regex.test(toValidate);
   if (!ok) {
-    $(elemTag).html(msg);
+    element.innerText = msg;
+    styleBorder(true, element);
     return false;
   } else {
-    $(elemTag).html("");
+    element.innerText = "";
+    styleBorder(false, element);
     return true;
+  }
+}
+
+function styleBorder(isError, element) {
+  let styledBorder;
+  if (isError) {
+    styledBorder = "var(--font-size-200) solid rgba(var(--accent-500-v), 0.3)";
+  } else {
+    styledBorder = "var(--font-size-200) solid rgba(var(--blue-300-v), 0.15)";
+  }
+
+  const siblings = element.parentElement.children;
+  for (e of siblings) {
+    if (e.tagName === "INPUT") {
+      e.style.borderBottom = styledBorder;
+    }
   }
 }

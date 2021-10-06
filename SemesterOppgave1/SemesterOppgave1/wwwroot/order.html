@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-          rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/general.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/index.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/order.css" media="screen" />
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/customelements/navbar.js"></script>
@@ -16,68 +18,70 @@
     <script src="js/validering.js"></script>
     <title>Holbergs Båte - Database</title>
 </head>
+
 <body>
     <custom-navbar></custom-navbar>
-    <!-- Addet en style her, bare midlertidig, for at ikke footer skulle være midt på skjermen ^^ -->
     <main>
-        <h1>Order tickets!</h1>
         <div id="content">
-            <p id="tripInfo"></p>
-            <p id="tripInfo2"></p>
-            <form id="orderForm" onsubmit="return false">
-
-                <div class="form-check-group">
-                    <label for="firstName">Enter first name:</label>
-                    <input type="text" name="firstName" id="firstName" placeholder="First name" />
-                    <span id="failFirstname" style="color: red"></span>
+            <h1>Place order</h1>
+            <div id="ticketInfo">
+                <h2>Selected tickets</h2>
+                <div id="ticketInfo-trips">
+                    <p id="tripInfo"></p>
+                    <p id="tripInfo2"></p>
                 </div>
+            </div>
+            <div id="personalInfo">
+                <h2>Personal information</h2>
+                <form id="orderForm" onsubmit="return false">
 
-                <div class="form-check-group">
-                    <label for="lastName">Enter last name:</label>
-                    <input type="text" name="lastName" id="lastName" placeholder="Last name" />
-                    <span id="failLastname" style="color: red"></span>
-                </div>
+                    <div class="form-check-group">
+                        <label for="firstName">First name</label>
+                        <input type="text" name="firstName" id="firstName" placeholder="First name" />
+                        <span id="failFirstname" class="form-check-group-fail"></span>
+                    </div>
 
-                <div class="form-check-group">
-                    <label for="phoneNr">Enter phone number:</label>
-                    <input type="text" name="phoneNr" id="phoneNr" placeholder="Phone number" />
-                    <span id="failPhonenr" style="color: red"></span>
-                </div>
+                    <div class="form-check-group">
+                        <label for="lastName">Last name</label>
+                        <input type="text" name="lastName" id="lastName" placeholder="Last name" />
+                        <span id="failLastname" class="form-check-group-fail"></span>
+                    </div>
 
-                <div class="form-check-group">
-                    <label for="email">Enter email:</label>
-                    <input type="text" name="email" id="email" placeholder="Email" />
-                    <span id="failEmail" style="color: red"></span>
-                </div>
+                    <div class="form-check-group">
+                        <label for="phoneNr">Phone number</label>
+                        <input type="text" name="phoneNr" id="phoneNr" placeholder="Phone number" />
+                        <span id="failPhonenr" class="form-check-group-fail"></span>
+                    </div>
 
-                <div class="form-check-group">
-                    <label for="streetName">Enter street name:</label>
-                    <input type="text" name="streetName" id="streetName" placeholder="Street name" />
-                    <span id="failStreet" style="color: red"></span>
-                </div>
+                    <div class="form-check-group">
+                        <label for="email">E-mail address</label>
+                        <input type="text" name="email" id="email" placeholder="Email" />
+                        <span id="failEmail" class="form-check-group-fail"></span>
+                    </div>
 
-                <div class="form-check-group">
-                    <label for="zipCode">Enter zip code:</label>
-                    <input type="text" name="zipCode" id="zipCode" placeholder="Zip code" />
-                    <span id="failZip" style="color: red"></span>
-                </div>
+                    <div class="form-check-group">
+                        <label for="streetName">Street name</label>
+                        <input type="text" name="streetName" id="streetName" placeholder="Street name" />
+                        <span id="failStreet" class="form-check-group-fail"></span>
+                    </div>
 
-                <div class="form-check-group">
-                    <label for="cityName">Enter city:</label>
-                    <input type="text" name="cityName" id="cityName" placeholder="City name" />
-                    <span id="failCity" style="color: red"></span>
-                </div>
+                    <div class="form-check-group">
+                        <label for="zipCode">Zip code</label>
+                        <input type="text" name="zipCode" id="zipCode" placeholder="Zip code" />
+                        <span id="failZip" class="form-check-group-fail"></span>
+                    </div>
 
-                <div class="form-check-group">
-                    <label for="ticketAmount">Amount of tickets:</label>
-                    <input type="number" min="0" name="ticketAmount" id="ticketAmount" placeholder="Ticket amount" />
-                    <span id="failTicketAmount" style="color: red"></span>
-                </div>
-
-                <input type="submit" onclick="validateAndOrder()" value="Order ticket" />
-            </form>
+                    <div class="form-check-group">
+                        <label for="cityName">City</label>
+                        <input type="text" name="cityName" id="cityName" placeholder="City name" />
+                        <span id="failCity" class="form-check-group-fail"></span>
+                    </div>
+                </form>
+                <input type="submit" onclick="validateAndOrder()" value="Order ticket" aria-roledescription="button" />
+            </div>
         </div>
     </main>
     <custom-footer></custom-footer>
 </body>
+
 </html>
