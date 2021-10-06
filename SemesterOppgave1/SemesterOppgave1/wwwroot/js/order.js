@@ -93,7 +93,8 @@ function setOrder() {
       arrivalPlace +
       "\n" +
       "Departure time: " +
-      departureTime;
+      departureTime +
+      " 09:00";
     let tripInfo = $("#tripInfo").text(out);
     tripInfo.html(tripInfo.html().replace(/\n/g, "<br/>"));
   }
@@ -110,7 +111,7 @@ function setOrder() {
     let arrivalPlace = localStorage.getItem("arrival");
     let departureTime = localStorage.getItem("outbound");
 
-      let out =
+    let out =
       "Inbound trip:\n\n" +
       "Departure place: " +
       departurePlace +
