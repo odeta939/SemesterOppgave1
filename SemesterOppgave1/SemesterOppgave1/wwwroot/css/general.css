@@ -78,6 +78,7 @@ input[type="submit"] {
   font-family: var(--font-accent);
   font-size: var(--font-size-300);
   font-weight: 700;
+  cursor: pointer;
 }
 
 button:hover,
