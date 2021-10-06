@@ -61,6 +61,7 @@
   font-size: var(--font-size-400);
   margin-left: -0.25rem;
   border-bottom: var(--font-size-200) solid rgba(var(--blue-300-v), 0.15);
+  cursor: pointer;
 }
 
 .orderbox-params-dropdown select:disabled,
@@ -78,6 +79,7 @@
   font-size: var(--font-size-400);
   border-bottom: var(--font-size-200) solid rgba(var(--blue-300-v), 0.15);
   display: flex;
+  cursor: pointer;
 }
 
 #orderbox-params-when-btn > p {
