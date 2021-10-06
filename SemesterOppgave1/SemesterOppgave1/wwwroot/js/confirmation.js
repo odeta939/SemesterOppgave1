@@ -11,6 +11,7 @@ function loadConfirmation() {
                                         <h3>Outbound:</h3>
                                             <p><b>Departure</b></p>
                                             <p><b>Terminal:</b> ${orderOut.departureTerminalName}</p>
+                                            <p><b>Boat:</b> ${orderOut.boatName}</p>
                                             <p id="address"><b>Address:</b>
                                                              ${orderOut.departureTerminalStreet}, 
                                                              ${orderOut.departureTerminalZipCode}
@@ -20,6 +21,7 @@ function loadConfirmation() {
         $("#content").append(`<div id="arr-info">
                                         <p><b>Arrival</b></p>
                                             <p><b>Terminal:</b> ${orderOut.arrivalTerminalName}</p>
+                                            <p><b>Boat:</b> ${orderOut.boatName}</p>
                                             <p id="address"><b>Address:</b>
                                                              ${orderOut.arrivalTerminalStreet}, 
                                                              ${orderOut.arrivalTerminalZipCode}
@@ -37,6 +39,7 @@ function loadConfirmation() {
                                 <h3>Inbound:</h3>
                                     <p><b>Departure</b></p>
                                     <p><b>Terminal:</b> ${orderIn.departureTerminalName}</p>
+                                    <p><b>Boat:</b> ${orderOut.boatName}</p>
                                     <p id="address"><b>Address:</b>
                                                      ${orderIn.departureTerminalStreet}, 
                                                      ${orderIn.departureTerminalZipCode}
@@ -46,6 +49,7 @@ function loadConfirmation() {
         $("#return-content").append(`<div id="arr-info">
                                 <p><b>Arrival</b></p>
                                     <p><b>Terminal:</b> ${orderIn.arrivalTerminalName}</p>
+                                    <p><b>Boat:</b> ${orderOut.boatName}</p>
                                     <p id="address"><b>Address:</b>
                                                      ${orderIn.arrivalTerminalStreet}, 
                                                      ${orderIn.arrivalTerminalZipCode}
