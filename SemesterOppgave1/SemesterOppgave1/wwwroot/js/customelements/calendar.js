@@ -481,20 +481,3 @@ function showTicketData(direction, from, to, seatsLeft, time, price) {
   createTicketDetails("Departure time", time, elem);
   createTicketDetails("Price per ticket", "kr " + String(price) + ",-", elem);
 }
-
-function createTicketDetails(label, data, parentElement) {
-  const p1 = document.createElement("p");
-  p1.innerHTML = label;
-  p1.classList.add("ticket-details-infoType");
-  p1.classList.add("ticket-details-infoAll");
-  const p2 = document.createElement("p");
-  p2.innerHTML = label === "Departure time" ? data + " 09:00" : data;
-  p2.classList.add("ticket-details-infoData");
-  p2.classList.add("ticket-details-infoAll");
-
-  const div = document.createElement("div");
-  div.classList.add("ticket-details-info");
-  div.appendChild(p1);
-  div.appendChild(p2);
-  $(parentElement).append(div);
-}
