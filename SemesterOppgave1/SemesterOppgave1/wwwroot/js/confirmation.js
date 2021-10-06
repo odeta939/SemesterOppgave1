@@ -10,7 +10,7 @@ function loadConfirmation() {
   if (localStorage.getItem("order")) {
     const h1 = document.createElement("h1");
     h1.classList.add("content-title");
-    h1.innerHTML = `Thank you ${orderOut.firstname} ${orderOut.lastname}!`;
+    h1.innerHTML = `Thank you, ${orderOut.firstname} ${orderOut.lastname}!`;
     grandpa.append(h1);
 
     const h2 = document.createElement("h2");
@@ -29,7 +29,7 @@ function loadConfirmation() {
       createOrderTicket(orderIn, parent, false);
     }
   } else {
-    $("#content").append(`<h1>You havent ordered anything yet!</h1>`);
+    $("#content").append(`<h1>You have not ordered anything yet.</h1>`);
   }
 }
 
