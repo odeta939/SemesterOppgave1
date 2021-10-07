@@ -1,4 +1,8 @@
-﻿function validateFirstname(firstname) {
+﻿/**
+ * Function for validating the first name
+ * @param {any} firstname Customers first name
+ */
+function validateFirstname(firstname) {
   return textEntryValidation(
     firstname,
     "#failFirstname",
@@ -7,6 +11,10 @@
   );
 }
 
+/**
+ * Function for validating the last name
+ * @param {any} lastname Customers last name
+ */
 function validateLastname(lastname) {
   return textEntryValidation(
     lastname,
@@ -16,6 +24,10 @@ function validateLastname(lastname) {
   );
 }
 
+/**
+ * Function for validating the phone number
+ * @param {any} phonenr Customers phone number
+ */
 function validatePhonenr(phonenr) {
   //Only norwegian phone numbers usable for the customer
   const regex = /^^(\+47)?[2-9][0-9]{7}$/;
@@ -30,7 +42,10 @@ function validatePhonenr(phonenr) {
     return true;
   }
 }
-
+/**
+ * Function for validating the email address
+ * @param {any} email Customers email address
+ */
 function validateEmail(email) {
   const regex = /^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/;
   const ok = regex.test(email);
@@ -45,6 +60,10 @@ function validateEmail(email) {
   }
 }
 
+/**
+ * Function for validating the street name
+ * @param {any} street Customers street name
+ */
 function validateStreet(street) {
   return textEntryValidation(
     street,
@@ -53,7 +72,11 @@ function validateStreet(street) {
     50
   );
 }
-/^\d{4}$/;
+
+/**
+ * Function for validating the zip code
+ * @param {any} zip Customers zip code
+ */
 function validateZipcode(zip) {
   const regex = /^[1-9][0-9]{4}|[0-9]{4}|[1-9]{1}[0-9]{2}( )[0-9]{2}$/;
   const ok = regex.test(zip);
@@ -68,11 +91,21 @@ function validateZipcode(zip) {
   }
 }
 
+/**
+ * Function for validating the city
+ * @param {any} city Customers city name
+ */
 function validateCity(city) {
   return textEntryValidation(city, "#failCity", "City is invalid", 30);
 }
 
-//A one in all method for the text entry regex
+/**
+ * A function to handle all of the validation of text with similar regex patterns
+ * @param {any} toValidate The variable that is about to be validated
+ * @param {any} elemTag The tag of the span element to be edited based on the validation
+ * @param {any} msg The message if the input isnt valid
+ * @param {any} maxChars The maximum amount of characters for the text that is being validated
+ */
 function textEntryValidation(toValidate, elemTag, msg, maxChars) {
   let regex;
   const element = $(elemTag)[0];
@@ -103,6 +136,11 @@ function textEntryValidation(toValidate, elemTag, msg, maxChars) {
   }
 }
 
+/**
+ * A function to style the border of the span element for error handling
+ * @param {any} isError Boolean, if there is an error with validation
+ * @param {any} element The span element that is being styled
+ */
 function styleBorder(isError, element) {
   let styledBorder;
   if (isError) {
