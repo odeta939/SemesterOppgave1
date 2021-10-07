@@ -1,57 +1,70 @@
+// List of departure and arrival destinations (later populated)
 let toList = [];
 let fromList = [];
 
 $(function () {
   localStorage.clear();
+
+  //Test if browser supports Web components
   const proceed = supportWarning();
+
+  //If supported, proceed
   if (proceed) {
     addPassengerNrs(); //Adding the amount of passengers to passengers
 
-    getDeparturePlaces(); //Loading all the routes under from 
+    getDeparturePlaces(); //Loading all the routes under from
 
     // Handle reloading edge cases
     enableTo();
     enableDate();
 
+    // Adds onchange handler to fromPlace dropdown
     $("#fromPlace").on("change", function () {
-        enableTo(); //Since the user has selected a from destination when can make to destination active
-        removeCalendar(); //If there was a calendar showing it means that the user has change its route and the calendar need to be deleted since it is not accurat anymore
-        let departurePlace = $("#fromPlace").children("option:selected").text();
-        localStorage.setItem("departure", departurePlace); //Departure place get stored into local storage
+      enableTo(); //Since the user has selected a from destination when can make to destination active
+      removeCalendar(); //If there was a calendar showing it means that the user has change its route and the calendar need to be deleted since it is not accurat anymore
+      let departurePlace = $("#fromPlace").children("option:selected").text();
+      localStorage.setItem("departure", departurePlace); //Departure place get stored into local storage
     });
 
+    // Adds onchange handler to toPlace dropdown
     $("#toPlace").on("change", function () {
-        enableDate(); //Both routes are selected so now we can enable the calendar
-        removeCalendar(); //If the calendar is showing we remove it since the route has hanged
-        let arrivalPlace = $("#toPlace").children("option:selected").text();
-        localStorage.setItem("arrival", arrivalPlace); //Arrival place get stored into local storage
+      enableDate(); //Both routes are selected so now we can enable the calendar
+      removeCalendar(); //If the calendar is showing we remove it since the route has hanged
+      let arrivalPlace = $("#toPlace").children("option:selected").text();
+      localStorage.setItem("arrival", arrivalPlace); //Arrival place get stored into local storage
     });
 
+    // Adds onchange handler to passengers dropdown
     $("#passengers").on("change", function () {
-        removeCalendar(); //Number of passengers has changed and therefor the routesavaliability might have changed as well, we remove it
-          localStorage.setItem( //Every time the amount of passengers is changed we save it
-            "ticketAmount",
-            $("#passengers").children("option:selected").text()
-            );
-            $("#orderbox-params-when-btn > p").text("Select date")
+      removeCalendar(); //Number of passengers has changed and therefor the routesavaliability might have changed as well, we remove it
+      localStorage.setItem(
+        //Every time the amount of passengers is changed we save it
+        "ticketAmount",
+        $("#passengers").children("option:selected").text()
+      );
+      $("#orderbox-params-when-btn > p").text("Select date"); //feedback to user
     });
 
-      $('input[type="radio"]').on('click change', function (e) { //one way vs round trip has been changed so we need to reset the calendar
-          $("#orderbox-params-when-btn > p").text("Select date") //feedback to user
-          removeCalendar();
-      });
+    // Adds onchange handler to one-way/round-trip radio buttons
+    $('input[type="radio"]').on("click change", function (e) {
+      //one way vs round trip has been changed so we need to reset the calendar
+      $("#orderbox-params-when-btn > p").text("Select date"); //feedback to user
+      removeCalendar();
+    });
   }
 });
 
-
 /**
- * Since we use custom elements it might be that older webbrowesers wont support this
- * This is being handled here in this function
-*/
+ * Checks that browser supports web components. If not, replaces page with warning
+ * Despite being in the web standards, IE does not support it (age reasons) and
+ * Safari (webkit) chose not to support custom elements
+ */
 function supportWarning() {
+  // Checks for support of versions 0 and 1 of custom elements
   const supportsCustomElementsv0 = "registerElement" in document;
   const supportsCustomElementsv1 = "customElements" in window;
 
+  // If not supported, replaces body with warning message
   if (!supportsCustomElementsv0 && !supportsCustomElementsv1) {
     const main = document.getElementsByTagName("body")[0];
     main.innerHTML = "";
@@ -84,9 +97,10 @@ function supportWarning() {
 }
 
 /**
- * Function to add data to the "Passengers" dropdown to select how many people will be travelling 
-*/
-function addPassengerNrs() { //We are adding option 1-99 under passengers 
+ * Adds data to the "Passengers" dropdown
+ */
+function addPassengerNrs() {
+  // Adding options 1-99 under passengers
   for (let i = 1; i < 100; i++) {
     $("#passengers").append(
       $("<option>", {
@@ -94,71 +108,81 @@ function addPassengerNrs() { //We are adding option 1-99 under passengers
         text: i,
       })
     );
-    }
-    localStorage.setItem( //Vi save passengers to local storage
-        "ticketAmount",
-        $("#passengers").children("option:selected").text()
-    );
+  }
+  localStorage.setItem(
+    //Save selected default passenger number to local storage
+    "ticketAmount",
+    $("#passengers").children("option:selected").text()
+  );
 }
 
 /**
- * Function to put routes from GetAllRoutes in as a parameter for the initialPlaces function 
-*/
+ * Calls initialPlaces with routes from GetAllRoutes
+ */
 function getDeparturePlaces() {
-    $.get("order/GetAllRoutes", function (routes) { //Getting all the routes from the database
+  $.get("order/GetAllRoutes", function (routes) {
+    //Gets all routes from database
     initialPlaces(routes);
   });
 }
 
 /**
- * Function to enable the toPlace dropdown 
-*/
-function enableTo() { //From destination has been chosen to should be activated
+ * Enables toPlace dropdown
+ */
+function enableTo() {
   const from = $('select[name="from"]')[0].value;
   const to = $("#toPlace")[0];
-  if (from !== "noPlace" && from !== "") { //We do an extra check to see if the user really picked a desitination in from
+
+  // Ensure a departure location has been chosen
+  if (from !== "noPlace" && from !== "") {
     to.removeAttribute("disabled");
-    setToPlaces(); //We are going to display the possible destinations
+    setToPlaces(); // Load and display destinations
   } else {
+    // Ensures destinations are disabled if no departure location chosen
     to.setAttribute("disabled", true);
   }
 }
 
 /**
- * Function to enable choosing of a date 
-*/
+ * Enable date-picking
+ */
 function enableDate() {
   const date = $("#orderbox-params-when-btn")[0];
   const to = $('select[name="to"]')[0].value;
-  if (to !== "noPlace" && to !== "") { //Check if to destination really is picked
+
+  //Check if destination has been chosen
+  if (to !== "noPlace" && to !== "") {
     date.removeAttribute("disabled");
   } else {
+    // Ensures destinations are disabled if no departure location chosen
     addPlaceholder("Select destination", "#toPlace");
     date.setAttribute("disabled", true);
   }
 }
 
 /**
- * Function with the GetAllRoutes request, adds all routes to the AddOptionsToTo function
-*/
-function setToPlaces() { 
-    $.get("order/GetAllRoutes", function (routes) {
+ * Calls AddOptionsToTo with routes retrieved from the GetAllRoutes request
+ */
+function setToPlaces() {
+  $.get("order/GetAllRoutes", function (routes) {
     AddOptionsToTo(routes);
   });
 }
 
 /**
- * Function to populate the fromPlace dropdown with all the possible cities.
- * @param {any} routes All routes, taken from the GetAllRoutes request
+ * Populates fromPlace dropdown
+ * @param {any} routes  All routes, taken from the GetAllRoutes request
  */
 function initialPlaces(routes) {
   addPlaceholder("Select origin", "#fromPlace");
 
   for (let route of routes) {
     let departureCity = route.departureTerminalCity;
-    if (toList.indexOf(departureCity) == -1) { //If the departure city is not found we add it to the list
+    if (toList.indexOf(departureCity) == -1) {
+      //If the departure city is not found we add it to the list
       toList.push(departureCity);
-      $("#fromPlace").append( //Add option for the place
+      $("#fromPlace").append(
+        //Add option for the place
         $("<option>", {
           value: departureCity,
           text: departureCity,
@@ -169,7 +193,7 @@ function initialPlaces(routes) {
 }
 
 /**
- * Function to add options to the toPlace dropdown, based on the fromPlace option thats selected.
+ * Populates toPlace dropdown, based on the selected fromPlace
  * @param {any} routes All routes, taken from the GetAllRoutes request
  */
 function AddOptionsToTo(routes) {
@@ -180,9 +204,11 @@ function AddOptionsToTo(routes) {
   addPlaceholder("Select destination", "#toPlace");
 
   for (let route of routes) {
-    if (route.departureTerminalCity == selectedCity) { //we compare departure city with selected city
+    if (route.departureTerminalCity == selectedCity) {
+      //Compare departure city with selected city
       let arrivalCity = route.arrivalTerminalCity;
-      if (fromList.indexOf(arrivalCity) == -1) { //If not in the list we add it as an option
+      if (fromList.indexOf(arrivalCity) == -1) {
+        //If not in the list, add it as an option
         fromList.push(arrivalCity);
         $("#toPlace").append(
           $("<option>", {
@@ -194,11 +220,12 @@ function AddOptionsToTo(routes) {
     }
   }
 }
+
 /**
  * Adds placeholder to option (edge-case handling)
- * @param {any} text The text of the select option
- * @param {any} parent The select tag which is the parent of the select option
- */ 
+ * @param {any} text    Text of the select option
+ * @param {any} parent  Parent of the select option
+ */
 function addPlaceholder(text, parent) {
   const option = document.createElement("option");
   option.value = "noPlace";
@@ -210,67 +237,78 @@ function addPlaceholder(text, parent) {
 }
 
 /**
- * Function for inputvalidation, if all the fields are populated.
- * Except for ticketAmount, which will be validated when loading the calendar.
- * This means that only routes that have ticketsLeft > ticketAmount will show that day as available.
-*/
+ * Validates input, if all fields are populated
+ * Does not validate ticketAmount, which is checked when loading the calendar
+ */
 function orderTickets() {
-    let roundway = $('input[name="nrTrips"]:checked').val();
-    //If its a oneway trip the inbound variable has to be stored in localstorage as well as the other three variables:
-        //If either of these values arent there you cant proceed:
-        if (
-            $("#toPlace").val() === null ||
-            $("#fromPlace").val() === null ||
-            !localStorage.getItem("outbound")
-        ) {
-            customAlert("Select a departure city, a destination and a date!", "Error buying ticket");
+  //If one-way trip, inbound variable has to be stored in localstorage
+  let roundway = $('input[name="nrTrips"]:checked').val();
+
+  //Only proceed if values are set
+  if (
+    $("#toPlace").val() === null ||
+    $("#fromPlace").val() === null ||
+    !localStorage.getItem("outbound")
+  ) {
+    customAlert(
+      "Select a departure city, a destination and a date!",
+      "Error buying ticket"
+    );
+  } else {
+    //If its a round way trip
+    if (roundway == "roundtrip") {
+      if (localStorage.getItem("inbound")) {
+        let outbound = localStorage.getItem("outbound");
+        let outboundArr = outbound.split("-");
+        let outboundDate = new Date(
+          outboundArr[2],
+          outboundArr[1],
+          outboundArr[0]
+        ); //converting string into date
+
+        let inbound = localStorage.getItem("inbound");
+        let inboundArr = inbound.split("-");
+        let inboundDate = new Date(inboundArr[2], inboundArr[1], inboundArr[0]); //converting string into date
+
+        if (inboundDate < outboundDate) {
+          customAlert(
+            "Your return trip is before your first trip! Choose a new date for your inbound (return) trip.",
+            "Error with date"
+          );
         } else {
-            if (roundway == "roundtrip") { //If its a round way trip
-                if (localStorage.getItem("inbound")) {
-                    let outbound = localStorage.getItem("outbound");
-                    let outboundArr = outbound.split("-");
-                    let outboundDate = new Date(outboundArr[2], outboundArr[1], outboundArr[0]);; //converting string into date
-
-                    let inbound = localStorage.getItem("inbound");
-                    let inboundArr = inbound.split("-");
-                    let inboundDate = new Date(inboundArr[2], inboundArr[1], inboundArr[0]);; //converting string into date
-
-                    if (inboundDate < outboundDate) {
-                        customAlert(
-                            "Your return trip is before your first trip! Choose a new date for your inbound (return) trip.", "Error with date"
-                        );
-                    } else {
-                        window.location.href = "order.html";
-                    }
-                } else {
-                    customAlert("You chose a roundway trip but you didnt choose an inbound date!", "Error buying ticket");
-                }
-                
-            } else {
-                window.location.href = "order.html";
-            }
+          window.location.href = "order.html";
         }
+      } else {
+        customAlert(
+          "You chose a roundway trip but you didnt choose an inbound date!",
+          "Error buying ticket"
+        );
+      }
+    } else {
+      window.location.href = "order.html";
+    }
+  }
 }
 
 /**
- * Function for reloading the calendar 
-*/
+ * Reloads calendar if the div is populated
+ */
 function reloadCalendar() {
   const cal = $("#calendar-outbound")[0];
   if (cal.children.length !== 0) {
     initializeCalendars();
-    }
+  }
 }
 
 /**
- * Function for removing the calendar
-*/
+ * Removes calendar
+ */
 function removeCalendar() {
-    $(".calendar.inbound").children().empty();
-    $(".calendar.outbound").children().empty();
-    $("#inbound-details").children().empty();
-    $("#outbound-details").children().empty();
-    localStorage.removeItem("inbound");
-    localStorage.removeItem("outbound");
-    $("#orderbox-params-when-btn > p").text("Select date")
+  $(".calendar.inbound").children().empty();
+  $(".calendar.outbound").children().empty();
+  $("#inbound-details").children().empty();
+  $("#outbound-details").children().empty();
+  localStorage.removeItem("inbound");
+  localStorage.removeItem("outbound");
+  $("#orderbox-params-when-btn > p").text("Select date");
 }

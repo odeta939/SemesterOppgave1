@@ -1,7 +1,7 @@
-//Variables for the order for a oneway trip
+//Oneway trip order
 let firstRoute = {};
 
-//Variables for the order for a roundtrip
+//Round trip order
 let isRoundtrip = false;
 let roundTripRoute = {};
 
@@ -11,17 +11,17 @@ $(function () {
 });
 
 /**
- * Function for validating the order
- * If valid it will run the createOrder function
- * */
+ * Validates order
+ * If valid, calls createOrder()
+ */
 function validateAndOrder() {
-  var firstnameOK = validateFirstname($("#firstName").val());
-  var lastnameOK = validateLastname($("#lastName").val());
-  var phonenrOK = validatePhonenr($("#phoneNr").val());
-  var emailOK = validateEmail($("#email").val());
-  var streetOK = validateStreet($("#streetName").val());
-  var zipOK = validateZipcode($("#zipCode").val());
-  var cityOK = validateCity($("#cityName").val());
+  const firstnameOK = validateFirstname($("#firstName").val());
+  const lastnameOK = validateLastname($("#lastName").val());
+  const phonenrOK = validatePhonenr($("#phoneNr").val());
+  const emailOK = validateEmail($("#email").val());
+  const streetOK = validateStreet($("#streetName").val());
+  const zipOK = validateZipcode($("#zipCode").val());
+  const cityOK = validateCity($("#cityName").val());
 
   if (
     firstnameOK &&
@@ -37,8 +37,8 @@ function validateAndOrder() {
 }
 
 /**
- * Function for initializing the variables based on the localStorage values
-*/
+ * Initialises variables based on the localStorage values
+ */
 function getRoutes() {
   $.get("Order/GetAllRoutes", function (routes) {
     for (let route of routes) {
@@ -65,7 +65,7 @@ function getRoutes() {
 }
 
 /**
- * Function to reduce the amount of tickets of a route
+ * Reduces the amount of tickets of a route
  * @param {*} aRoute    Route object (to be edited)
  */
 function reduceTicketsLeft(aRoute) {
@@ -75,17 +75,16 @@ function reduceTicketsLeft(aRoute) {
 }
 
 /**
- * Function to populate the divs with the ticket information
-*/
+ * Populates the divs with the ticket information
+ */
 function setOrder() {
-  //If it's a one way trip:
+  //If it's a one way trip
   if (
     localStorage.getItem("departure") &&
     localStorage.getItem("arrival") &&
     localStorage.getItem("outbound") &&
     !localStorage.getItem("inbound")
   ) {
-
     const departurePlace = localStorage.getItem("departure");
     const arrivalPlace = localStorage.getItem("arrival");
     const departureTime = localStorage.getItem("outbound");
@@ -100,14 +99,13 @@ function setOrder() {
       ticketAmount
     );
   }
-  //If it's a round trip:
+  //If it's a round trip
   else if (
     localStorage.getItem("departure") &&
     localStorage.getItem("arrival") &&
     localStorage.getItem("outbound") &&
     localStorage.getItem("inbound")
   ) {
-
     const departurePlace = localStorage.getItem("departure");
     const arrivalPlace = localStorage.getItem("arrival");
     const departureTime = localStorage.getItem("outbound");
@@ -122,7 +120,7 @@ function setOrder() {
       ticketAmount
     );
 
-    //Setting the trip info for the round trip (arrivalPlace will be departurePlace and vice versa):
+    //Setting the trip info for the round trip (arrivalPlace will be departurePlace and vice versa)
     const departureTime2 = localStorage.getItem("inbound");
 
     populateTicket(
@@ -134,7 +132,7 @@ function setOrder() {
       ticketAmount
     );
   }
-  //If there are no values in localStorage:
+  //If there are no values in localStorage
   else {
     $("#content-title").html("Oops...");
     $("#orderForm").html("");
@@ -177,10 +175,10 @@ function populateTicket(
 }
 
 /**
- * Function to create the order.
- * It either creates one or two orders, based on it being a round / oneway trip.
- * It also calls the reduceTicketsLeft function after a successful request
-*/
+ * Creates order
+ * Creates one or two orders, based on it being a round / oneway trip.
+ * Calls reduceTicketsLeft() function after a successful request
+ */
 function createOrder() {
   let ticketAmount = localStorage.getItem("ticketAmount");
   let firstname = $("#firstName").val();
@@ -192,7 +190,7 @@ function createOrder() {
   let city = $("#cityName").val();
 
   if (isRoundtrip == true) {
-    //Reducing the amount of tickets left for a round trip:
+    //Reducing the amount of tickets left for a round trip
     if (firstRoute.ticketsLeft >= ticketAmount) {
       firstRoute.ticketsLeft -= ticketAmount;
     } else {
@@ -266,23 +264,23 @@ function createOrder() {
     };
 
     $.post("Order/SaveOrder", order, function () {
-      //If the post request returns an OK add the order to local storage:
+      //If the post request returns an OK add the order to local storage
       localStorage.setItem("order", JSON.stringify(order));
-      //Reducing the amount of tickets left for the route in the database:
+      //Reducing the amount of tickets left for the route in the database
       reduceTicketsLeft(firstRoute);
 
       $.post("Order/SaveOrder", order2, function () {
-        //If the post request returns an OK remove the old storage and add the second order to local storage:
+        //If the post request returns an OK remove the old storage and add the second order to local storage
         localStorage.setItem("order2", JSON.stringify(order2));
         localStorage.removeItem("arrival");
         localStorage.removeItem("departure");
         localStorage.removeItem("outbound");
         localStorage.removeItem("inbound");
         localStorage.removeItem("ticketAmount");
-        //Reducing the amount of tickets left for the roundtrip route in the database:
+        //Reducing the amount of tickets left for the roundtrip route in the database
         reduceTicketsLeft(roundTripRoute);
-        //Will redirect to an order confirmation page if both orders returns an OK:
-        //Added a delay because on firefox jquery is changing location before the request is finished:
+        //Will redirect to an order confirmation page if both orders returns an OK
+        //Added a delay because on firefox jquery is changing location before the request is finished
         setTimeout(function () {
           window.location.href = "confirmation.html";
         }, 500);
@@ -294,7 +292,7 @@ function createOrder() {
       return;
     });
   } else {
-    //Reducing the amount of tickets for a one way trip:
+    //Reducing the amount of tickets for a one way trip
     if (firstRoute.ticketsLeft >= ticketAmount) {
       firstRoute.ticketsLeft -= ticketAmount;
     } else {
@@ -305,7 +303,7 @@ function createOrder() {
       return;
     }
 
-    //Only one order if it's a oneway trip:
+    //Only one order if it's a oneway trip
     const order = {
       ticketAmount: ticketAmount,
       totalPrice: ticketAmount * firstRoute.ticketPrice,
@@ -333,16 +331,16 @@ function createOrder() {
     };
 
     $.post("Order/SaveOrder", order, function () {
-      //If the post request returns an OK remove the old storage and add the order to local storage:
+      //If the post request returns an OK remove the old storage and add the order to local storage
       localStorage.setItem("order", JSON.stringify(order));
       localStorage.removeItem("arrival");
       localStorage.removeItem("departure");
       localStorage.removeItem("outbound");
       localStorage.removeItem("inbound");
       localStorage.removeItem("ticketAmount");
-      //Reducing the amount of tickets left for the route in the database:
+      //Reducing the amount of tickets left for the route in the database
       reduceTicketsLeft(firstRoute);
-      //Will redirect to the order confirmation page after a timeout for firefox:
+      //Will redirect to the order confirmation page after a timeout for Firefox
       setTimeout(function () {
         window.location.href = "confirmation.html";
       }, 500);

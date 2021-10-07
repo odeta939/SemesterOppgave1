@@ -42,6 +42,7 @@ function validatePhonenr(phonenr) {
     return true;
   }
 }
+
 /**
  * Validates the email address
  * @param {any} email Customers email address
@@ -112,7 +113,7 @@ function textEntryValidation(toValidate, elemTag, msg, maxChars) {
   //Based on the maxChars, the regex is created
   switch (maxChars) {
     case 20:
-      regex = /^[a-zA-ZøæåØÆÅ. \-]{2,20}$/
+      regex = /^[a-zA-ZøæåØÆÅ. \-]{2,20}$/;
       break;
     case 30:
       regex = /^[a-zA-ZøæåØÆÅ. \-]{2,30}$/;
