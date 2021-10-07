@@ -4,19 +4,17 @@ function customAlert(text, title) {
     if (document.getElementById("alertContainer")) {
         return;
     }
-
     let container = document.getElementsByTagName("body")[0].appendChild(document.createElement("div"));
     container.id = "alertContainer";
     container.style.height = document.documentElement.scrollHeight + "px";
-    container.onclick = function (event) {
-        event.stopPropagation();
+    container.onclick = function () {
         document.getElementsByTagName("body")[0].removeChild(document.getElementById("alertContainer"));
+        document.getElementsByTagName("body")[0].removeChild(document.getElementById("alertBox"));
     }
 
-    let alerter = container.appendChild(document.createElement("div"));
+    let alerter = document.getElementsByTagName("body")[0].appendChild(document.createElement("div"));
     alerter.id = "alertBox";
     alerter.style.top = document.documentElement.scrollTop + "px";
-    alerter.style.left = "50%";
     alerter.style.display = "block";
 
     let h1 = alerter.appendChild(document.createElement("h1"));
@@ -30,5 +28,6 @@ function customAlert(text, title) {
     a.href = "#";
     a.onclick = function () {
         document.getElementsByTagName("body")[0].removeChild(document.getElementById("alertContainer"));
+        document.getElementsByTagName("body")[0].removeChild(document.getElementById("alertBox"));
     };
 }
