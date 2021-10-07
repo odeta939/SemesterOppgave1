@@ -326,21 +326,17 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
     let route = 0;
     let routeIndex = 0;
 
-    for (; route < departureDays.length; route++) {
-      //Looping through all the routes
+    for (; route < departureDays.length; route++) {      //Looping through all the routes
       let dateArray = departureDays[route].split("-"); //day-month-year is the format we use in the database so we need to split it
       routeDay = dateArray[0]; //Getting the day
       routeMonth = dateArray[1]; //Getting the month
-      if (routeDay.slice(0, 1) == 0) {
-        //in case the day start with a 0
+      if (routeDay.slice(0, 1) == 0) {        //in case the day start with a 0
         routeDay = routeDay.slice(1, 2);
       }
-      if (routeMonth.slice(0, 1) == 0) {
-        //in case the month start with a 0
+      if (routeMonth.slice(0, 1) == 0) {        //in case the month start with a 0
         routeMonth = routeMonth.slice(1, 2);
       }
-      //In case the day is the same as the route. We check if route day matches, if the day is active or not and if the months matches
-      if (
+      if (      //In case the day is the same as the route. We check if route day matches, if the day is active or not and if the months matches
         $(this).text() == routeDay &&
         !$(this).hasClass("notActiveDay") &&
         $(".textMonth" + "." + direction).text() == monthNames[routeMonth - 1]
@@ -357,16 +353,16 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
       );
 
       //here we set the onclick
-      if (capacity[routeIndex] > nrOfTravellers) {
-        $(this).click(function () {
-          let ticketDate =
+      if (capacity[routeIndex] >= nrOfTravellers) { //Inputvalidation if ticket amount is >= than we will show the route
+        $(this).click(function () { //Since active routes are clickable we create an extra onclick function that shows route date, like pris, time etc
+          let ticketDate = //Gettint the ticketdate
             $(this).text().split("T")[0] +
             "-" +
-            (monthNames.indexOf($(".textMonth" + "." + direction).text()) + 1) +
+            (monthNames.indexOf($(".textMonth" + "." + direction).text()) + 1) + //Converting month text into right int
             "-" +
             $(".textYear" + "." + direction).text();
 
-          showTicketData(
+          showTicketData( //When ticket is selected we show its data, like price etc.
             direction,
             localStorage.getItem("departure"),
             localStorage.getItem("arrival"),
@@ -378,25 +374,17 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
           //Only one per outbound and inboud can be selected. This we can check based on antallClicked and directionn
           if (antallClicked == 0) {
             //No days selected so the first is always going to be active
-            $(this).addClass("dayActive");
-            let arrayDateText = $(this).text().split("T");
-            let date = arrayDateText[0]; //Getting the day
-            let selectedMonth = $(".textMonth" + "." + direction).text();
-
-            date += "-" + (monthNames.indexOf(selectedMonth) + 1);
-            date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
-
-            localStorage.setItem(direction, date); //Save selected date to locale storage
+              $(this).addClass("dayActive");
+              saveToLocalStorage($(this).text(), direction); //Day is selected so we save it to localStorage
               antallClicked = 1;
+
               if (oneWay) {
                   $("#orderbox-params-when-btn > p").text("Date selected") //Feedback to the user to set date
               }
           } else if (antallClicked == 1) {
-            //If there is one active we will add another with dayActiv
-            if ($(".dayActive").hasClass(direction)) {
-              //If the active day has the same direction we replace it
-              //If it is the same day we remove the class active from it
-              if (
+            //If there is one clicked day we will add another active day (when round Trip)
+            if ($(".dayActive").hasClass(direction)) {//If the active day has the same direction we replace it
+              if (//If it is the same day we remove the class active from it
                 $(".dayActive").attr("class") === $(this).attr("class") &&
                 $(".dayActive").text() &&
                 $(this).text()
@@ -408,30 +396,17 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
                       $("#orderbox-params-when-btn > p").text("Select date") //Feedback to the user to set date
                   }
               } else {
-                //Otherwise we replace the old one with the new selected
-                $(".dayActive").removeClass("dayActive");
-                $(this).addClass("dayActive");
-                let arrayDateText = $(this).text().split("T");
-                let date = arrayDateText[0]; //Getting the day
-                let selectedMonth = $(".textMonth" + "." + direction).text();
-
-                date += "-" + (monthNames.indexOf(selectedMonth) + 1);
-                date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
-
-                localStorage.setItem(direction, date); //Save selected date to locale storage
-                antallClicked = 1; // = 1
+                  //Otherwise we replace the old one with the new selected
+                  $(".dayActive").removeClass("dayActive");
+                  $(this).addClass("dayActive");
+                  saveToLocalStorage($(this).text(), direction); //Day is selected so we save it to localStorage
+                 antallClicked = 1; 
               }
             } else {
-              //The clicked day has a different direction so we add it
-              $(this).addClass("dayActive");
-              let arrayDateText = $(this).text().split("T");
-              let date = arrayDateText[0]; //Getting the day
-              let selectedMonth = $(".textMonth" + "." + direction).text();
-
-              date += "-" + (monthNames.indexOf(selectedMonth) + 1);
-              date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
-
-              localStorage.setItem(direction, date); //Save selected date to locale storage
+                //The clicked day has a different direction so we add it
+                $(this).addClass("dayActive");
+                saveToLocalStorage($(this).text(), direction);
+             
                 antallClicked += 1; // = 2
                 if (!oneWay) { //round trip
                     $("#orderbox-params-when-btn > p").text("Date selected") //Feedback to the user to set date
@@ -446,28 +421,22 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
               $(".dayActive").text() &&
               $(this).text()
             ) {
-              localStorage.removeItem(direction);
+              localStorage.removeItem(direction); //Same day so we remove it
               $("." + direction + ".dayActive").removeClass("dayActive");
                 antallClicked -= 1; // = 1
                 if (!oneWay) { //round trip
                     $("#orderbox-params-when-btn > p").text("Select date") //Feedback to the user to set date
                 }
             } else {
-              //Otherwise we replace the old with the new
-              $("." + direction + ".dayActive").removeClass("dayActive");
-              $(this).addClass("dayActive");
-              let arrayDateText = $(this).text().split("T");
-              let date = arrayDateText[0]; //Getting the day
-              let selectedMonth = $(".textMonth" + "." + direction).text();
-
-              date += "-" + (monthNames.indexOf(selectedMonth) + 1);
-              date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
-              localStorage.setItem(direction, date); //Save selected date to locale storage
+                //Otherwise we replace the old with the new
+                $("." + direction + ".dayActive").removeClass("dayActive");
+                $(this).addClass("dayActive");
+                saveToLocalStorage($(this).text(), direction);
             }
           }
         });
       } else {
-        $(this).addClass("notActiveDay"); //Ticket is sold out day is set to not active
+        $(this).addClass("notActiveDay"); //Ticket is sold out or not enough for the wanted amount of tickets day is set to not active
       }
     } else {
       $(this).addClass("notActiveDay"); //No active route found so the div will get notActiveDay as extra class
@@ -476,7 +445,18 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
   });
 }
 
-function showTicketData(direction, from, to, seatsLeft, time, price) {
+function saveToLocalStorage(dayText, direction) {
+    let arrayDateText = dayText.split("T");
+    let date = arrayDateText[0]; //Getting the day
+    let selectedMonth = $(".textMonth" + "." + direction).text();
+
+    date += "-" + (monthNames.indexOf(selectedMonth) + 1);
+    date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
+
+    localStorage.setItem(direction, date); //Save selected date to locale storage
+}
+
+function showTicketData(direction, from, to, seatsLeft, time, price) { //Based on the selected date we create a ticket overview
   const elem = $("#" + direction + "-details")[0];
   elem.innerHTML = "";
 
