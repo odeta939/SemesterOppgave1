@@ -73,7 +73,6 @@ function setOrder() {
     localStorage.getItem("outbound") &&
     !localStorage.getItem("inbound")
   ) {
-    //Calling getRoutes to initiate the variables for the order - as well as getting the route object to reduce tickets left depending on the ticketamount chosen.
 
     const departurePlace = localStorage.getItem("departure");
     const arrivalPlace = localStorage.getItem("arrival");
@@ -96,7 +95,6 @@ function setOrder() {
     localStorage.getItem("outbound") &&
     localStorage.getItem("inbound")
   ) {
-    //Calling getRoutes to initiate the variables for the order - as well as getting the route object to reduce tickets left depending on the ticketamount chosen.
 
     const departurePlace = localStorage.getItem("departure");
     const arrivalPlace = localStorage.getItem("arrival");
