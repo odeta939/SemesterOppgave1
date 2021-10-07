@@ -184,33 +184,41 @@ function addPlaceholder(text, parent) {
 // Adding departure and arrival place to localstorage to retrieve them in another file!
 // ticketAmount will be validated when loading in the calendar (only routes that have the equal amount or more tickets will show)
 function orderTickets() {
-  if (
-    $("#toPlace").val() === null ||
-    $("#fromPlace").val() === null ||
-    !localStorage.getItem("outbound")
-  ) {
-    customAlert("Select a departure city, a destination and a date!", "Error buying ticket");
-  } else {
-    if (localStorage.getItem("inbound")) { //We are getting the dates from local storage to compare them
-        let outbound = localStorage.getItem("outbound");
-        let outboundArr = outbound.split("-");
-        let outboundDate = new Date(outboundArr[2], outboundArr[1], outboundArr[0]);; //converting string into date
+    let roundway = $('input[name="nrTrips"]:checked').val();
+    //If its a oneway trip the inbound variable has to be stored in localstorage as well as the other three variables:
+        //If either of these values arent there you cant proceed:
+        if (
+            $("#toPlace").val() === null ||
+            $("#fromPlace").val() === null ||
+            !localStorage.getItem("outbound")
+        ) {
+            customAlert("Select a departure city, a destination and a date!", "Error buying ticket");
+        } else {
+            if (roundway == "roundtrip") { //If its a round way trip
+                if (localStorage.getItem("inbound")) {
+                    let outbound = localStorage.getItem("outbound");
+                    let outboundArr = outbound.split("-");
+                    let outboundDate = new Date(outboundArr[2], outboundArr[1], outboundArr[0]);; //converting string into date
 
-        let inbound = localStorage.getItem("inbound");
-        let inboundArr = inbound.split("-");
-        let inboundDate = new Date(inboundArr[2], inboundArr[1], inboundArr[0]);; //converting string into date
+                    let inbound = localStorage.getItem("inbound");
+                    let inboundArr = inbound.split("-");
+                    let inboundDate = new Date(inboundArr[2], inboundArr[1], inboundArr[0]);; //converting string into date
 
-      if (inboundDate < outboundDate) {
-        customAlert(
-          "Your return trip is before your first trip! Choose a new date for your inbound (return) trip.", "Error with date"
-        );
-      } else {
-        window.location.href = "order.html";
-      }
-    } else {
-      window.location.href = "order.html";
-    }
-  }
+                    if (inboundDate < outboundDate) {
+                        customAlert(
+                            "Your return trip is before your first trip! Choose a new date for your inbound (return) trip.", "Error with date"
+                        );
+                    } else {
+                        window.location.href = "order.html";
+                    }
+                } else {
+                    customAlert("You chose a roundway trip but you didnt choose an inbound date!", "Error buying ticket");
+                }
+                
+            } else {
+                window.location.href = "order.html";
+            }
+        }
 }
 
 function reloadCalendar() {

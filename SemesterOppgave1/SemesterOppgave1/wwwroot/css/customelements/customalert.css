@@ -6,7 +6,7 @@
 }
 
 #alertBox {
-    position: absolute;
+    position: fixed;
     left: 50%;
     width: 300px;
     margin-left: -150px;
@@ -44,7 +44,7 @@
     color: #fff;
     background-color: var(--blue-700);
     text-decoration: none;
-    font-size: 0.7em;
+    font-size: 0.8em;
 }
 
 #alertBox #okBtn:hover {

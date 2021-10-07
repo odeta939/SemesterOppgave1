@@ -343,8 +343,10 @@ function createOrder() {
       localStorage.removeItem("ticketAmount");
       //Reducing the amount of tickets left for the route in the database:
       reduceTicketsLeft(firstRoute);
-      //Will redirect to an order confirmation page when thats created:
-      window.location.href = "confirmation.html";
+      //Will redirect to the order confirmation page after a timeout for firefox:
+      setTimeout(function () {
+        window.location.href = "confirmation.html";
+      }, 100);
     }).fail(function (fail) {
       customAlert(fail.responseText, "Error saving order");
     });
