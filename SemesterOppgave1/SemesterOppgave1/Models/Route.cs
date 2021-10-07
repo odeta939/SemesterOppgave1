@@ -13,7 +13,7 @@ namespace SemesterOppgave1.Models
         public string DepartureTime { get; set; }
         [RegularExpression(@"^[0-9]{1,2}-[0-9]{1,2}-[0-9]{4}$")]
         public string ArrivalTime { get; set; }
-        [RegularExpression(@"^([1-9]{1}[0-9]{1,3})$")]
+        [RegularExpression(@"^[0-9]{1,4}$")]
         public int TicketsLeft { get; set; }
 
         //boat
