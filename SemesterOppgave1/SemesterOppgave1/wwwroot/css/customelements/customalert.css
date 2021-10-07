@@ -9,7 +9,9 @@
 }
 
 #alertBox {
-    position: relative;
+    position: absolute;
+    top: 0px;
+    left: 50%;
     width: 300px;
     margin-left: -150px;
     background-color: white;
@@ -17,6 +19,7 @@
     margin-top: 50px;
     border: 2px solid rgba(var(--blue-700-v), 0.3);
     background-position: 20px 30px;
+    z-index: 1000;
 }
 
 #alertContainer > #alertBox {
