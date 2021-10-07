@@ -25,6 +25,25 @@
   margin-left: var(--padding-100);
 }
 
+.totalPrice-info {
+  display: flex;
+  align-items: center;
+}
+
+.totalPrice-lbl {
+  text-transform: uppercase;
+  font-family: var(--font-accent);
+  font-weight: 700;
+  font-size: var(--font-size-600);
+  color: var(--blue-700);
+  margin-right: var(--padding-200);
+}
+
+.totalPrice-data {
+  font-weight: 500;
+  font-size: var(--font-size-600);
+}
+
 #orderForm {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
