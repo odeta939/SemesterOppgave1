@@ -180,8 +180,9 @@ function addPlaceholder(text, parent) {
   $(parent).append(option);
 }
 
-//Inputvalidation +
-//Adding departure and arrival place to localstorage to retrieve them in another file!
+// Inputvalidation +
+// Adding departure and arrival place to localstorage to retrieve them in another file!
+// ticketAmount will be validated when loading in the calendar (only routes that have the equal amount or more tickets will show)
 function orderTickets() {
   if (
     $("#toPlace").val() === null ||
