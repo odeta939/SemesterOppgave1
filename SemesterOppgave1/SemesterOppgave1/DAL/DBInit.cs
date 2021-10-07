@@ -144,9 +144,7 @@ namespace SemesterOppgave1.DAL
                     context.Routes.Add(route);
                 }
 
-                // context.Orders.Add(order);
                 context.SaveChanges();
-
             }
         }
     }
