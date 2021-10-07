@@ -51,6 +51,11 @@ $(function () {
       );
       reloadCalendar();
     });
+
+      $('input[type="radio"]').on('click change', function (e) {
+          reloadCalendar();
+      });
+
   }
 });
 
