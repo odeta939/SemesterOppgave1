@@ -154,9 +154,12 @@ function populateTicket(
   departureTime,
   ticketAmount
 ) {
+  // Creates a title for the ticket session (outbound/inbound)
   const h3 = document.createElement("h3");
   h3.innerHTML = "<span class='capitalize'>" + direction + "</span> trip";
   $(parentElement).append(h3);
+
+  // Adds each of the lines of information
   createTicketDetails("Departure place", departurePlace, parentElement);
   createTicketDetails("Arrival place", arrivalPlace, parentElement);
   createTicketDetails("Departure time", departureTime, parentElement);
