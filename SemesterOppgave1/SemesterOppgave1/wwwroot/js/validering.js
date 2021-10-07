@@ -12,7 +12,7 @@ function validateLastname(lastname) {
     lastname,
     "#failLastname",
     "Last name is invalid",
-    20
+    30
   );
 }
 
@@ -75,15 +75,18 @@ function textEntryValidation(toValidate, elemTag, msg, maxChars) {
   let regex;
   const element = $(elemTag)[0];
 
-  switch (maxChars) {
+    switch (maxChars) {
+    case 20:
+      regex = /^[a-zA-ZøæåØÆÅ. \-]{2,20}$/
+      break;
     case 30:
-      regex = /^[0-9a-zA-ZøæåØÆÅ. \-]{2,30}$/;
+      regex = /^[a-zA-ZøæåØÆÅ. \-]{2,30}$/;
       break;
     case 50:
       regex = /^[0-9a-zA-ZøæåØÆÅ. \-]{2,50}$/;
       break;
     default:
-      regex = /^[0-9a-zA-ZøæåØÆÅ. \-]{2,20}$/;
+      regex = /^[a-zA-ZøæåØÆÅ. \-]{2,20}$/;
       break;
   }
   const ok = regex.test(toValidate);
