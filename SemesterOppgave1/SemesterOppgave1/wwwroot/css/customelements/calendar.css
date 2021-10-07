@@ -1,0 +1,148 @@
+#body-calendar {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.calendar {
+  margin: 0 var(--padding-300);
+}
+
+.calendar-title {
+  margin: var(--padding-150) auto var(--padding-050) auto;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: var(--font-size-500);
+  font-family: var(--font-accent);
+  font-weight: 600;
+  color: var(--blue-700);
+}
+
+.month {
+  width: 100%;
+  text-align: center;
+  display: grid;
+  grid-template-rows: auto;
+  font-size: var(--font-size-400);
+}
+
+.month > .arrow {
+  padding: 0 var(--padding-050);
+}
+
+.monthText {
+  text-align: center;
+  display: flex;
+  margin-bottom: var(--padding-050);
+}
+
+.text {
+  flex-basis: 100%;
+  text-align: center;
+}
+
+.textYear {
+  text-align: left;
+}
+
+.arrow {
+  cursor: pointer;
+}
+
+.calendar-cells {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.daysOfTheWeek {
+  font-weight: 600;
+}
+
+.day {
+  border-right: 1px solid rgba(var(--blue-700-v), 0.3);
+  border-collapse: collapse;
+  text-align: center;
+  padding: var(--font-size-200);
+  cursor: pointer;
+}
+
+.day:first-of-type,
+.day:nth-of-type(8),
+.day:nth-of-type(15),
+.day:nth-of-type(22),
+.day:nth-of-type(29),
+.day:nth-of-type(36),
+.day:nth-of-type(43) {
+  border-left: 1px solid rgba(var(--blue-700-v), 0.3);
+}
+
+.emptyDay:last-of-type + .dayOfTheWeek {
+  text-align: center;
+  font-weight: bold;
+}
+
+.notActiveDay {
+  color: rgba(var(--blue-700-v), 0.15);
+  cursor: default;
+  text-decoration: line-through;
+}
+
+.emptyDay {
+  border: none;
+  text-align: center;
+}
+
+.dayActive {
+  background-color: var(--blue-700);
+  color: var(--blue-100);
+  font-weight: 600;
+}
+
+@media only screen and (max-width: 1000px) {
+  #body-calendar {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ticketInfo {
+  margin: var(--padding-050) var(--padding-300);
+}
+
+.ticketInfo-info {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+}
+
+.ticketInfo-infoAll {
+  margin: var(--padding-025) var(--padding-050) var(--padding-050) 0;
+  align-self: center;
+}
+
+.ticketInfo-infoType {
+  text-transform: uppercase;
+  font-family: var(--font-accent);
+  font-weight: 600;
+  font-size: var(--font-size-400);
+  color: var(--blue-700);
+}
+
+.ticketInfo-infoData {
+  margin-left: var(--padding-100);
+}
+
+@media only screen and (max-width: 500px) {
+  .calendar {
+    margin: 0 var(--padding-050);
+  }
+
+  .ticketInfo-info {
+    grid-template-columns: 1fr;
+  }
+
+  .ticketInfo-infoType {
+    margin-bottom: 0;
+  }
+
+  .ticketInfo-infoData {
+    margin-left: 0;
+  }
+}

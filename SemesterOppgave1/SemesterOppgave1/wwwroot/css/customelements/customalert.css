@@ -1,0 +1,53 @@
+﻿#alertContainer {
+  position: absolute;
+  backdrop-filter: blur(5px);
+  width: 100%;
+  z-index: 999;
+}
+
+#alertBox {
+  position: fixed;
+  left: 50%;
+  width: 300px;
+  margin-left: -150px;
+  background-color: var(--white);
+  text-align: center;
+  margin-top: 75px;
+  border: 2px solid rgba(var(--blue-700-v), 0.3);
+  z-index: 1000;
+}
+
+#alertBox h1 {
+  margin: 0;
+  font-size: 0.9em;
+  background-color: var(--blue-700);
+  color: #fff;
+  border-bottom: 1px solid var(--black);
+  padding: 2px 0 2px 5px;
+}
+
+#alertBox p {
+  height: 75px;
+  padding: 5px;
+  font-size: 0.8em;
+}
+
+#alertBox #okBtn {
+  display: block;
+  position: relative;
+  margin: 5px auto;
+  padding: 10px;
+  border: 2px solid rgba(var(--blue-700-v), 0.3);
+  width: 70px;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  background-color: var(--blue-700);
+  text-decoration: none;
+  font-size: 0.8em;
+}
+
+#alertBox #okBtn:hover {
+  background: rgba(var(--blue-300-v), 0.15);
+  color: var(--blue-700);
+}

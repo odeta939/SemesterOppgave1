@@ -1,0 +1,205 @@
+#hero {
+  position: relative;
+  height: fit-content;
+}
+
+.hero-img {
+  inset: 0;
+  margin: auto;
+  width: 100%;
+  height: 33vh;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+#orderbox {
+  margin: auto;
+  transform: translate(0, -100px);
+  border-radius: var(--borderradius-100);
+  box-shadow: var(--shadow-700);
+  background-color: white;
+  padding: var(--padding-200);
+}
+
+.orderbox-ways-lbl {
+  display: inline-block;
+  margin-bottom: var(--padding-100);
+  font-size: var(--font-size-350);
+}
+
+.orderbox-ways-lbl + .orderbox-ways-radio {
+  margin-left: var(--padding-150);
+}
+
+#orderbox-params {
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 1fr;
+  width: 100%;
+}
+
+#orderbox-params > * {
+  margin-right: var(--padding-200);
+}
+
+.orderbox-params-dropdown label {
+  display: block;
+  text-align: start;
+  text-transform: uppercase;
+  color: var(--blue-500);
+  font-family: var(--font-accent);
+  font-weight: 500;
+  font-size: var(--font-size-300);
+}
+
+.orderbox-params-dropdown select {
+  width: 100%;
+  background: transparent;
+  border: unset;
+  padding: var(--padding-050) 0;
+  color: rgba(var(--blue-700-v), 0.7);
+  font-family: var(--font-default);
+  font-size: var(--font-size-400);
+  margin-left: -0.25rem;
+  border-bottom: var(--font-size-200) solid rgba(var(--blue-300-v), 0.15);
+  cursor: pointer;
+}
+
+.orderbox-params-dropdown select:disabled,
+#orderbox-params-when-btn:disabled {
+  color: rgba(var(--blue-700-v), 0.2);
+  border-bottom: var(--font-size-200) solid rgba(var(--blue-300-v), 0.1);
+}
+
+#orderbox-params-when-btn {
+  all: unset;
+  width: 100%;
+  padding: var(--padding-050) 0;
+  color: rgba(var(--blue-700-v), 0.7);
+  font-family: var(--font-default);
+  font-size: var(--font-size-400);
+  border-bottom: var(--font-size-200) solid rgba(var(--blue-300-v), 0.15);
+  display: flex;
+  cursor: pointer;
+}
+
+#orderbox-params-when-btn > p {
+  all: unset;
+  display: block;
+  flex-basis: 100%;
+}
+
+#orderbox-params-when-btn > svg {
+  fill: rgba(var(--blue-700), 0.7);
+}
+
+#orderbox-params-when-btn:disabled > svg {
+  fill: rgba(var(--blue-700-v), 0.2);
+}
+
+#orderbox-confirm {
+  text-align: center;
+}
+
+#buyTicket {
+  margin: var(--padding-050) auto 0 auto;
+}
+
+@media only screen and (max-width: 800px) {
+  #orderbox-params {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  .orderbox-params-dropdown {
+    margin-bottom: var(--padding-100);
+  }
+
+  .orderbox-params-dropdown:nth-of-type(2),
+  .orderbox-params-dropdown:nth-of-type(4) {
+    margin-right: 0 !important;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  #orderbox-params {
+    grid-template-columns: 1fr;
+  }
+
+  .orderbox-params-dropdown {
+    margin-right: 0 !important;
+  }
+}
+
+#travelinfo {
+  display: flex;
+  max-width: 100%;
+  gap: var(--padding-400);
+  margin-bottom: var(--padding-200);
+}
+
+.travelinfo-box {
+  flex-basis: 100%;
+  text-align: center;
+}
+
+.travelinfo-img {
+  width: var(--img-size-500);
+}
+
+.travelinfo-box {
+  margin: var(--padding-200) var(--padding-400);
+  padding: var(--padding-200) var(--padding-200) var(--padding-100);
+}
+
+@supports (gap: var(--padding-400)) {
+  .travelinfo-box {
+    margin: unset var(--padding-400);
+  }
+}
+
+.travelinfo-txt {
+  font-size: var(--font-size-400);
+}
+
+.travelinfo-title {
+  font-size: var(--font-size-600);
+}
+
+@media only screen and (max-width: 1250px) {
+  #travelinfo {
+    gap: var(--padding-200);
+  }
+
+  .travelinfo-box {
+    margin: var(--padding-200) var(--padding-100);
+    padding: var(--padding-100);
+  }
+
+  @supports (gap: var(--padding-200)) {
+    .travelinfo-box {
+      margin: var(--padding-200) unset;
+    }
+  }
+}
+
+@media only screen and (max-width: 1030px) {
+  #travelinfo {
+    display: block;
+  }
+
+  .travelinfo-box {
+    margin: var(--padding-200) var(--padding-100);
+    padding: var(--padding-100);
+  }
+
+  @supports (gap: var(--padding-200)) {
+    .travelinfo-box {
+      margin: var(--padding-200) unset;
+    }
+  }
+}
+
+@media only screen and (max-width: 8rem) {
+  .travelinfo-img {
+    width: calc(var(--img-size-500) / 2);
+  }
+}
