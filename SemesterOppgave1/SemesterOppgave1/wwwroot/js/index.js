@@ -110,11 +110,9 @@ function enableFrom() {
   const from = $('select[name="from"]')[0].value;
   const to = $("#toPlace")[0];
   if (from !== "noPlace" && from !== "") {
-    console.log(from);
     to.removeAttribute("disabled");
     setToPlaces();
   } else {
-    console.log("In else");
     to.setAttribute("disabled", true);
   }
 }

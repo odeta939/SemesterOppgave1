@@ -12,7 +12,6 @@ $(function () {
 });
 
 function validateAndOrder() {
-  console.log(firstRoute);
   var firstnameOK = validateFirstname($("#firstName").val());
   var lastnameOK = validateLastname($("#lastName").val());
   var phonenrOK = validatePhonenr($("#phoneNr").val());
@@ -37,11 +36,6 @@ function validateAndOrder() {
 //Function for initializing the variables based on the localStorage values
 function getRoutes() {
   $.get("Order/GetAllRoutes", function (routes) {
-    console.log(routes);
-    console.log(localStorage.getItem("arrival"));
-    console.log(localStorage.getItem("departure"));
-    console.log(localStorage.getItem("outbound"));
-    console.log(localStorage.getItem("inbound"));
     for (let route of routes) {
       if (
         route.arrivalTerminalCity == localStorage.getItem("arrival") &&
@@ -162,8 +156,6 @@ function createOrder() {
   let zipCode = $("#zipCode").val();
   let city = $("#cityName").val();
 
-  console.log(roundtrip);
-
   if (roundtrip == true) {
     //Reducing the amount of tickets left for a round trip:
     if (firstRoute.ticketsLeft >= ticketAmount) {
@@ -233,7 +225,6 @@ function createOrder() {
     };
 
     $.post("Order/SaveOrder", order, function () {
-      console.log("In ROUNDWAY1");
       //If the post request returns an OK remove the old storage and add the order to local storage:
       localStorage.setItem("order", JSON.stringify(order));
       localStorage.removeItem("arrival");
@@ -249,7 +240,6 @@ function createOrder() {
     });
 
     $.post("Order/SaveOrder", order2, function () {
-      console.log("In ROUNDWAY2");
       //If the post request returns an OK remove the old storage and add the second order to local storage:
       localStorage.setItem("order2", JSON.stringify(order2));
       localStorage.removeItem("arrival");
@@ -300,7 +290,6 @@ function createOrder() {
     };
 
     $.post("Order/SaveOrder", order, function () {
-      console.log("In ONEWAY");
       //If the post request returns an OK remove the old storage and add the order to local storage:
       localStorage.setItem("order", JSON.stringify(order));
       localStorage.removeItem("arrival");

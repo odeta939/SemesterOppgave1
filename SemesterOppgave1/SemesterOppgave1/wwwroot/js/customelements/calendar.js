@@ -384,7 +384,6 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
 
             date += "-" + (monthNames.indexOf(selectedMonth) + 1);
             date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
-            console.log(date);
 
             localStorage.setItem(direction, date); //Save selected date to locale storage
             antallClicked = 1;
@@ -411,7 +410,6 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
 
                 date += "-" + (monthNames.indexOf(selectedMonth) + 1);
                 date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
-                console.log(date);
 
                 localStorage.setItem(direction, date); //Save selected date to locale storage
                 antallClicked = 1; // = 1
@@ -425,7 +423,6 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
 
               date += "-" + (monthNames.indexOf(selectedMonth) + 1);
               date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
-              console.log(date);
 
               localStorage.setItem(direction, date); //Save selected date to locale storage
               antallClicked += 1; // = 2
@@ -452,7 +449,6 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
 
               date += "-" + (monthNames.indexOf(selectedMonth) + 1);
               date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
-              console.log(date);
               localStorage.setItem(direction, date); //Save selected date to locale storage
             }
           }

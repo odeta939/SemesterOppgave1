@@ -25,7 +25,7 @@ function validatePhonenr(phonenr) {
     return false;
   } else {
     $("#failPhonenr").html("");
-    styleBorder(true, $("#failPhonenr")[0]);
+    styleBorder(false, $("#failPhonenr")[0]);
     return true;
   }
 }
@@ -39,7 +39,7 @@ function validateEmail(email) {
     return false;
   } else {
     $("#failEmail").html("");
-    styleBorder(true, $("#failEmail")[0]);
+    styleBorder(false, $("#failEmail")[0]);
     return true;
   }
 }
@@ -62,7 +62,7 @@ function validateZipcode(zip) {
     return false;
   } else {
     $("#failZip").html("");
-    styleBorder(true, $("#failZip")[0]);
+    styleBorder(false, $("#failZip")[0]);
     return true;
   }
 }
