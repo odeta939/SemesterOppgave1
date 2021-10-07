@@ -60,7 +60,7 @@ function reduceTicketsLeft(aRoute) {
   $.get("Order/EditRoute", aRoute, function () {
     //Do nothing :D
   }).fail(function (fail) {
-    alert(fail.responseText);
+      customAlert(fail.responseText, "Error editing route");
   });
 }
 
@@ -161,14 +161,14 @@ function createOrder() {
     if (firstRoute.ticketsLeft >= ticketAmount) {
       firstRoute.ticketsLeft -= ticketAmount;
     } else {
-      alert("There are not that many tickets left for this route!");
+      customAlert("There are not that many tickets left for this route!", "No tickets left");
       return;
     }
 
     if (roundTripRoute.ticketsLeft >= ticketAmount) {
       roundTripRoute.ticketsLeft -= ticketAmount;
     } else {
-      alert("There are not that many tickets left for this route!");
+      customAlert("There are not that many tickets left for this route!", "No tickets left");
       return;
     }
 
@@ -235,7 +235,7 @@ function createOrder() {
       //Reducing the amount of tickets left for the route in the database:
       reduceTicketsLeft(firstRoute);
     }).fail(function (fail) {
-      alert(fail.responseText);
+      customAlert(fail.responseText, "Error saving order");
       return;
     });
 
@@ -252,14 +252,14 @@ function createOrder() {
       //Will redirect to an order confirmation page when thats created:
       window.location.href = "confirmation.html";
     }).fail(function (fail) {
-      alert(fail.responseText);
+      customAlert(fail.responseText, "Error saving order");
     });
   } else {
     //Reducing the amount of tickets for a one way trip:
     if (firstRoute.ticketsLeft >= ticketAmount) {
       firstRoute.ticketsLeft -= ticketAmount;
     } else {
-      alert("There are not that many tickets left for this route!");
+      customAlert("There are not that many tickets left for this route!", "Error saving order");
       return;
     }
 
@@ -302,7 +302,7 @@ function createOrder() {
       //Will redirect to an order confirmation page when thats created:
       window.location.href = "confirmation.html";
     }).fail(function (fail) {
-      alert(fail.responseText);
+      customAlert(fail.responseText, "Error saving order");
     });
   }
 }
