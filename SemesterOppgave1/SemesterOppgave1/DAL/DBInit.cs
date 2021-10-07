@@ -118,7 +118,7 @@ namespace SemesterOppgave1.DAL
                 }
 
                 
-                //Orders
+                //An order is added for each route - so that we can reduce the amount of tickets left in some routes, to make it seem more realistic that some can be sold out etc.
                 foreach(Routes route in routeList)
                 {
                     Random rnd = new Random();

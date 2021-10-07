@@ -16,8 +16,6 @@ namespace SemesterOppgave1.DAL
         public string Phonenr { get; set; }
         public string Email { get; set; }
         virtual public PostPlaces Postplace { get; set; }
-        //Kan ha denne listen under hvis vi skal liste hver kunde sin ordreliste?
-        //virtual public Orders Order { get; set; }
     }
 
     public class PostPlaces
