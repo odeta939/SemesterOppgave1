@@ -2,12 +2,14 @@
 let firstRoute = {};
 
 //Variables for the order for a roundtrip
-let roundtrip = false;
+let isRoundtrip = false;
 let roundTripRoute = {};
+let totalPrice = 0;
 
 $(function () {
   getRoutes();
-  setOrder();
+    setOrder();
+   
 });
 
 function validateAndOrder() {
@@ -41,15 +43,20 @@ function getRoutes() {
         route.departureTerminalCity == localStorage.getItem("departure") &&
         route.departureTime == localStorage.getItem("outbound")
       ) {
-        firstRoute = route;
-      }
+          firstRoute = route;
+          calculateTotalPrice(firstRoute)
+          placeTotal()
+        }
       if (
         route.arrivalTerminalCity == localStorage.getItem("departure") &&
         route.departureTerminalCity == localStorage.getItem("arrival") &&
         route.departureTime == localStorage.getItem("inbound")
       ) {
         roundTripRoute = route;
-        roundtrip = true;
+          isRoundtrip = true;
+          calculateTotalPrice(roundTripRoute);
+          placeTotal();
+
       }
     }
   });
@@ -75,15 +82,20 @@ function setOrder() {
 
     const departurePlace = localStorage.getItem("departure");
     const arrivalPlace = localStorage.getItem("arrival");
-    const departureTime = localStorage.getItem("outbound");
+      const departureTime = localStorage.getItem("outbound");
+      const ticketAmount = localStorage.getItem("ticketAmount")
 
     populateTicket(
       "Outbound",
       "#tripInfo",
       departurePlace,
       arrivalPlace,
-      departureTime
-    );
+        departureTime,
+      ticketAmount
+      );
+      
+
+      
   }
   //If it's a round trip:
   else if (
@@ -96,16 +108,18 @@ function setOrder() {
 
     const departurePlace = localStorage.getItem("departure");
     const arrivalPlace = localStorage.getItem("arrival");
-    const departureTime = localStorage.getItem("outbound");
+      const departureTime = localStorage.getItem("outbound");
+      const ticketAmount = localStorage.getItem("ticketAmount")
 
     populateTicket(
       "Outbound",
       "#tripInfo",
       departurePlace,
       arrivalPlace,
-      departureTime
+        departureTime,
+        ticketAmount
     );
-
+   
     //Setting the trip info for the round trip (arrivalPlace will be departurePlace and vice versa):
     const departureTime2 = localStorage.getItem("inbound");
 
@@ -114,8 +128,10 @@ function setOrder() {
       "#tripInfo2",
       arrivalPlace,
       departurePlace,
-      departureTime2
-    );
+        departureTime2,
+        ticketAmount
+      );
+      
   }
   //If there are no values in localStorage:
   else {
@@ -135,14 +151,39 @@ function populateTicket(
   parentElement,
   departurePlace,
   arrivalPlace,
-  departureTime
+    departureTime,
+    ticketAmount
 ) {
   const h3 = document.createElement("h3");
   h3.innerHTML = "<span class='capitalize'>" + direction + "</span> trip";
   $(parentElement).append(h3);
   createTicketDetails("Departure place", departurePlace, parentElement);
   createTicketDetails("Arrival place", arrivalPlace, parentElement);
-  createTicketDetails("Departure time", departureTime, parentElement);
+    createTicketDetails("Departure time", departureTime, parentElement);
+    createTicketDetails("Amount of passengers", ticketAmount, parentElement);
+    
+}
+
+function calculateTotalPrice(route) {
+    const amount = Number(localStorage.getItem("ticketAmount"));
+    const ticketpr = Number(route.ticketPrice);
+        totalPrice += ticketpr * amount;
+}
+
+function placeTotal() {
+    const p1 = document.createElement("p");
+    p1.innerHTML = "Total price";
+    p1.classList.add("totalPrice-lbl");
+    const p2 = document.createElement("p");
+    p2.innerHTML = "kr "+totalPrice +",-";
+    p2.classList.add("totalPrice-data");
+
+    const div = document.createElement("div");
+    div.classList.add("totalPrice-info");
+    div.appendChild(p1);
+    div.appendChild(p2);
+    $("#priceInfo").html("");
+    $("#priceInfo").append(div);
 }
 
 function createOrder() {
@@ -153,9 +194,10 @@ function createOrder() {
   let email = $("#email").val();
   let street = $("#streetName").val();
   let zipCode = $("#zipCode").val();
-  let city = $("#cityName").val();
+    let city = $("#cityName").val();
+   
 
-  if (roundtrip == true) {
+  if (isRoundtrip == true) {
     //Reducing the amount of tickets left for a round trip:
     if (firstRoute.ticketsLeft >= ticketAmount) {
       firstRoute.ticketsLeft -= ticketAmount;
