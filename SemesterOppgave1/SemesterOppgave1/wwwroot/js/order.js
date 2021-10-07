@@ -137,6 +137,15 @@ function setOrder() {
   }
 }
 
+/**
+ * Creates a ticket (inbound or outbound) for the order.html page
+ * @param {*} direction       Outbound/inbound
+ * @param {*} parentElement   Element to which all the HTML nodes will be attached
+ * @param {*} departurePlace  Departure place
+ * @param {*} arrivalPlace    Arrival place
+ * @param {*} departureTime   Departure time
+ * @param {*} ticketAmount    Number of tickets/passengers chosen
+ */
 function populateTicket(
   direction,
   parentElement,
