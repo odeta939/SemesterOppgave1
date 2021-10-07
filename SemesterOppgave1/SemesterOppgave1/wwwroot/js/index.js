@@ -5,19 +5,19 @@ $(function () {
   localStorage.clear();
   const proceed = supportWarning();
   if (proceed) {
-    addPassengerNrs();
+    addPassengerNrs(); //Adding the amount of passengers to passengers
 
-    getDeparturePlaces();
+    getDeparturePlaces(); //Loading all the routes under from 
 
     // Handle reloading edge cases
-    enableFrom();
+      enableTo();
     enableDate();
 
     $("#fromPlace").on("change", function () {
-        enableFrom();
-        removeCalendar();
+        enableTo(); //Since the user has selected a from destination the rest of the form can be activated
+        removeCalendar(); //If there was a calendar showing it means that the user has change its route and the calendar need to be deleted since it is not accurat anymore
         let departurePlace = $("#fromPlace").children("option:selected").text();
-        localStorage.setItem("departure", departurePlace);
+        localStorage.setItem("departure", departurePlace); //Departure place get stored into local storage
         //reloadCalendar();
     });
 
@@ -95,12 +95,12 @@ function addPassengerNrs() {
 }
 
 function getDeparturePlaces() {
-  $.get("order/GetAllRoutes", function (routes) {
+    $.get("order/GetAllRoutes", function (routes) { //Getting all the routes from the database
     initialPlaces(routes);
   });
 }
 
-function enableFrom() {
+function enableTo() {
   const from = $('select[name="from"]')[0].value;
   const to = $("#toPlace")[0];
   if (from !== "noPlace" && from !== "") {
@@ -132,19 +132,10 @@ function initialPlaces(routes) {
   addPlaceholder("Select origin", "#fromPlace");
 
   for (let route of routes) {
-    let arrivalCity = route.arrivalTerminalCity;
     let departureCity = route.departureTerminalCity;
-    if (toList.indexOf(arrivalCity) == -1) {
-      toList.push(arrivalCity);
-      $("#fromPlace").append(
-        $("<option>", {
-          value: arrivalCity,
-          text: arrivalCity,
-        })
-      );
-    } else if (toList.indexOf(departureCity) == -1) {
+    if (toList.indexOf(departureCity) == -1) { //If the departure city is not found we add it to the list
       toList.push(departureCity);
-      $("#fromPlace").append(
+      $("#fromPlace").append( //Add option for the place
         $("<option>", {
           value: departureCity,
           text: departureCity,
