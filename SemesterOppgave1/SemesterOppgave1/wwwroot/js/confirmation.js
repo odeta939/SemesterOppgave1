@@ -21,16 +21,18 @@ function loadConfirmation() {
     const parent = document.createElement("div");
     parent.classList.add("content-tripinfo");
     grandpa.append(parent);
-    createOrderTicket(orderOut, parent, true);
+      createOrderTicket(orderOut, parent, true);
 
+ 
+    
     const orderIn = getNewOrderInbound();
     if (localStorage.getItem("order2")) {
       const parent = $("#content")[0];
       createOrderTicket(orderIn, parent, false);
-    }
+      }
   } else {
     $("#content").append(`<h1>You have not ordered anything yet.</h1>`);
-  }
+    }
 }
 
 function createOrderTicket(order, parent, isOutbound) {
@@ -64,6 +66,8 @@ function createOrderTicket(order, parent, isOutbound) {
     divDeparture
   );
   createTicketDetails("Departure time", order.departureTime, divDeparture);
+  createTicketDetails("Amount of passengers", order.ticketAmount, divDeparture);
+    
 
   const divArrival = document.createElement("div");
   divArrival.classList.add("content-tripinfo-arrival");

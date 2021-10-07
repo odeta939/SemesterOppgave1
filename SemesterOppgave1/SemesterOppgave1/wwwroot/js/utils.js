@@ -4,7 +4,7 @@ function createTicketDetails(label, data, parentElement) {
   p1.classList.add("ticketInfo-infoType");
   p1.classList.add("ticketInfo-infoAll");
   const p2 = document.createElement("p");
-  p2.innerHTML = label === "Departure time" ? data + " 09:00" : data;
+  p2.innerHTML = label === "Departure time" || label === "Arrival time" ? data + " 09:00" : data;
   p2.classList.add("ticketInfo-infoData");
   p2.classList.add("ticketInfo-infoAll");
 
