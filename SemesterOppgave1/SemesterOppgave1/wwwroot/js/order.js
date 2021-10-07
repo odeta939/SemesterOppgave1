@@ -1,9 +1,8 @@
 //Variables for the order for a oneway trip
 let firstRoute = {};
 
-let roundtrip = false;
-
 //Variables for the order for a roundtrip
+let roundtrip = false;
 let roundTripRoute = {};
 
 $(function () {
@@ -20,17 +19,17 @@ function validateAndOrder() {
   var zipOK = validateZipcode($("#zipCode").val());
   var cityOK = validateCity($("#cityName").val());
 
-  if (
-    firstnameOK &&
-    lastnameOK &&
-    phonenrOK &&
-    emailOK &&
-    streetOK &&
-    zipOK &&
-    cityOK
-  ) {
-    createOrder();
-  }
+    if (
+        firstnameOK &&
+        lastnameOK &&
+        phonenrOK &&
+        emailOK &&
+        streetOK &&
+        zipOK &&
+        cityOK
+    ) {
+        createOrder();
+    } 
 }
 
 //Function for initializing the variables based on the localStorage values
@@ -222,16 +221,11 @@ function createOrder() {
       street: street,
       zipCode: zipCode,
       city: city,
-    };
+      };
 
     $.post("Order/SaveOrder", order, function () {
-      //If the post request returns an OK remove the old storage and add the order to local storage:
+      //If the post request returns an OK add the order to local storage:
       localStorage.setItem("order", JSON.stringify(order));
-      localStorage.removeItem("arrival");
-      localStorage.removeItem("departure");
-      localStorage.removeItem("outbound");
-      localStorage.removeItem("inbound");
-      localStorage.removeItem("ticketAmount");
       //Reducing the amount of tickets left for the route in the database:
       reduceTicketsLeft(firstRoute);
     }).fail(function (fail) {
@@ -249,7 +243,7 @@ function createOrder() {
       localStorage.removeItem("ticketAmount");
       //Reducing the amount of tickets left for the roundtrip route in the database:
       reduceTicketsLeft(roundTripRoute);
-      //Will redirect to an order confirmation page when thats created:
+      //Will redirect to an order confirmation page:
       window.location.href = "confirmation.html";
     }).fail(function (fail) {
       customAlert(fail.responseText, "Error saving order");
@@ -262,7 +256,7 @@ function createOrder() {
       customAlert("There are not that many tickets left for this route!", "Error saving order");
       return;
     }
-
+    //Only one order if it's a oneway trip:
     const order = {
       ticketAmount: ticketAmount,
       totalPrice: ticketAmount * firstRoute.ticketPrice,

@@ -17,6 +17,7 @@ function validateLastname(lastname) {
 }
 
 function validatePhonenr(phonenr) {
+  //Only norwegian phone numbers usable for the customer
   const regex = /^^(\+47)?[2-9][0-9]{7}$/;
   const ok = regex.test(phonenr);
   if (!ok) {
@@ -31,7 +32,7 @@ function validatePhonenr(phonenr) {
 }
 
 function validateEmail(email) {
-  const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  const regex = /^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/;
   const ok = regex.test(email);
   if (!ok) {
     $("#failEmail").html("Email is invalid");
@@ -54,7 +55,7 @@ function validateStreet(street) {
 }
 /^\d{4}$/;
 function validateZipcode(zip) {
-  const regex = /^\d{4}$/;
+  const regex = /^[1-9][0-9]{4}|[0-9]{4}|[1-9]{1}[0-9]{2}( )[0-9]{2}$/;
   const ok = regex.test(zip);
   if (!ok) {
     $("#failZip").html("Zip code is invalid");
@@ -71,11 +72,12 @@ function validateCity(city) {
   return textEntryValidation(city, "#failCity", "City is invalid", 30);
 }
 
+//A one in all method for the text entry regex
 function textEntryValidation(toValidate, elemTag, msg, maxChars) {
   let regex;
   const element = $(elemTag)[0];
 
-    switch (maxChars) {
+  switch (maxChars) {
     case 20:
       regex = /^[a-zA-ZøæåØÆÅ. \-]{2,20}$/
       break;

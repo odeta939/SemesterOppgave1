@@ -22,10 +22,6 @@
     z-index: 1000;
 }
 
-#alertContainer > #alertBox {
-    position: fixed;
-}
-
 #alertBox h1 {
     margin: 0;
     font-size: 0.9em;
