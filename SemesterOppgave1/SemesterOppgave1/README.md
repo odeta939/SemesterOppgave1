@@ -1,0 +1,7 @@
+﻿We are using web components, internet explorer does not implement them at all and safari (https://developer.mozilla.org/en-US/docs/Web/Web_Components) has chosen not to implement custom elements. This mean that in those browsers an error message will show up, and no content will be loaded. 
+
+We are also populating our database with preloaded values, this is done in the DBInit.cs file under the DAL catalogue. There we are creating preset routes, terminals, boats, customers and orders - to simulate an actual boat trip ordering site / database.The routes in our database have a variable called ticketsLeft, and we are adding orders in the DBInit file just so that the ticketsLeftvalue of each route will be different, so that some routes have less tickets left and some have more. In some cases some routes are sold out and you can see that in the calendar on the site as well.
+
+We decided to have one order be one ticket. This means that if you choose a round trip, both an inbound and outbound date, two orders will be saved. And you will then have two tickets in the order confirmation page. In the DAL folder there is an ER Diagram for the database, where you can see our logic visually.
+
+We have experienced that error alerts will sometimes show up on Firefox incorrectly. The issues were not easily reproducible, and are most likely related to response times from the server. A timeout was set, which drastically reduced occurrences, but on rare occasions an error message would still briefly appear before redirection.
