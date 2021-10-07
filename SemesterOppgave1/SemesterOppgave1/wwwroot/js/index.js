@@ -14,46 +14,35 @@ $(function () {
     enableDate();
 
     $("#fromPlace").on("change", function () {
-      enableFrom();
-      let departurePlace = $("#fromPlace").children("option:selected").text();
-      $(".calendar.inbound").children().empty();
-      $(".calendar.outbound").children().empty();
-      $("#inbound-details").children().empty();
-      $("#outbound-details").children().empty();
-      localStorage.removeItem("inbound");
-      localStorage.removeItem("outbound");
-      localStorage.setItem("departure", departurePlace);
+        enableFrom();
+        removeCalendar();
+        let departurePlace = $("#fromPlace").children("option:selected").text();
+        localStorage.setItem("departure", departurePlace);
+        //reloadCalendar();
     });
 
     $("#toPlace").on("change", function () {
-      enableDate();
-      let arrivalPlace = $("#toPlace").children("option:selected").text();
-      $(".calendar.inbound").children().empty();
-      $(".calendar.outbound").children().empty();
-      $("#inbound-details").children().empty();
-      $("#outbound-details").children().empty();
-      localStorage.removeItem("inbound");
-      localStorage.removeItem("outbound");
-      localStorage.setItem("arrival", arrivalPlace);
-      reloadCalendar();
+        enableDate();
+        removeCalendar();
+        let arrivalPlace = $("#toPlace").children("option:selected").text();
+        localStorage.setItem("arrival", arrivalPlace);
+        //reloadCalendar();
     });
 
     $("#passengers").on("change", function () {
-      $(".calendar.inbound").children().empty();
-      $(".calendar.outbound").children().empty();
-      $("#inbound-details").children().empty();
-      $("#outbound-details").children().empty();
-      localStorage.removeItem("inbound");
-      localStorage.removeItem("outbound");
-      localStorage.setItem(
-        "ticketAmount",
-        $("#passengers").children("option:selected").text()
-      );
-      reloadCalendar();
+        removeCalendar();
+          localStorage.setItem(
+            "ticketAmount",
+            $("#passengers").children("option:selected").text()
+            );
+            $("#orderbox-params-when-btn > p").text("Select date")
+        reloadCalendar();
     });
 
       $('input[type="radio"]').on('click change', function (e) {
-          reloadCalendar();
+          $("#orderbox-params-when-btn > p").text("Select date")
+          removeCalendar();
+          //reloadCalendar();
       });
 
   }
@@ -242,5 +231,15 @@ function reloadCalendar() {
   const cal = $("#calendar-outbound")[0];
   if (cal.children.length !== 0) {
     initializeCalendars();
-  }
+    }
+}
+
+function removeCalendar() {
+    $(".calendar.inbound").children().empty();
+    $(".calendar.outbound").children().empty();
+    $("#inbound-details").children().empty();
+    $("#outbound-details").children().empty();
+    localStorage.removeItem("inbound");
+    localStorage.removeItem("outbound");
+    $("#orderbox-params-when-btn > p").text("Select date")
 }

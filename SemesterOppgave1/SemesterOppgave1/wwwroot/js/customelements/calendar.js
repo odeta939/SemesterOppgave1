@@ -38,6 +38,7 @@ let oneWay = false;
 let ticketsWanted;
 
 function initializeCalendars() {
+    antallClicked = 0;
   departureCity = localStorage.getItem("departure");
   arrivalCity = localStorage.getItem("arrival");
   oneWay = $('input[name="nrTrips"]:checked').val() == "oneway" ? true : false;
@@ -49,7 +50,7 @@ function initializeCalendars() {
     createCalendar(outbound, outboundDate); //Creating outbound calendar
     $(".calendar.inbound").children().empty();
   } else {
-    // Back and forth
+    // Round trip
     createCalendar(outbound, outboundDate); //Creating outbound calendar
     createCalendar(inbound, inboundDate); //Creating inbound calendar
   }
@@ -386,7 +387,10 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
             date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
 
             localStorage.setItem(direction, date); //Save selected date to locale storage
-            antallClicked = 1;
+              antallClicked = 1;
+              if (oneWay) {
+                  $("#orderbox-params-when-btn > p").text("Date selected") //Feedback to the user to set date
+              }
           } else if (antallClicked == 1) {
             //If there is one active we will add another with dayActiv
             if ($(".dayActive").hasClass(direction)) {
@@ -399,7 +403,10 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
               ) {
                 localStorage.removeItem(direction);
                 $(".dayActive").removeClass("dayActive");
-                antallClicked -= 1; //  = 0
+                  antallClicked -= 1; //  = 0
+                  if (oneWay) {
+                      $("#orderbox-params-when-btn > p").text("Select date") //Feedback to the user to set date
+                  }
               } else {
                 //Otherwise we replace the old one with the new selected
                 $(".dayActive").removeClass("dayActive");
@@ -425,7 +432,10 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
               date += "-" + $(".textYear" + "." + direction).text(); //Getting the year
 
               localStorage.setItem(direction, date); //Save selected date to locale storage
-              antallClicked += 1; // = 2
+                antallClicked += 1; // = 2
+                if (!oneWay) { //round trip
+                    $("#orderbox-params-when-btn > p").text("Date selected") //Feedback to the user to set date
+                }
             }
           } else if (antallClicked == 2) {
             //When antallClicked is 2 we need to replace based on the direction
@@ -438,7 +448,10 @@ function setOnclickListners(departureDays, capacity, ticketprice, direction) {
             ) {
               localStorage.removeItem(direction);
               $("." + direction + ".dayActive").removeClass("dayActive");
-              antallClicked -= 1; // = 1
+                antallClicked -= 1; // = 1
+                if (!oneWay) { //round trip
+                    $("#orderbox-params-when-btn > p").text("Select date") //Feedback to the user to set date
+                }
             } else {
               //Otherwise we replace the old with the new
               $("." + direction + ".dayActive").removeClass("dayActive");
