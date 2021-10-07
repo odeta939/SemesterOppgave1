@@ -55,12 +55,11 @@ function getRoutes() {
   });
 }
 
+//Function to reduce the amount of tickets of a route
 function reduceTicketsLeft(aRoute) {
-  $.get("Order/EditRoute", aRoute, function () {
-    //Do nothing :D
-  }).fail(function (fail) {
-      customAlert(fail.responseText, "Error editing route");
-  });
+    $.post("Order/EditRoute", aRoute).fail(function (fail) {
+        customAlert(fail.statusText, "Cant edit route");
+    });
 }
 
 function setOrder() {
@@ -158,18 +157,19 @@ function createOrder() {
   if (roundtrip == true) {
     //Reducing the amount of tickets left for a round trip:
     if (firstRoute.ticketsLeft >= ticketAmount) {
-      firstRoute.ticketsLeft -= ticketAmount;
+        firstRoute.ticketsLeft -= ticketAmount;
     } else {
-      customAlert("There are not that many tickets left for this route!", "No tickets left");
-      return;
+        customAlert("There are not that many tickets left for this route!", "No tickets left");
+        return;
     }
 
     if (roundTripRoute.ticketsLeft >= ticketAmount) {
-      roundTripRoute.ticketsLeft -= ticketAmount;
+        roundTripRoute.ticketsLeft -= ticketAmount;
     } else {
-      customAlert("There are not that many tickets left for this route!", "No tickets left");
-      return;
+        customAlert("There are not that many tickets left for this route!", "No tickets left");
+        return;
     }
+
 
     const order = {
       ticketAmount: ticketAmount,
@@ -223,39 +223,47 @@ function createOrder() {
       city: city,
       };
 
-    localStorage.setItem("order", JSON.stringify(order));
-    $.post("Order/SaveOrder", order, function () {
-      //If the post request returns an OK add the order to local storage:
-      //Reducing the amount of tickets left for the route in the database:
-      reduceTicketsLeft(firstRoute);
-    }).fail(function (fail) {
-      customAlert(fail.responseText, "Error saving order");
-      return;
+    
+      $.post("Order/SaveOrder", order, function () {
+          //If the post request returns an OK add the order to local storage:
+          localStorage.setItem("order", JSON.stringify(order));
+          //Reducing the amount of tickets left for the route in the database:
+          reduceTicketsLeft(firstRoute);
+
+          $.post("Order/SaveOrder", order2, function () {
+            //If the post request returns an OK remove the old storage and add the second order to local storage:
+            localStorage.setItem("order2", JSON.stringify(order2));
+            localStorage.removeItem("arrival");
+            localStorage.removeItem("departure");
+            localStorage.removeItem("outbound");
+            localStorage.removeItem("inbound");
+            localStorage.removeItem("ticketAmount");
+            //Reducing the amount of tickets left for the roundtrip route in the database:
+            reduceTicketsLeft(roundTripRoute);
+            //Will redirect to an order confirmation page if both orders returns an OK:
+            //Added a delay because on firefox jquery is changing location before the request is finished:
+            setTimeout(function () {
+                window.location.href = "confirmation.html";
+            }, 100);
+            
+          }).fail(function (fail) {
+              customAlert(fail.responseText, "Error saving order");
+          });
+      }).fail(function (fail) {
+        customAlert(fail.responseText, "Error saving order");
+        return;
     });
 
-    localStorage.setItem("order2", JSON.stringify(order2));
-    $.post("Order/SaveOrder", order2, function () {
-      //If the post request returns an OK remove the old storage and add the second order to local storage:
-      localStorage.removeItem("arrival");
-      localStorage.removeItem("departure");
-      localStorage.removeItem("outbound");
-      localStorage.removeItem("inbound");
-      localStorage.removeItem("ticketAmount");
-      //Reducing the amount of tickets left for the roundtrip route in the database:
-      reduceTicketsLeft(roundTripRoute);
-      //Will redirect to an order confirmation page:
-      window.location.href = "confirmation.html";
-    }).fail(function (fail) {
-      customAlert(fail.responseText, "Error saving order");
-    });
+    
   } else {
     //Reducing the amount of tickets for a one way trip:
     if (firstRoute.ticketsLeft >= ticketAmount) {
-      firstRoute.ticketsLeft -= ticketAmount;
+        firstRoute.ticketsLeft -= ticketAmount;
     } else {
-      customAlert("There are not that many tickets left for this route!", "Error saving order");
-      return;
+        customAlert("There are not that many tickets left for this route!", "No tickets left");
+        return;
     }
+
     //Only one order if it's a oneway trip:
     const order = {
       ticketAmount: ticketAmount,
