@@ -1,5 +1,5 @@
 ﻿/**
- * Function for validating the first name
+ * Validates the first name
  * @param {any} firstname Customers first name
  */
 function validateFirstname(firstname) {
@@ -12,7 +12,7 @@ function validateFirstname(firstname) {
 }
 
 /**
- * Function for validating the last name
+ * Validates the last name
  * @param {any} lastname Customers last name
  */
 function validateLastname(lastname) {
@@ -25,7 +25,7 @@ function validateLastname(lastname) {
 }
 
 /**
- * Function for validating the phone number
+ * Validates the phone number
  * @param {any} phonenr Customers phone number
  */
 function validatePhonenr(phonenr) {
@@ -43,7 +43,7 @@ function validatePhonenr(phonenr) {
   }
 }
 /**
- * Function for validating the email address
+ * Validates the email address
  * @param {any} email Customers email address
  */
 function validateEmail(email) {
@@ -61,7 +61,7 @@ function validateEmail(email) {
 }
 
 /**
- * Function for validating the street name
+ * Validates the street name
  * @param {any} street Customers street name
  */
 function validateStreet(street) {
@@ -74,7 +74,7 @@ function validateStreet(street) {
 }
 
 /**
- * Function for validating the zip code
+ * Validates the zip code
  * @param {any} zip Customers zip code
  */
 function validateZipcode(zip) {
@@ -92,7 +92,7 @@ function validateZipcode(zip) {
 }
 
 /**
- * Function for validating the city
+ * Validates the city
  * @param {any} city Customers city name
  */
 function validateCity(city) {
@@ -100,7 +100,7 @@ function validateCity(city) {
 }
 
 /**
- * A function to handle all of the validation of text with similar regex patterns
+ * Handles all of the validation of text with similar regex patterns
  * @param {any} toValidate The variable that is about to be validated
  * @param {any} elemTag The tag of the span element to be edited based on the validation
  * @param {any} msg The message if the input isnt valid
@@ -109,7 +109,7 @@ function validateCity(city) {
 function textEntryValidation(toValidate, elemTag, msg, maxChars) {
   let regex;
   const element = $(elemTag)[0];
-
+  //Based on the maxChars, the regex is created
   switch (maxChars) {
     case 20:
       regex = /^[a-zA-ZøæåØÆÅ. \-]{2,20}$/
@@ -137,7 +137,7 @@ function textEntryValidation(toValidate, elemTag, msg, maxChars) {
 }
 
 /**
- * A function to style the border of the span element for error handling
+ * Styles the border of the span element for error handling
  * @param {any} isError Boolean, if there is an error with validation
  * @param {any} element The span element that is being styled
  */
