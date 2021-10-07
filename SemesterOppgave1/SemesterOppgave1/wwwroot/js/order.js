@@ -223,9 +223,9 @@ function createOrder() {
       city: city,
       };
 
+    localStorage.setItem("order", JSON.stringify(order));
     $.post("Order/SaveOrder", order, function () {
       //If the post request returns an OK add the order to local storage:
-      localStorage.setItem("order", JSON.stringify(order));
       //Reducing the amount of tickets left for the route in the database:
       reduceTicketsLeft(firstRoute);
     }).fail(function (fail) {
@@ -233,9 +233,9 @@ function createOrder() {
       return;
     });
 
+    localStorage.setItem("order2", JSON.stringify(order2));
     $.post("Order/SaveOrder", order2, function () {
       //If the post request returns an OK remove the old storage and add the second order to local storage:
-      localStorage.setItem("order2", JSON.stringify(order2));
       localStorage.removeItem("arrival");
       localStorage.removeItem("departure");
       localStorage.removeItem("outbound");
