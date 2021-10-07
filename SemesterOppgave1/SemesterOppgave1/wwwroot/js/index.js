@@ -14,40 +14,37 @@ $(function () {
     enableDate();
 
     $("#fromPlace").on("change", function () {
-        enableTo(); //Since the user has selected a from destination the rest of the form can be activated
+        enableTo(); //Since the user has selected a from destination when can make to destination active
         removeCalendar(); //If there was a calendar showing it means that the user has change its route and the calendar need to be deleted since it is not accurat anymore
         let departurePlace = $("#fromPlace").children("option:selected").text();
         localStorage.setItem("departure", departurePlace); //Departure place get stored into local storage
-        //reloadCalendar();
     });
 
     $("#toPlace").on("change", function () {
-        enableDate();
-        removeCalendar();
+        enableDate(); //Both routes are selected so now we can enable the calendar
+        removeCalendar(); //If the calendar is showing we remove it since the route has hanged
         let arrivalPlace = $("#toPlace").children("option:selected").text();
-        localStorage.setItem("arrival", arrivalPlace);
-        //reloadCalendar();
+        localStorage.setItem("arrival", arrivalPlace); //Arrival place get stored into local storage
     });
 
     $("#passengers").on("change", function () {
-        removeCalendar();
-          localStorage.setItem(
+        removeCalendar(); //Number of passengers has changed and therefor the routesavaliability might have changed as well, we remove it
+          localStorage.setItem( //Every time the amount of passengers is changed we save it
             "ticketAmount",
             $("#passengers").children("option:selected").text()
             );
             $("#orderbox-params-when-btn > p").text("Select date")
-        reloadCalendar();
     });
 
-      $('input[type="radio"]').on('click change', function (e) {
-          $("#orderbox-params-when-btn > p").text("Select date")
+      $('input[type="radio"]').on('click change', function (e) { //one way vs round trip has been changed so we need to reset the calendar
+          $("#orderbox-params-when-btn > p").text("Select date") //feedback to user
           removeCalendar();
-          //reloadCalendar();
       });
-
   }
 });
 
+
+//Since we use custom elements it might be that older webbrowesers wont support this. This is being handeld here:
 function supportWarning() {
   const supportsCustomElementsv0 = "registerElement" in document;
   const supportsCustomElementsv1 = "customElements" in window;
@@ -83,7 +80,7 @@ function supportWarning() {
   return true;
 }
 
-function addPassengerNrs() {
+function addPassengerNrs() { //We are adding option 1-99 under passengers 
   for (let i = 1; i < 100; i++) {
     $("#passengers").append(
       $("<option>", {
@@ -91,7 +88,11 @@ function addPassengerNrs() {
         text: i,
       })
     );
-  }
+    }
+    localStorage.setItem( //Vi save passengers to local storage
+        "ticketAmount",
+        $("#passengers").children("option:selected").text()
+    );
 }
 
 function getDeparturePlaces() {
@@ -100,12 +101,12 @@ function getDeparturePlaces() {
   });
 }
 
-function enableTo() {
+function enableTo() { //From destination has been chosen to should be activated
   const from = $('select[name="from"]')[0].value;
   const to = $("#toPlace")[0];
-  if (from !== "noPlace" && from !== "") {
+  if (from !== "noPlace" && from !== "") { //We do an extra check to see if the user really picked a desitination in from
     to.removeAttribute("disabled");
-    setToPlaces();
+    setToPlaces(); //We are going to display the possible destinations
   } else {
     to.setAttribute("disabled", true);
   }
@@ -114,7 +115,7 @@ function enableTo() {
 function enableDate() {
   const date = $("#orderbox-params-when-btn")[0];
   const to = $('select[name="to"]')[0].value;
-  if (to !== "noPlace" && to !== "") {
+  if (to !== "noPlace" && to !== "") { //Check if to destination really is picked
     date.removeAttribute("disabled");
   } else {
     addPlaceholder("Select destination", "#toPlace");
@@ -122,8 +123,8 @@ function enableDate() {
   }
 }
 
-function setToPlaces() {
-  $.get("order/GetAllRoutes", function (routes) {
+function setToPlaces() { 
+    $.get("order/GetAllRoutes", function (routes) { //Getting all the routes from the database
     AddOptionsToTo(routes);
   });
 }
@@ -153,9 +154,9 @@ function AddOptionsToTo(routes) {
   addPlaceholder("Select destination", "#toPlace");
 
   for (let route of routes) {
-    if (route.departureTerminalCity == selectedCity) {
+    if (route.departureTerminalCity == selectedCity) { //we compare departure city with selected city
       let arrivalCity = route.arrivalTerminalCity;
-      if (fromList.indexOf(arrivalCity) == -1) {
+      if (fromList.indexOf(arrivalCity) == -1) { //If not in the list we add it as an option
         fromList.push(arrivalCity);
         $("#toPlace").append(
           $("<option>", {
@@ -179,6 +180,7 @@ function addPlaceholder(text, parent) {
   $(parent).append(option);
 }
 
+//Inputvalidation +
 //Adding departure and arrival place to localstorage to retrieve them in another file!
 function orderTickets() {
   if (
@@ -188,22 +190,14 @@ function orderTickets() {
   ) {
     customAlert("Select a departure city, a destination and a date!", "Error buying ticket");
   } else {
-    localStorage.setItem(
-      "ticketAmount",
-      $("#passengers").children("option:selected").text()
-    );
-    if (localStorage.getItem("inbound")) {
-      let outbound = localStorage.getItem("outbound");
-      let outboundArr = outbound.split("-");
-      let outboundCorrectOrder =
-        outboundArr[2] + "-" + outboundArr[1] + "-" + outboundArr[0];
-      var outboundDate = new Date(outboundCorrectOrder);
+    if (localStorage.getItem("inbound")) { //We are getting the dates from local storage to compare them
+        let outbound = localStorage.getItem("outbound");
+        let outboundArr = outbound.split("-");
+        let outboundDate = new Date(outboundArr[2], outboundArr[1], outboundArr[0]);; //converting string into date
 
-      let inbound = localStorage.getItem("inbound");
-      let inboundArr = inbound.split("-");
-      let inboundCorrectOrder =
-        inboundArr[2] + "-" + inboundArr[1] + "-" + inboundArr[0];
-      var inboundDate = new Date(inboundCorrectOrder);
+        let inbound = localStorage.getItem("inbound");
+        let inboundArr = inbound.split("-");
+        let inboundDate = new Date(inboundArr[2], inboundArr[1], inboundArr[0]);; //converting string into date
 
       if (inboundDate < outboundDate) {
         customAlert(
@@ -225,6 +219,7 @@ function reloadCalendar() {
     }
 }
 
+//Removing the calendar
 function removeCalendar() {
     $(".calendar.inbound").children().empty();
     $(".calendar.outbound").children().empty();
