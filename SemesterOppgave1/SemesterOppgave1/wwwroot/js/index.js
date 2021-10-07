@@ -186,7 +186,7 @@ function orderTickets() {
     $("#fromPlace").val() === null ||
     !localStorage.getItem("outbound")
   ) {
-    alert("Select a departure city, a destination and a date!");
+    customAlert("Select a departure city, a destination and a date!", "Error buying ticket");
   } else {
     localStorage.setItem(
       "ticketAmount",
@@ -206,8 +206,8 @@ function orderTickets() {
       var inboundDate = new Date(inboundCorrectOrder);
 
       if (inboundDate < outboundDate) {
-        alert(
-          "Your return trip is before your first trip! Choose a new date for your inbound (return) trip."
+        customAlert(
+          "Your return trip is before your first trip! Choose a new date for your inbound (return) trip.", "Error with date"
         );
       } else {
         window.location.href = "order.html";
