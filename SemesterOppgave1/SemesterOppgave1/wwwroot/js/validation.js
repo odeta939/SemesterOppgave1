@@ -30,7 +30,7 @@ function validateLastname(lastname) {
  */
 function validatePhonenr(phonenr) {
   //Only norwegian phone numbers usable for the customer
-  const regex = /^^(\+47)?[2-9][0-9]{7}$/;
+  const regex = /^(\+47)?[2-9][0-9]{7}$/;
   const ok = regex.test(phonenr);
   if (!ok) {
     $("#failPhonenr").html("Phone number is invalid");
