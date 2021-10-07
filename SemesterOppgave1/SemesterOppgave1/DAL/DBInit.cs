@@ -79,8 +79,8 @@ namespace SemesterOppgave1.DAL
                 //Terminal
                 var Terminal1 = new Terminals { TerminalName = "Oslo", Street = "Schweigaards gate 1", TerminalAddress = postplaceOslo };
                 var Terminal2 = new Terminals { TerminalName = "Kiel", Street = "Kiel kai", TerminalAddress = postplaceKiel };
-                var Terminal3 = new Terminals { TerminalName = "Goteborg", Street = "Danmarksterminalen", TerminalAddress = postplaceGot };
-                var Terminal4 = new Terminals { TerminalName = "Kobenhavn", Street = "Dampfergevej 30", TerminalAddress = postplaceKob };
+                var Terminal3 = new Terminals { TerminalName = "Bergen", Street = "Sundts gate 1", TerminalAddress = postplaceGot };
+                var Terminal4 = new Terminals { TerminalName = "Helsinki", Street = "Hietalahdenranta 14", TerminalAddress = postplaceKob };
 
                 context.Terminals.Add(Terminal1);
                 context.Terminals.Add(Terminal2);
