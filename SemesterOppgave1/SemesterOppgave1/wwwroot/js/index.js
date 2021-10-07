@@ -10,7 +10,7 @@ $(function () {
     getDeparturePlaces(); //Loading all the routes under from 
 
     // Handle reloading edge cases
-      enableTo();
+    enableTo();
     enableDate();
 
     $("#fromPlace").on("change", function () {
@@ -44,7 +44,10 @@ $(function () {
 });
 
 
-//Since we use custom elements it might be that older webbrowesers wont support this. This is being handeld here:
+/**
+ * Since we use custom elements it might be that older webbrowesers wont support this
+ * This is being handled here in this function
+*/
 function supportWarning() {
   const supportsCustomElementsv0 = "registerElement" in document;
   const supportsCustomElementsv1 = "customElements" in window;
@@ -80,6 +83,9 @@ function supportWarning() {
   return true;
 }
 
+/**
+ * Function to add data to the "Passengers" dropdown to select how many people will be travelling 
+*/
 function addPassengerNrs() { //We are adding option 1-99 under passengers 
   for (let i = 1; i < 100; i++) {
     $("#passengers").append(
@@ -95,12 +101,18 @@ function addPassengerNrs() { //We are adding option 1-99 under passengers
     );
 }
 
+/**
+ * Function to put routes from GetAllRoutes in as a parameter for the initialPlaces function 
+*/
 function getDeparturePlaces() {
     $.get("order/GetAllRoutes", function (routes) { //Getting all the routes from the database
     initialPlaces(routes);
   });
 }
 
+/**
+ * Function to enable the toPlace dropdown 
+*/
 function enableTo() { //From destination has been chosen to should be activated
   const from = $('select[name="from"]')[0].value;
   const to = $("#toPlace")[0];
@@ -112,6 +124,9 @@ function enableTo() { //From destination has been chosen to should be activated
   }
 }
 
+/**
+ * Function to enable choosing of a date 
+*/
 function enableDate() {
   const date = $("#orderbox-params-when-btn")[0];
   const to = $('select[name="to"]')[0].value;
@@ -123,12 +138,19 @@ function enableDate() {
   }
 }
 
+/**
+ * Function with the GetAllRoutes request, adds all routes to the AddOptionsToTo function
+*/
 function setToPlaces() { 
-    $.get("order/GetAllRoutes", function (routes) { //Getting all the routes from the database
+    $.get("order/GetAllRoutes", function (routes) {
     AddOptionsToTo(routes);
   });
 }
 
+/**
+ * Function to populate the fromPlace dropdown with all the possible cities.
+ * @param {any} routes All routes, taken from the GetAllRoutes request
+ */
 function initialPlaces(routes) {
   addPlaceholder("Select origin", "#fromPlace");
 
@@ -146,6 +168,10 @@ function initialPlaces(routes) {
   }
 }
 
+/**
+ * Function to add options to the toPlace dropdown, based on the fromPlace option thats selected.
+ * @param {any} routes All routes, taken from the GetAllRoutes request
+ */
 function AddOptionsToTo(routes) {
   fromList = [];
   $("#toPlace").empty();
@@ -168,8 +194,11 @@ function AddOptionsToTo(routes) {
     }
   }
 }
-
-// Adds placeholder option (edge-case handling)
+/**
+ * Adds placeholder to option (edge-case handling)
+ * @param {any} text The text of the select option
+ * @param {any} parent The select tag which is the parent of the select option
+ */ 
 function addPlaceholder(text, parent) {
   const option = document.createElement("option");
   option.value = "noPlace";
@@ -180,9 +209,11 @@ function addPlaceholder(text, parent) {
   $(parent).append(option);
 }
 
-// Inputvalidation +
-// Adding departure and arrival place to localstorage to retrieve them in another file!
-// ticketAmount will be validated when loading in the calendar (only routes that have the equal amount or more tickets will show)
+/**
+ * Function for inputvalidation, if all the fields are populated.
+ * Except for ticketAmount, which will be validated when loading the calendar.
+ * This means that only routes that have ticketsLeft > ticketAmount will show that day as available.
+*/
 function orderTickets() {
     let roundway = $('input[name="nrTrips"]:checked').val();
     //If its a oneway trip the inbound variable has to be stored in localstorage as well as the other three variables:
@@ -221,6 +252,9 @@ function orderTickets() {
         }
 }
 
+/**
+ * Function for reloading the calendar 
+*/
 function reloadCalendar() {
   const cal = $("#calendar-outbound")[0];
   if (cal.children.length !== 0) {
@@ -228,7 +262,9 @@ function reloadCalendar() {
     }
 }
 
-//Removing the calendar
+/**
+ * Function for removing the calendar
+*/
 function removeCalendar() {
     $(".calendar.inbound").children().empty();
     $(".calendar.outbound").children().empty();

@@ -10,6 +10,10 @@ $(function () {
   setOrder();
 });
 
+/**
+ * Function for validating the order
+ * If valid it will run the createOrder function
+ * */
 function validateAndOrder() {
   var firstnameOK = validateFirstname($("#firstName").val());
   var lastnameOK = validateLastname($("#lastName").val());
@@ -32,7 +36,9 @@ function validateAndOrder() {
   }
 }
 
-//Function for initializing the variables based on the localStorage values
+/**
+ * Function for initializing the variables based on the localStorage values
+*/
 function getRoutes() {
   $.get("Order/GetAllRoutes", function (routes) {
     for (let route of routes) {
@@ -58,13 +64,19 @@ function getRoutes() {
   });
 }
 
-//Function to reduce the amount of tickets of a route
+/**
+ * Function to reduce the amount of tickets of a route
+ * @param {*} aRoute    Route object (to be edited)
+ */
 function reduceTicketsLeft(aRoute) {
   $.post("Order/EditRoute", aRoute).fail(function (fail) {
     customAlert(fail.statusText, "Cant edit route");
   });
 }
 
+/**
+ * Function to populate the divs with the ticket information
+*/
 function setOrder() {
   //If it's a one way trip:
   if (
@@ -164,6 +176,11 @@ function populateTicket(
   createTicketDetails("Amount of passengers", ticketAmount, parentElement);
 }
 
+/**
+ * Function to create the order.
+ * It either creates one or two orders, based on it being a round / oneway trip.
+ * It also calls the reduceTicketsLeft function after a successful request
+*/
 function createOrder() {
   let ticketAmount = localStorage.getItem("ticketAmount");
   let firstname = $("#firstName").val();
