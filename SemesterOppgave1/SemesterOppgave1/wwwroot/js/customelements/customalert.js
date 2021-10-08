@@ -25,7 +25,8 @@ function customAlert(text, title) {
     .appendChild(document.createElement("div"));
   alerter.id = "alertBox";
   //Have the height as scrollTop so that it doesnt disappear when you scroll down
-  alerter.style.top = document.documentElement.scrollTop + "px";
+    alerter.style.top = document.documentElement.scrollBottom + "px";
+    console.log(document.documentElement.scrollBottom);
 
   //Append an h1 and a p element to the alert box with their own text nodes that will have their values from the text and title parameters
   let h1 = alerter.appendChild(document.createElement("h1"));

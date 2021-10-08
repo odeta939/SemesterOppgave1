@@ -215,13 +215,5 @@ namespace SemesterOppgave1.Controllers
                 return BadRequest("Input not valid!");
             }
         }
-
-
-      
-        //Something random:
-        public string Index()
-        {
-            return "Hei, controller her!";
-        }
     } 
 }
