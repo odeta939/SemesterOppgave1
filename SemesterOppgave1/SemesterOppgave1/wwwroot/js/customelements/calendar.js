@@ -41,6 +41,15 @@ let ticketsWanted;
  * Initialises calendars
  */
 function initializeCalendars() {
+    $(".calendar.inbound").children().empty();
+    $(".calendar.outbound").children().empty();
+    $("#inbound-details").children().empty();
+    $("#outbound-details").children().empty();
+    localStorage.removeItem("inbound");
+    localStorage.removeItem("outbound");
+    $("#orderbox-params-when-btn > p").text("Select date");
+
+
   timesClicked = 0;
   departureCity = localStorage.getItem("departure");
   arrivalCity = localStorage.getItem("arrival");

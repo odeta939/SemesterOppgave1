@@ -6,4 +6,4 @@ It was decided that one order contains only one direction. This means that if a 
 
 Finally, upon testing, it was found that error alerts might sometimes appear on Firefox incorrectly. The issues were not easily reproducible and seemed to occur with a certain level of randomness (and rarity); it is likely that they are related to response times from the server. A timeout was set, which drastically reduced occurrences, but on rare occasions an error message may still briefly appear before redirection.
 
-Google Inspect doesnt always show the right grid-layout
+Inspect in google chrome has some inconsistency when displaying the design (mostly because of the grid setup we used). This means that the mobile version of the inspect in google is not always accurat. Reducing the screen to a minimum size on a pc should give a good inidication on how it will look on a phone.
