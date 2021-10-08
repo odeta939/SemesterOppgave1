@@ -68,20 +68,19 @@ namespace SemesterOppgave1.DAL
                 //Postplaces Terminals
                 var postplaceOslo = new PostPlaces { ZipCode = "1111", City = "Oslo" };
                 var postplaceKiel = new PostPlaces { ZipCode = "24143", City = "Kiel-Gaarden" };
-                var postplaceGot = new PostPlaces { ZipCode = "405 19", City = "Goteborg" };
-                var postplaceKob = new PostPlaces { ZipCode = "2100", City = "Kobenhavn" };
+                var postplaceBer = new PostPlaces { ZipCode = "5012", City = "Bergen" };
+                var postplaceHel = new PostPlaces { ZipCode = "2100", City = "Helsinki" };
 
                 context.PostPlaces.Add(postplaceOslo);
                 context.PostPlaces.Add(postplaceKiel);
-                context.PostPlaces.Add(postplaceGot);
-                context.PostPlaces.Add(postplaceKob);
+                context.PostPlaces.Add(postplaceBer);
+                context.PostPlaces.Add(postplaceHel);
 
                 //Terminal
                 var Terminal1 = new Terminals { TerminalName = "Oslo", Street = "Schweigaards gate 1", TerminalAddress = postplaceOslo };
                 var Terminal2 = new Terminals { TerminalName = "Kiel", Street = "Kiel kai", TerminalAddress = postplaceKiel };
-                var Terminal3 = new Terminals { TerminalName = "Bergen", Street = "Sundts gate 1", TerminalAddress = postplaceGot };
-                var Terminal4 = new Terminals { TerminalName = "Helsinki", Street = "Hietalahdenranta 14", TerminalAddress = postplaceKob };
-                var Terminal5 = new Terminals { TerminalName = "Helsinki", Street = "Hietalahdenranta 14", TerminalAddress = postplaceKob };
+                var Terminal3 = new Terminals { TerminalName = "Bergen", Street = "Sundts gate 1", TerminalAddress = postplaceBer };
+                var Terminal4 = new Terminals { TerminalName = "Helsinki", Street = "Hietalahdenranta 14", TerminalAddress = postplaceHel };
 
                 context.Terminals.Add(Terminal1);
                 context.Terminals.Add(Terminal2);
